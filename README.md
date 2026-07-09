@@ -1,32 +1,29 @@
-# Plegar Pro · Demo Industrial para GitHub Pages
+# Plegar Pro Demo Funcional
 
-Demo funcional, visual y sin dependencias externas de una plataforma tipo **Plegar Pro** para cálculo y simulación básica de plegado de chapa.
+Demo web estática para GitHub Pages, hecha con HTML, CSS y JavaScript puro.
 
 ## Funciones incluidas
 
-- Dashboard visual con métricas de fuerza, desarrollo plano, riesgo y tiempo de ciclo.
-- Simulador 2D en Canvas con pieza, punzón, matriz y ángulo.
-- Cálculos orientativos de:
-  - Bend Allowance
-  - Bend Deduction
-  - Desarrollo plano
-  - Recuperación elástica
-  - Fuerza aproximada de plegado
-- Biblioteca de materiales y utillaje.
-- Secuencia de fabricación recomendada.
-- Informe técnico automático.
-- Exportación de cálculo en JSON.
-- Diseño responsive compatible con GitHub Pages.
+- Menú lateral intuitivo y visual en color.
+- Base de datos local de materiales, matrices y punzones.
+- Selección funcional de material, matriz y punzón.
+- Cálculo aproximado de desarrollo plano, Bend Allowance, Bend Deduction y fuerza de plegado.
+- Validaciones básicas de compatibilidad de matriz, punzón y espesor.
+- Simulación visual 2D de pieza plegada.
+- Visualización del desarrollo plano.
+- Secuencia de plegado propuesta.
+- Añadir herramientas a la base local.
+- Guardar proyecto en el navegador.
+- Exportar resultados en JSON y CSV.
 
-## Cómo publicarlo en GitHub Pages
+## Publicar en GitHub Pages
 
 1. Crea un repositorio nuevo en GitHub.
-2. Sube todos los archivos de esta carpeta.
-3. Entra en **Settings > Pages**.
-4. En **Build and deployment**, selecciona **Deploy from a branch**.
-5. Elige la rama `main` y la carpeta `/root`.
-6. Guarda y abre la URL que GitHub te indique.
+2. Sube `index.html`, `styles.css`, `app.js`, `README.md` y `LICENSE`.
+3. Entra en Settings > Pages.
+4. Selecciona la rama `main` y la carpeta raíz `/root`.
+5. Guarda y abre la URL publicada.
 
-## Aviso técnico
+## Aviso
 
-Esta demo utiliza fórmulas simplificadas y sirve como prototipo visual/funcional. Para uso industrial real deben calibrarse los cálculos con tablas de fabricante, herramientas reales, material, máquina, ensayos y validación técnica.
+Los cálculos son aproximados para una demo funcional. Para uso industrial real habría que conectar tablas reales de fabricante, calibraciones de máquina, ensayos de material y validaciones de seguridad.

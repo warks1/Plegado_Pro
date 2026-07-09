@@ -1,151 +1,153 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Plegar Pro · Demo Industrial</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Plegar Pro Demo</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="app-shell">
+  <div class="app">
     <aside class="sidebar">
       <div class="brand">
-        <div class="brand-mark">PP</div>
-        <div>
-          <strong>Plegar Pro</strong>
-          <span>Demo industrial</span>
-        </div>
+        <div class="logo">PP</div>
+        <div><strong>Plegar Pro</strong><span>Demo funcional</span></div>
       </div>
-      <nav>
-        <button class="nav-item active" data-view="dashboard">Dashboard</button>
-        <button class="nav-item" data-view="engineering">Ingeniería</button>
-        <button class="nav-item" data-view="sequence">Secuencia</button>
-        <button class="nav-item" data-view="library">Biblioteca</button>
-        <button class="nav-item" data-view="report">Informe</button>
-      </nav>
-      <div class="sidebar-card">
-        <span>Estado del proyecto</span>
-        <strong id="projectStatus">Validación pendiente</strong>
-        <div class="mini-progress"><i id="healthBar"></i></div>
+      <button class="nav active" data-page="dashboard">📊 Panel</button>
+      <button class="nav" data-page="calc">📐 Calculadora</button>
+      <button class="nav" data-page="tools">🧰 Herramientas</button>
+      <button class="nav" data-page="flat">🧾 Desarrollo</button>
+      <button class="nav" data-page="project">💾 Proyecto</button>
+      <button class="nav" data-page="help">❔ Ayuda</button>
+      <div class="side-card">
+        <span>Estado</span>
+        <b id="statusText">Listo</b>
       </div>
     </aside>
 
-    <main class="main">
+    <main>
       <header class="topbar">
         <div>
-          <p class="eyebrow">Smart bending workspace</p>
-          <h1>Demo funcional de cálculo y simulación de plegado</h1>
+          <h1 id="pageTitle">Panel principal</h1>
+          <p id="pageSub">Base de datos local, cálculo de plegado y simulación visual.</p>
         </div>
         <div class="actions">
-          <button id="loadExample" class="ghost">Cargar ejemplo</button>
-          <button id="exportJson" class="primary">Exportar JSON</button>
+          <button id="btnExample" class="btn secondary">Cargar ejemplo</button>
+          <button id="btnCalc" class="btn primary">Calcular</button>
         </div>
       </header>
 
-      <section class="hero-grid">
-        <article class="metric-card glow">
-          <span>Fuerza estimada</span>
-          <strong id="forceMetric">—</strong>
-          <small>Toneladas aproximadas</small>
-        </article>
-        <article class="metric-card">
-          <span>Desarrollo plano</span>
-          <strong id="flatMetric">—</strong>
-          <small>mm calculados</small>
-        </article>
-        <article class="metric-card">
-          <span>Riesgo</span>
-          <strong id="riskMetric">—</strong>
-          <small>Compatibilidad proceso</small>
-        </article>
-        <article class="metric-card">
-          <span>Tiempo ciclo</span>
-          <strong id="timeMetric">—</strong>
-          <small>Estimación demo</small>
-        </article>
+      <section id="dashboard" class="page active">
+        <div class="grid kpis">
+          <div class="card kpi"><span>Material</span><b id="kpiMaterial">-</b></div>
+          <div class="card kpi"><span>Desarrollo</span><b id="kpiFlat">-</b></div>
+          <div class="card kpi"><span>Fuerza estimada</span><b id="kpiForce">-</b></div>
+          <div class="card kpi"><span>Compatibilidad</span><b id="kpiOk">-</b></div>
+        </div>
+        <div class="grid two">
+          <div class="card">
+            <h2>Simulación de pieza</h2>
+            <canvas id="partCanvas" width="900" height="430"></canvas>
+          </div>
+          <div class="card">
+            <h2>Resumen técnico</h2>
+            <div id="summary" class="summary">Pulsa “Cargar ejemplo” o introduce datos en Calculadora.</div>
+          </div>
+        </div>
       </section>
 
-      <section class="view active" id="dashboard">
-        <div class="content-grid">
-          <article class="panel wide">
-            <div class="panel-head">
-              <div>
-                <p class="eyebrow">Simulador visual</p>
-                <h2>Pieza, matriz y punzón</h2>
-              </div>
-              <span class="badge" id="simulationBadge">Listo</span>
+      <section id="calc" class="page">
+        <div class="grid two">
+          <div class="card form-card">
+            <h2>Datos de la pieza</h2>
+            <label>Nombre del proyecto<input id="projectName" value="Soporte demo" /></label>
+            <div class="row">
+              <label>Material<select id="materialSelect"></select></label>
+              <label>Espesor mm<input id="thickness" type="number" step="0.1" value="1.5" /></label>
             </div>
-            <canvas id="bendCanvas" width="1080" height="520"></canvas>
-          </article>
-
-          <article class="panel">
-            <div class="panel-head">
-              <div>
-                <p class="eyebrow">Alertas inteligentes</p>
-                <h2>Validación</h2>
-              </div>
+            <div class="row">
+              <label>Longitud ala A mm<input id="legA" type="number" value="80" /></label>
+              <label>Longitud ala B mm<input id="legB" type="number" value="55" /></label>
             </div>
-            <div id="alerts" class="alerts"></div>
-          </article>
-        </div>
-      </section>
-
-      <section class="view" id="engineering">
-        <div class="content-grid">
-          <article class="panel form-panel">
-            <div class="panel-head"><div><p class="eyebrow">Entrada técnica</p><h2>Datos de pieza</h2></div></div>
-            <div class="form-grid">
-              <label>Material<select id="material"></select></label>
-              <label>Espesor mm<input id="thickness" type="number" min="0.5" step="0.1" /></label>
-              <label>Longitud plegado mm<input id="bendLength" type="number" min="20" step="1" /></label>
-              <label>Ángulo °<input id="angle" type="number" min="10" max="170" step="1" /></label>
-              <label>Radio interior mm<input id="radius" type="number" min="0.2" step="0.1" /></label>
-              <label>Apertura V mm<input id="dieV" type="number" min="4" step="1" /></label>
-              <label>Ala A mm<input id="legA" type="number" min="5" step="1" /></label>
-              <label>Ala B mm<input id="legB" type="number" min="5" step="1" /></label>
+            <div class="row">
+              <label>Ángulo plegado °<input id="angle" type="number" value="90" /></label>
+              <label>Radio interior mm<input id="radius" type="number" step="0.1" value="1.2" /></label>
             </div>
-            <button id="calculate" class="primary full">Recalcular proceso</button>
-          </article>
-
-          <article class="panel">
-            <div class="panel-head"><div><p class="eyebrow">Resultados</p><h2>Cálculo de plegado</h2></div></div>
-            <div class="result-list" id="results"></div>
-          </article>
+            <div class="row">
+              <label>Longitud de plegado mm<input id="bendLength" type="number" value="300" /></label>
+              <label>Matriz<select id="dieSelect"></select></label>
+            </div>
+            <label>Punzón<select id="punchSelect"></select></label>
+            <div class="button-row">
+              <button class="btn primary" id="calcFromForm">Calcular ahora</button>
+              <button class="btn secondary" id="resetForm">Limpiar</button>
+            </div>
+          </div>
+          <div class="card">
+            <h2>Resultados</h2>
+            <table class="result-table"><tbody id="resultTable"></tbody></table>
+            <div id="warnings" class="warnings"></div>
+          </div>
         </div>
       </section>
 
-      <section class="view" id="sequence">
-        <div class="content-grid">
-          <article class="panel wide">
-            <div class="panel-head"><div><p class="eyebrow">Planificación</p><h2>Secuencia recomendada</h2></div><button id="shuffleSequence" class="ghost">Optimizar</button></div>
-            <div id="sequenceList" class="sequence-list"></div>
-          </article>
+      <section id="tools" class="page">
+        <div class="grid two">
+          <div class="card">
+            <h2>Base de datos de matrices</h2>
+            <div class="table-wrap"><table><thead><tr><th>Ref</th><th>V mm</th><th>Ángulo</th><th>Espesor</th></tr></thead><tbody id="diesTable"></tbody></table></div>
+          </div>
+          <div class="card">
+            <h2>Base de datos de punzones</h2>
+            <div class="table-wrap"><table><thead><tr><th>Ref</th><th>Radio</th><th>Ángulo</th><th>Altura</th></tr></thead><tbody id="punchesTable"></tbody></table></div>
+          </div>
+        </div>
+        <div class="card form-card">
+          <h2>Añadir herramienta rápida</h2>
+          <div class="row four">
+            <select id="toolType"><option value="die">Matriz</option><option value="punch">Punzón</option></select>
+            <input id="toolRef" placeholder="Referencia" />
+            <input id="toolMain" type="number" placeholder="V matriz / radio punzón" />
+            <button id="addTool" class="btn primary">Añadir</button>
+          </div>
         </div>
       </section>
 
-      <section class="view" id="library">
-        <div class="content-grid">
-          <article class="panel">
-            <div class="panel-head"><div><p class="eyebrow">Materiales</p><h2>Biblioteca</h2></div></div>
-            <div id="materialLibrary" class="library-list"></div>
-          </article>
-          <article class="panel">
-            <div class="panel-head"><div><p class="eyebrow">Utillaje</p><h2>Punzones y matrices</h2></div></div>
-            <div id="toolLibrary" class="library-list"></div>
-          </article>
+      <section id="flat" class="page">
+        <div class="grid two">
+          <div class="card">
+            <h2>Desarrollo plano</h2>
+            <canvas id="flatCanvas" width="900" height="380"></canvas>
+          </div>
+          <div class="card">
+            <h2>Secuencia propuesta</h2>
+            <ol id="sequenceList" class="sequence"></ol>
+          </div>
         </div>
       </section>
 
-      <section class="view" id="report">
-        <article class="panel wide report-panel">
-          <div class="panel-head"><div><p class="eyebrow">Documento técnico</p><h2>Informe automático</h2></div><button id="printReport" class="ghost">Imprimir / PDF</button></div>
-          <div id="reportContent" class="report-content"></div>
-        </article>
+      <section id="project" class="page">
+        <div class="card">
+          <h2>Guardar y exportar</h2>
+          <div class="button-row">
+            <button id="saveProject" class="btn primary">Guardar en navegador</button>
+            <button id="loadSaved" class="btn secondary">Cargar guardado</button>
+            <button id="exportJson" class="btn secondary">Exportar JSON</button>
+            <button id="exportCsv" class="btn secondary">Exportar CSV</button>
+          </div>
+          <pre id="projectJson"></pre>
+        </div>
+      </section>
+
+      <section id="help" class="page">
+        <div class="card help">
+          <h2>Qué hace esta demo</h2>
+          <p>Permite elegir material, matriz y punzón desde una base de datos local; calcula desarrollo aproximado, fuerza de plegado, bend allowance, bend deduction, valida compatibilidad básica y dibuja la pieza plegada y el desarrollo plano.</p>
+          <p>Está preparada para GitHub Pages: no necesita servidor, base de datos externa ni instalación.</p>
+        </div>
       </section>
     </main>
   </div>
-
-  <div id="toast" class="toast">Copiado</div>
   <script src="app.js"></script>
 </body>
 </html>

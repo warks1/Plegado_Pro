@@ -1,60 +1,111 @@
-const materials = {
-  steel: { name: 'Acero S275', uts: 410, k: 0.42, spring: 1.5, color: '#45d6ff' },
-  stainless: { name: 'Inox 304', uts: 620, k: 0.38, spring: 2.4, color: '#d7e5f8' },
-  aluminum: { name: 'Aluminio 5754', uts: 230, k: 0.47, spring: 1.1, color: '#ffd166' },
-  galv: { name: 'Galvanizado DX51', uts: 330, k: 0.44, spring: 1.3, color: '#43e695' }
+const seedDB = {
+  materials:[
+    {id:'dc01',name:'Acero DC01',k:0.38,rm:280,density:7.85,color:'#4ea1ff'},
+    {id:'s235',name:'Acero S235',k:0.40,rm:360,density:7.85,color:'#38d996'},
+    {id:'inox304',name:'Inox 304',k:0.44,rm:620,density:8.00,color:'#d1e8ff'},
+    {id:'alu5754',name:'Aluminio 5754',k:0.33,rm:220,density:2.66,color:'#ffcc66'},
+    {id:'galv',name:'Galvanizado DX51D',k:0.39,rm:300,density:7.85,color:'#9ad7ff'}
+  ],
+  dies:[
+    {id:'v6',ref:'Matriz V6 88°',v:6,angle:88,minT:0.5,maxT:1.2},
+    {id:'v8',ref:'Matriz V8 88°',v:8,angle:88,minT:0.8,maxT:1.5},
+    {id:'v10',ref:'Matriz V10 88°',v:10,angle:88,minT:1.0,maxT:2.0},
+    {id:'v12',ref:'Matriz V12 88°',v:12,angle:88,minT:1.2,maxT:2.5},
+    {id:'v16',ref:'Matriz V16 85°',v:16,angle:85,minT:2.0,maxT:3.5},
+    {id:'v20',ref:'Matriz V20 85°',v:20,angle:85,minT:3.0,maxT:5.0}
+  ],
+  punches:[
+    {id:'p08',ref:'Punzón R0.8 88°',r:0.8,angle:88,height:120},
+    {id:'p12',ref:'Punzón R1.2 88°',r:1.2,angle:88,height:120},
+    {id:'p20',ref:'Punzón R2.0 85°',r:2.0,angle:85,height:135},
+    {id:'p30',ref:'Punzón R3.0 85°',r:3.0,angle:85,height:150},
+    {id:'goose',ref:'Cuello cisne R1.5 86°',r:1.5,angle:86,height:180}
+  ]
 };
-const tools = [
-  { name:'Punzón estándar 88°', type:'Punzón', radius:'0.8-3 mm', use:'Plegado general' },
-  { name:'Punzón cuello cisne', type:'Punzón', radius:'1-4 mm', use:'Cajas y retornos' },
-  { name:'Matriz V12', type:'Matriz', radius:'1-2 mm', use:'Chapa fina' },
-  { name:'Matriz V20', type:'Matriz', radius:'2-4 mm', use:'Chapa media' },
-  { name:'Matriz V32', type:'Matriz', radius:'4-6 mm', use:'Chapa gruesa' }
-];
-const state = { material:'steel', thickness:2, bendLength:500, angle:90, radius:2, dieV:16, legA:80, legB:60, optimized:false };
+let db = JSON.parse(localStorage.getItem('plegarProDB') || 'null') || seedDB;
+let lastResult = null;
 const $ = id => document.getElementById(id);
-function init(){
-  const mat = $('material');
-  Object.entries(materials).forEach(([key,m])=>{ const o=document.createElement('option'); o.value=key; o.textContent=m.name; mat.appendChild(o); });
-  ['material','thickness','bendLength','angle','radius','dieV','legA','legB'].forEach(id=>{ $(id).value=state[id]; $(id).addEventListener('input', readAndRender); });
-  document.querySelectorAll('.nav-item').forEach(btn=>btn.addEventListener('click',()=>switchView(btn.dataset.view)));
-  $('calculate').addEventListener('click', readAndRender);
-  $('loadExample').addEventListener('click', loadExample);
-  $('shuffleSequence').addEventListener('click', ()=>{ state.optimized=!state.optimized; renderSequence(); toast('Secuencia optimizada'); });
-  $('exportJson').addEventListener('click', exportJson);
-  $('printReport').addEventListener('click', ()=>window.print());
-  renderLibraries(); readAndRender();
+const fmt = (n,d=2)=> Number.isFinite(n)? n.toFixed(d) : '-';
+function fillSelects(){
+  $('materialSelect').innerHTML = db.materials.map(m=>`<option value="${m.id}">${m.name}</option>`).join('');
+  $('dieSelect').innerHTML = db.dies.map(d=>`<option value="${d.id}">${d.ref} · V${d.v}</option>`).join('');
+  $('punchSelect').innerHTML = db.punches.map(p=>`<option value="${p.id}">${p.ref}</option>`).join('');
+  renderToolTables();
 }
-function switchView(id){ document.querySelectorAll('.nav-item').forEach(b=>b.classList.toggle('active',b.dataset.view===id)); document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id)); setTimeout(drawCanvas,40); }
-function readAndRender(){ ['thickness','bendLength','angle','radius','dieV','legA','legB'].forEach(id=>state[id]=Number($(id).value)); state.material=$('material').value; renderAll(); }
-function calc(){
-  const m=materials[state.material], t=state.thickness, L=state.bendLength, A=state.angle, R=state.radius, V=state.dieV;
-  const force = (1.42 * m.uts * t*t * L / Math.max(V,1)) / 10000;
-  const bendRad = (Math.PI/180) * A;
-  const ba = bendRad * (R + m.k * t);
-  const bd = 2 * (R+t) * Math.tan(bendRad/2) - ba;
-  const flat = state.legA + state.legB + ba;
-  const spring = (m.spring * (A/90) * (t/(R+t))).toFixed(2);
-  const minV = t*6, maxV=t*12;
-  let risk=18;
-  if(V<minV) risk+=35; if(V>maxV) risk+=12; if(R<t*.6) risk+=18; if(force>80) risk+=20; if(A<35||A>145) risk+=15;
-  risk=Math.min(100,Math.max(5,risk));
-  const cycle = 8 + L/180 + (risk/18) + (state.optimized?-3:0);
-  return { force, ba, bd, flat, spring, risk, cycle, minV, maxV, material:m };
+function getInput(){return {
+  name:$('projectName').value || 'Proyecto sin nombre', material:db.materials.find(x=>x.id===$('materialSelect').value),
+  die:db.dies.find(x=>x.id===$('dieSelect').value), punch:db.punches.find(x=>x.id===$('punchSelect').value),
+  t:+$('thickness').value, a:+$('legA').value, b:+$('legB').value, angle:+$('angle').value, r:+$('radius').value, length:+$('bendLength').value
+}}
+function calculate(){
+  const i=getInput();
+  const bendRad=(180-i.angle)*Math.PI/180; // included bend development angle
+  const ba=bendRad*(i.r+i.material.k*i.t);
+  const ossb=Math.tan(((180-i.angle)/2)*Math.PI/180)*(i.r+i.t);
+  const bd=2*ossb-ba;
+  const flat=i.a+i.b-bd;
+  const force=(1.42*i.material.rm*i.t*i.t*i.length)/(1000*i.die.v); // approximate kN
+  const okDie=i.t>=i.die.minT && i.t<=i.die.maxT;
+  const okPunch=Math.abs(i.punch.angle-i.die.angle)<=5 && i.punch.r<=Math.max(i.r+1, i.t*2);
+  const minV=i.t*6, maxV=i.t*12;
+  let warnings=[];
+  if(!okDie) warnings.push({type:'danger',txt:`La matriz seleccionada admite ${i.die.minT}-${i.die.maxT} mm y la pieza tiene ${i.t} mm.`});
+  if(i.die.v<minV || i.die.v>maxV) warnings.push({type:'warning',txt:`V recomendada aproximada: ${fmt(minV,1)}-${fmt(maxV,1)} mm. Seleccionada: V${i.die.v}.`});
+  if(!okPunch) warnings.push({type:'warning',txt:'El punzón no es ideal para esta matriz/radio. Revisa ángulo y radio.'});
+  if(force>800) warnings.push({type:'danger',txt:`Fuerza alta estimada: ${fmt(force,0)} kN. Verifica tonelaje de máquina.`});
+  if(!warnings.length) warnings.push({type:'success',txt:'Configuración compatible para demo. Validación básica correcta.'});
+  lastResult={input:i, ba, bd, flat, force, ok:okDie && okPunch, warnings, date:new Date().toISOString()};
+  updateUI();
+  setStatus('Cálculo actualizado');
 }
-function renderAll(){ renderMetrics(); renderResults(); renderAlerts(); renderSequence(); renderReport(); drawCanvas(); }
-function renderMetrics(){ const c=calc(); $('forceMetric').textContent=c.force.toFixed(1)+' t'; $('flatMetric').textContent=c.flat.toFixed(1); $('riskMetric').textContent=c.risk<35?'Bajo':c.risk<65?'Medio':'Alto'; $('riskMetric').style.color=c.risk<35?'var(--good)':c.risk<65?'var(--warn)':'var(--bad)'; $('timeMetric').textContent=c.cycle.toFixed(1)+' s'; $('healthBar').style.width=(100-c.risk)+'%'; $('projectStatus').textContent=c.risk<65?'Proceso viable':'Revisión necesaria'; $('simulationBadge').textContent=c.risk<65?'Viable':'Atención'; $('simulationBadge').style.background=c.risk<65?'var(--good)':'var(--warn)'; }
-function renderResults(){ const c=calc(); const rows=[['Material',c.material.name],['K-Factor usado',c.material.k.toFixed(2)],['Bend allowance',c.ba.toFixed(2)+' mm'],['Bend deduction',c.bd.toFixed(2)+' mm'],['Desarrollo estimado',c.flat.toFixed(2)+' mm'],['Springback estimado',c.spring+'°'],['Apertura V recomendada',c.minV.toFixed(0)+' - '+c.maxV.toFixed(0)+' mm'],['Fuerza estimada',c.force.toFixed(2)+' toneladas']]; $('results').innerHTML=rows.map(([a,b])=>`<div class="result-item"><span>${a}</span><strong>${b}</strong></div>`).join(''); }
-function renderAlerts(){ const c=calc(); const list=[]; if(state.dieV<c.minV) list.push(['bad','La apertura V parece pequeña para el espesor. Puede marcar la pieza o exigir demasiada fuerza.']); if(state.dieV>c.maxV) list.push(['warn','La apertura V es grande. Puede aumentar el radio real y reducir precisión.']); if(state.radius<state.thickness*.6) list.push(['warn','Radio interior bajo respecto al espesor. Revisar riesgo de grieta.']); if(c.force>80) list.push(['bad','Fuerza elevada. Revisar capacidad de máquina y longitud de útil.']); if(!list.length) list.push(['good','La combinación material, radio, V y fuerza parece coherente para una demo.']); list.push(['','Consejo: valida siempre con tablas reales de máquina, material y herramienta antes de fabricar.']); $('alerts').innerHTML=list.map(([cls,t])=>`<div class="alert ${cls}">${t}</div>`).join(''); }
-function renderSequence(){ const base=[['Importar CAD','Reconocer espesor, material y pliegues'],['Seleccionar utillaje','Punzón 88° + matriz compatible'],['Preparar topes','Ajustar referencia y longitud de apoyo'],['Plegado principal','Ejecutar ángulo objetivo con compensación'],['Control calidad','Medir ángulo y registrar evidencia']]; const opt=[base[0],base[1],base[2],base[3],base[4]]; const arr=state.optimized?opt:base; $('sequenceList').innerHTML=arr.map((s,i)=>`<div class="step-card"><div class="step-index">${i+1}</div><div><b>${s[0]}</b><small>${s[1]}</small></div><span class="pill">${i===3?calc().cycle.toFixed(1)+' s':'OK'}</span></div>`).join(''); }
-function renderLibraries(){ $('materialLibrary').innerHTML=Object.values(materials).map(m=>`<div class="tool-card"><div><b>${m.name}</b><small>UTS ${m.uts} MPa · K ${m.k}</small></div><span class="pill">Activo</span></div>`).join(''); $('toolLibrary').innerHTML=tools.map(t=>`<div class="tool-card"><div><b>${t.name}</b><small>${t.type} · ${t.radius} · ${t.use}</small></div><span class="pill">Biblioteca</span></div>`).join(''); }
-function renderReport(){ const c=calc(); $('reportContent').innerHTML=`<h3>Informe técnico automático</h3><p><b>Pieza demo:</b> chapa ${c.material.name} de ${state.thickness} mm, plegado de ${state.bendLength} mm a ${state.angle}°.</p><p><b>Resultado:</b> desarrollo plano estimado de ${c.flat.toFixed(2)} mm, fuerza aproximada de ${c.force.toFixed(2)} toneladas y recuperación elástica estimada de ${c.spring}°.</p><p><b>Validación:</b> riesgo ${c.risk<35?'bajo':c.risk<65?'medio':'alto'}. ${c.risk<65?'La configuración es razonable para una demo funcional.':'Se recomienda revisar herramienta, radio o apertura V.'}</p><p><b>Nota:</b> demo orientativa para GitHub Pages. Los cálculos reales deben calibrarse con tablas del fabricante, ensayos y datos de producción.</p>`; }
-function drawCanvas(){ const canvas=$('bendCanvas'); if(!canvas) return; const ctx=canvas.getContext('2d'); const w=canvas.width,h=canvas.height; ctx.clearRect(0,0,w,h); const c=calc(); const bg=ctx.createLinearGradient(0,0,w,h); bg.addColorStop(0,'#0c1b31'); bg.addColorStop(1,'#070b14'); ctx.fillStyle=bg; ctx.fillRect(0,0,w,h); ctx.strokeStyle='rgba(255,255,255,.07)'; for(let x=0;x<w;x+=45){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke()} for(let y=0;y<h;y+=45){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke()}
-  const cx=w/2, cy=h*0.58, angle=(180-state.angle)*Math.PI/180, lenA=260, lenB=220; ctx.lineCap='round'; ctx.lineJoin='round'; ctx.lineWidth=28; ctx.strokeStyle=c.material.color; ctx.shadowColor=c.material.color; ctx.shadowBlur=18; ctx.beginPath(); ctx.moveTo(cx-lenA,cy); ctx.lineTo(cx,cy); ctx.lineTo(cx+Math.cos(-angle)*lenB,cy+Math.sin(-angle)*lenB); ctx.stroke(); ctx.shadowBlur=0; ctx.lineWidth=2; ctx.strokeStyle='rgba(255,255,255,.75)'; ctx.beginPath(); ctx.arc(cx,cy,70,-angle,0); ctx.stroke(); ctx.fillStyle='rgba(255,255,255,.85)'; ctx.font='bold 24px Inter,Arial'; ctx.fillText(state.angle+'°',cx+45,cy-28);
-  ctx.fillStyle='rgba(124,92,255,.7)'; ctx.beginPath(); ctx.moveTo(cx-80,cy+115); ctx.lineTo(cx,cy+35); ctx.lineTo(cx+80,cy+115); ctx.closePath(); ctx.fill(); ctx.fillStyle='rgba(69,214,255,.78)'; ctx.beginPath(); ctx.moveTo(cx-52,cy-170); ctx.lineTo(cx+52,cy-170); ctx.lineTo(cx,cy-70); ctx.closePath(); ctx.fill();
-  ctx.fillStyle='rgba(234,242,255,.95)'; ctx.font='bold 22px Inter,Arial'; ctx.fillText('Simulación de plegado · '+c.material.name,40,50); ctx.font='16px Inter,Arial'; ctx.fillStyle='rgba(142,162,189,.95)'; ctx.fillText(`Espesor ${state.thickness} mm · V${state.dieV} · Radio ${state.radius} mm · Fuerza ${c.force.toFixed(1)} t`,40,80);
+function updateUI(){
+  const r=lastResult; if(!r) return;
+  $('kpiMaterial').textContent=r.input.material.name;
+  $('kpiFlat').textContent=`${fmt(r.flat)} mm`;
+  $('kpiForce').textContent=`${fmt(r.force,0)} kN`;
+  $('kpiOk').textContent=r.ok?'OK':'Revisar';
+  $('resultTable').innerHTML = [
+    ['Bend Allowance',`${fmt(r.ba)} mm`],['Bend Deduction',`${fmt(r.bd)} mm`],['Desarrollo plano',`${fmt(r.flat)} mm`],['Fuerza estimada',`${fmt(r.force,0)} kN`],['K-Factor usado',r.input.material.k],['Matriz',r.input.die.ref],['Punzón',r.input.punch.ref]
+  ].map(x=>`<tr><td>${x[0]}</td><td><b>${x[1]}</b></td></tr>`).join('');
+  $('warnings').innerHTML=r.warnings.map(w=>`<div class="${w.type}">${w.txt}</div>`).join('');
+  $('summary').innerHTML=`<p><b>${r.input.name}</b></p><p>Material: <b>${r.input.material.name}</b>, espesor <b>${r.input.t} mm</b>, plegado a <b>${r.input.angle}°</b>.</p><p>Desarrollo calculado: <b>${fmt(r.flat)} mm</b>. Fuerza estimada: <b>${fmt(r.force,0)} kN</b>.</p><p>Estado: <span class="${r.ok?'ok':'warn'}">${r.ok?'compatible':'requiere revisión'}</span>.</p>`;
+  $('sequenceList').innerHTML=['Verificar material y espesor','Montar '+r.input.die.ref,'Montar '+r.input.punch.ref,'Ajustar topes a ala A '+r.input.a+' mm','Realizar plegado a '+r.input.angle+'°','Medir ángulo y corregir recuperación elástica'].map(x=>`<li>${x}</li>`).join('');
+  $('projectJson').textContent=JSON.stringify(r,null,2);
+  drawPart(); drawFlat();
 }
-function loadExample(){ Object.assign(state,{material:'stainless',thickness:1.5,bendLength:720,angle:90,radius:1.5,dieV:12,legA:95,legB:70,optimized:false}); Object.keys(state).forEach(k=>$(k)&&($(k).value=state[k])); renderAll(); toast('Ejemplo cargado'); }
-function exportJson(){ const payload={ project:'Plegar Pro Demo', date:new Date().toISOString(), input:state, calculations:calc() }; const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='plegar-pro-demo-calculo.json'; a.click(); URL.revokeObjectURL(a.href); toast('JSON exportado'); }
-function toast(text){ const t=$('toast'); t.textContent=text; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
-init();
+function drawPart(){
+  const c=$('partCanvas'),ctx=c.getContext('2d'); ctx.clearRect(0,0,c.width,c.height); const r=lastResult; if(!r){drawEmpty(ctx,c,'Sin cálculo');return}
+  const cx=430,cy=270,scale=2.2,a=r.input.a*scale,b=r.input.b*scale,ang=(180-r.input.angle)*Math.PI/180;
+  ctx.lineWidth=18;ctx.lineCap='round';ctx.strokeStyle=r.input.material.color;ctx.shadowColor=r.input.material.color;ctx.shadowBlur=16;
+  ctx.beginPath();ctx.moveTo(cx-a,cy);ctx.lineTo(cx,cy);ctx.lineTo(cx+Math.cos(-ang)*b,cy+Math.sin(-ang)*b);ctx.stroke();ctx.shadowBlur=0;
+  ctx.fillStyle='#eaf3ff';ctx.font='20px Segoe UI';ctx.fillText('Vista plegada',30,42);ctx.fillStyle='#8aa4c4';ctx.font='15px Segoe UI';ctx.fillText(`${r.input.material.name} · ${r.input.t} mm · ${r.input.angle}°`,30,70);
+  ctx.strokeStyle='#20d3ff';ctx.lineWidth=2;ctx.beginPath();ctx.arc(cx,cy,45,-ang,0);ctx.stroke();ctx.fillStyle='#20d3ff';ctx.fillText(r.input.angle+'°',cx+20,cy-28);
+}
+function drawFlat(){
+  const c=$('flatCanvas'),ctx=c.getContext('2d');ctx.clearRect(0,0,c.width,c.height);const r=lastResult;if(!r){drawEmpty(ctx,c,'Sin desarrollo');return}
+  const w=Math.min(760,r.flat*3),x=(c.width-w)/2,y=150,h=70;
+  ctx.fillStyle=r.input.material.color;ctx.shadowColor=r.input.material.color;ctx.shadowBlur=15;roundRect(ctx,x,y,w,h,16,true);ctx.shadowBlur=0;
+  ctx.strokeStyle='#07111f';ctx.setLineDash([8,8]);ctx.lineWidth=3;const bx=x+(r.input.a/r.flat)*w;ctx.beginPath();ctx.moveTo(bx,y-25);ctx.lineTo(bx,y+h+25);ctx.stroke();ctx.setLineDash([]);
+  ctx.fillStyle='#eaf3ff';ctx.font='20px Segoe UI';ctx.fillText('Desarrollo plano',30,42);ctx.fillStyle='#8aa4c4';ctx.font='15px Segoe UI';ctx.fillText(`Largo total: ${fmt(r.flat)} mm · línea discontinua = línea de plegado`,30,70);
+}
+function roundRect(ctx,x,y,w,h,r,fill){ctx.beginPath();ctx.roundRect(x,y,w,h,r); if(fill)ctx.fill(); else ctx.stroke()}
+function drawEmpty(ctx,c,t){ctx.fillStyle='#8aa4c4';ctx.font='22px Segoe UI';ctx.fillText(t,40,60)}
+function renderToolTables(){
+  $('diesTable').innerHTML=db.dies.map(d=>`<tr><td>${d.ref}</td><td>${d.v}</td><td>${d.angle}°</td><td>${d.minT}-${d.maxT} mm</td></tr>`).join('');
+  $('punchesTable').innerHTML=db.punches.map(p=>`<tr><td>${p.ref}</td><td>${p.r}</td><td>${p.angle}°</td><td>${p.height}</td></tr>`).join('');
+}
+function setStatus(t){$('statusText').textContent=t; setTimeout(()=>$('statusText').textContent='Listo',2400)}
+function nav(page){document.querySelectorAll('.page,.nav').forEach(e=>e.classList.remove('active')); $(`${page}`).classList.add('active'); document.querySelector(`[data-page="${page}"]`).classList.add('active'); const titles={dashboard:['Panel principal','Base de datos local, cálculo de plegado y simulación visual.'],calc:['Calculadora de plegado','Elige material, matriz, punzón y calcula el desarrollo.'],tools:['Herramientas','Base local de punzones y matrices editable.'],flat:['Desarrollo y secuencia','Visualiza el desarrollo plano y la secuencia propuesta.'],project:['Proyecto','Guarda y exporta los resultados.'],help:['Ayuda','Funcionamiento de la demo.']}; $('pageTitle').textContent=titles[page][0]; $('pageSub').textContent=titles[page][1];}
+function download(name,text,type='application/json'){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click();URL.revokeObjectURL(a.href)}
+function bind(){
+ document.querySelectorAll('.nav').forEach(b=>b.onclick=()=>nav(b.dataset.page));
+ ['btnCalc','calcFromForm'].forEach(id=>$(id).onclick=calculate);
+ $('btnExample').onclick=()=>{ $('projectName').value='Soporte inoxidable demo'; $('materialSelect').value='inox304'; $('thickness').value=1.5; $('legA').value=80; $('legB').value=55; $('angle').value=90; $('radius').value=1.2; $('bendLength').value=300; $('dieSelect').value='v10'; $('punchSelect').value='p12'; calculate(); };
+ $('resetForm').onclick=()=>{['projectName','thickness','legA','legB','angle','radius','bendLength'].forEach(id=>$(id).value=''); setStatus('Formulario limpio')};
+ $('addTool').onclick=()=>{const type=$('toolType').value,ref=$('toolRef').value||'Nueva herramienta',main=+$('toolMain').value;if(!main)return alert('Introduce un valor'); if(type==='die')db.dies.push({id:'d'+Date.now(),ref,v:main,angle:88,minT:Math.max(.5,main/12),maxT:main/6}); else db.punches.push({id:'p'+Date.now(),ref,r:main,angle:88,height:120}); localStorage.setItem('plegarProDB',JSON.stringify(db)); fillSelects(); setStatus('Herramienta añadida')};
+ $('saveProject').onclick=()=>{if(!lastResult)calculate(); localStorage.setItem('plegarProProject',JSON.stringify(lastResult)); setStatus('Proyecto guardado')};
+ $('loadSaved').onclick=()=>{const s=localStorage.getItem('plegarProProject'); if(!s)return alert('No hay proyecto guardado'); lastResult=JSON.parse(s); $('projectJson').textContent=JSON.stringify(lastResult,null,2); updateUI(); setStatus('Proyecto cargado')};
+ $('exportJson').onclick=()=>{if(!lastResult)calculate(); download('plegar-pro-proyecto.json',JSON.stringify(lastResult,null,2))};
+ $('exportCsv').onclick=()=>{if(!lastResult)calculate(); const r=lastResult; download('plegar-pro-resultados.csv',`Campo,Valor\nMaterial,${r.input.material.name}\nEspesor,${r.input.t}\nDesarrollo,${fmt(r.flat)}\nFuerza kN,${fmt(r.force,0)}\nMatriz,${r.input.die.ref}\nPunzon,${r.input.punch.ref}`,'text/csv')};
+}
+fillSelects(); bind(); $('btnExample').click();
