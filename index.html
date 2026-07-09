@@ -3,151 +3,126 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Plegar Pro Demo</title>
+  <title>Plegar Pro · Demo Industrial</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="app">
     <aside class="sidebar">
-      <div class="brand">
-        <div class="logo">PP</div>
-        <div><strong>Plegar Pro</strong><span>Demo funcional</span></div>
-      </div>
-      <button class="nav active" data-page="dashboard">📊 Panel</button>
-      <button class="nav" data-page="calc">📐 Calculadora</button>
-      <button class="nav" data-page="tools">🧰 Herramientas</button>
-      <button class="nav" data-page="flat">🧾 Desarrollo</button>
-      <button class="nav" data-page="project">💾 Proyecto</button>
-      <button class="nav" data-page="help">❔ Ayuda</button>
-      <div class="side-card">
+      <div class="brand"><div class="logo">PP</div><div><b>Plegar Pro</b><span>Demo funcional</span></div></div>
+      <button class="nav active" data-page="dashboard">Panel</button>
+      <button class="nav" data-page="project">Proyecto</button>
+      <button class="nav" data-page="tools">Herramientas</button>
+      <button class="nav" data-page="development">Desarrollo</button>
+      <button class="nav" data-page="sequence">Secuencia</button>
+      <button class="nav" data-page="database">Base de datos</button>
+      <button class="nav" data-page="reports">Informes</button>
+      <div class="sideCard">
         <span>Estado</span>
-        <b id="statusText">Listo</b>
+        <b id="systemStatus">Listo</b>
+        <small id="lastSaved">Sin guardar</small>
       </div>
     </aside>
 
-    <main>
+    <main class="main">
       <header class="topbar">
-        <div>
-          <h1 id="pageTitle">Panel principal</h1>
-          <p id="pageSub">Base de datos local, cálculo de plegado y simulación visual.</p>
-        </div>
+        <div><h1 id="pageTitle">Panel general</h1><p id="pageSub">Calculadora industrial de plegado con base de datos local.</p></div>
         <div class="actions">
-          <button id="btnExample" class="btn secondary">Cargar ejemplo</button>
-          <button id="btnCalc" class="btn primary">Calcular</button>
+          <button id="loadExample" class="btn ghost">Cargar ejemplo</button>
+          <button id="saveProject" class="btn">Guardar</button>
+          <button id="exportProject" class="btn accent">Exportar</button>
         </div>
       </header>
 
       <section id="dashboard" class="page active">
-        <div class="grid kpis">
-          <div class="card kpi"><span>Material</span><b id="kpiMaterial">-</b></div>
-          <div class="card kpi"><span>Desarrollo</span><b id="kpiFlat">-</b></div>
-          <div class="card kpi"><span>Fuerza estimada</span><b id="kpiForce">-</b></div>
-          <div class="card kpi"><span>Compatibilidad</span><b id="kpiOk">-</b></div>
+        <div class="grid cards4">
+          <div class="card kpi"><span>Material</span><b id="kpiMaterial">-</b><small id="kpiMaterialInfo">Selecciona un material</small></div>
+          <div class="card kpi"><span>Desarrollo</span><b id="kpiFlat">0 mm</b><small>Longitud plana estimada</small></div>
+          <div class="card kpi"><span>Fuerza</span><b id="kpiForce">0 T</b><small>Tonelaje aproximado</small></div>
+          <div class="card kpi"><span>Estado</span><b id="kpiFeasible">Pendiente</b><small id="kpiFeasibleInfo">Sin calcular</small></div>
         </div>
         <div class="grid two">
-          <div class="card">
-            <h2>Simulación de pieza</h2>
-            <canvas id="partCanvas" width="900" height="430"></canvas>
-          </div>
-          <div class="card">
-            <h2>Resumen técnico</h2>
-            <div id="summary" class="summary">Pulsa “Cargar ejemplo” o introduce datos en Calculadora.</div>
-          </div>
+          <div class="card"><h2>Simulación 2D</h2><canvas id="preview" width="900" height="420"></canvas><div class="legend"><span class="okdot"></span> Pieza <span class="warnDot"></span> Pliegues <span class="toolDot"></span> Herramienta</div></div>
+          <div class="card"><h2>Resumen técnico</h2><div id="summary" class="summary"></div><button id="calculateMain" class="btn accent full">Calcular ahora</button></div>
         </div>
       </section>
 
-      <section id="calc" class="page">
+      <section id="project" class="page">
         <div class="grid two">
-          <div class="card form-card">
-            <h2>Datos de la pieza</h2>
-            <label>Nombre del proyecto<input id="projectName" value="Soporte demo" /></label>
-            <div class="row">
-              <label>Material<select id="materialSelect"></select></label>
-              <label>Espesor mm<input id="thickness" type="number" step="0.1" value="1.5" /></label>
-            </div>
-            <div class="row">
-              <label>Longitud ala A mm<input id="legA" type="number" value="80" /></label>
-              <label>Longitud ala B mm<input id="legB" type="number" value="55" /></label>
-            </div>
-            <div class="row">
-              <label>Ángulo plegado °<input id="angle" type="number" value="90" /></label>
-              <label>Radio interior mm<input id="radius" type="number" step="0.1" value="1.2" /></label>
-            </div>
-            <div class="row">
-              <label>Longitud de plegado mm<input id="bendLength" type="number" value="300" /></label>
-              <label>Matriz<select id="dieSelect"></select></label>
-            </div>
-            <label>Punzón<select id="punchSelect"></select></label>
-            <div class="button-row">
-              <button class="btn primary" id="calcFromForm">Calcular ahora</button>
-              <button class="btn secondary" id="resetForm">Limpiar</button>
+          <div class="card"><h2>Datos de pieza</h2>
+            <div class="form">
+              <label>Nombre del proyecto<input id="projectName" /></label>
+              <label>Cliente<input id="clientName" /></label>
+              <label>Longitud ala A (mm)<input id="legA" type="number" min="1" step="0.1" /></label>
+              <label>Longitud ala B (mm)<input id="legB" type="number" min="1" step="0.1" /></label>
+              <label>Longitud de plegado (mm)<input id="bendLength" type="number" min="1" step="1" /></label>
+              <label>Espesor (mm)<input id="thickness" type="number" min="0.1" step="0.1" /></label>
+              <label>Ángulo final (°)<input id="angle" type="number" min="1" max="179" step="1" /></label>
+              <label>Radio interior deseado (mm)<input id="insideRadius" type="number" min="0.1" step="0.1" /></label>
             </div>
           </div>
-          <div class="card">
-            <h2>Resultados</h2>
-            <table class="result-table"><tbody id="resultTable"></tbody></table>
-            <div id="warnings" class="warnings"></div>
+          <div class="card"><h2>Selección técnica</h2>
+            <div class="form">
+              <label>Material<select id="materialSelect"></select></label>
+              <label>Punzón<select id="punchSelect"></select></label>
+              <label>Matriz<select id="dieSelect"></select></label>
+              <label>K-Factor<input id="kFactor" type="number" min="0.1" max="0.8" step="0.01" /></label>
+              <label>Cantidad<input id="quantity" type="number" min="1" step="1" /></label>
+              <label>Coste hora máquina (€)<input id="machineRate" type="number" min="1" step="1" /></label>
+            </div>
+            <button id="autoSelect" class="btn full">Seleccionar herramienta compatible</button>
           </div>
         </div>
       </section>
 
       <section id="tools" class="page">
+        <div class="grid three">
+          <div class="card"><h2>Material elegido</h2><div id="materialCard"></div></div>
+          <div class="card"><h2>Punzón elegido</h2><div id="punchCard"></div></div>
+          <div class="card"><h2>Matriz elegida</h2><div id="dieCard"></div></div>
+        </div>
+        <div class="card"><h2>Compatibilidad</h2><div id="compatibility"></div></div>
+      </section>
+
+      <section id="development" class="page">
         <div class="grid two">
-          <div class="card">
-            <h2>Base de datos de matrices</h2>
-            <div class="table-wrap"><table><thead><tr><th>Ref</th><th>V mm</th><th>Ángulo</th><th>Espesor</th></tr></thead><tbody id="diesTable"></tbody></table></div>
-          </div>
-          <div class="card">
-            <h2>Base de datos de punzones</h2>
-            <div class="table-wrap"><table><thead><tr><th>Ref</th><th>Radio</th><th>Ángulo</th><th>Altura</th></tr></thead><tbody id="punchesTable"></tbody></table></div>
-          </div>
-        </div>
-        <div class="card form-card">
-          <h2>Añadir herramienta rápida</h2>
-          <div class="row four">
-            <select id="toolType"><option value="die">Matriz</option><option value="punch">Punzón</option></select>
-            <input id="toolRef" placeholder="Referencia" />
-            <input id="toolMain" type="number" placeholder="V matriz / radio punzón" />
-            <button id="addTool" class="btn primary">Añadir</button>
-          </div>
+          <div class="card"><h2>Cálculo del desarrollo</h2><table><tbody id="calcTable"></tbody></table></div>
+          <div class="card"><h2>Coste estimado</h2><table><tbody id="costTable"></tbody></table></div>
         </div>
       </section>
 
-      <section id="flat" class="page">
+      <section id="sequence" class="page">
+        <div class="card"><h2>Secuencia propuesta</h2><div id="sequenceList" class="timeline"></div></div>
+      </section>
+
+      <section id="database" class="page">
+        <div class="grid three">
+          <div class="card"><h2>Materiales</h2><div id="materialsDb" class="dbList"></div></div>
+          <div class="card"><h2>Punzones</h2><div id="punchesDb" class="dbList"></div></div>
+          <div class="card"><h2>Matrices</h2><div id="diesDb" class="dbList"></div></div>
+        </div>
+        <div class="card"><h2>Editar / añadir registro</h2>
+          <div class="form row">
+            <select id="dbType"><option value="materials">Material</option><option value="punches">Punzón</option><option value="dies">Matriz</option></select>
+            <input id="dbName" placeholder="Nombre / referencia" />
+            <input id="dbA" placeholder="Dato A" />
+            <input id="dbB" placeholder="Dato B" />
+            <button id="addDb" class="btn accent">Añadir</button>
+            <button id="resetDb" class="btn ghost">Restaurar BD</button>
+          </div>
+          <p class="hint">La base de datos se guarda en LocalStorage. En GitHub Pages funciona sin servidor.</p>
+        </div>
+      </section>
+
+      <section id="reports" class="page">
         <div class="grid two">
-          <div class="card">
-            <h2>Desarrollo plano</h2>
-            <canvas id="flatCanvas" width="900" height="380"></canvas>
-          </div>
-          <div class="card">
-            <h2>Secuencia propuesta</h2>
-            <ol id="sequenceList" class="sequence"></ol>
-          </div>
-        </div>
-      </section>
-
-      <section id="project" class="page">
-        <div class="card">
-          <h2>Guardar y exportar</h2>
-          <div class="button-row">
-            <button id="saveProject" class="btn primary">Guardar en navegador</button>
-            <button id="loadSaved" class="btn secondary">Cargar guardado</button>
-            <button id="exportJson" class="btn secondary">Exportar JSON</button>
-            <button id="exportCsv" class="btn secondary">Exportar CSV</button>
-          </div>
-          <pre id="projectJson"></pre>
-        </div>
-      </section>
-
-      <section id="help" class="page">
-        <div class="card help">
-          <h2>Qué hace esta demo</h2>
-          <p>Permite elegir material, matriz y punzón desde una base de datos local; calcula desarrollo aproximado, fuerza de plegado, bend allowance, bend deduction, valida compatibilidad básica y dibuja la pieza plegada y el desarrollo plano.</p>
-          <p>Está preparada para GitHub Pages: no necesita servidor, base de datos externa ni instalación.</p>
+          <div class="card"><h2>Informe</h2><textarea id="reportText"></textarea><button id="generateReport" class="btn full">Generar informe</button></div>
+          <div class="card"><h2>Importar / exportar</h2><input type="file" id="importFile" accept=".json" /><button id="importProject" class="btn full">Importar proyecto</button><button id="downloadReport" class="btn accent full">Descargar informe TXT</button></div>
         </div>
       </section>
     </main>
   </div>
+  <div id="toast" class="toast"></div>
   <script src="app.js"></script>
 </body>
 </html>

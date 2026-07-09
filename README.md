@@ -1,29 +1,29 @@
-# Plegar Pro Demo Funcional
+# Plegar Pro · Demo funcional para GitHub Pages
 
-Demo web estática para GitHub Pages, hecha con HTML, CSS y JavaScript puro.
+Demo web estática, sin backend y sin dependencias, pensada para subir directamente a GitHub Pages.
 
 ## Funciones incluidas
 
-- Menú lateral intuitivo y visual en color.
-- Base de datos local de materiales, matrices y punzones.
-- Selección funcional de material, matriz y punzón.
-- Cálculo aproximado de desarrollo plano, Bend Allowance, Bend Deduction y fuerza de plegado.
-- Validaciones básicas de compatibilidad de matriz, punzón y espesor.
-- Simulación visual 2D de pieza plegada.
-- Visualización del desarrollo plano.
-- Secuencia de plegado propuesta.
-- Añadir herramientas a la base local.
-- Guardar proyecto en el navegador.
-- Exportar resultados en JSON y CSV.
+- Menú lateral por módulos.
+- Base de datos local editable de materiales, punzones y matrices.
+- Guardado en LocalStorage.
+- Importación/exportación de proyectos JSON.
+- Cálculo de desarrollo plano.
+- Bend Allowance, K-Factor, fuerza aproximada y coste estimado.
+- Selección automática de herramienta compatible.
+- Validaciones de matriz, punzón, radio y tonelaje.
+- Simulación 2D simplificada en canvas.
+- Informe técnico descargable.
 
-## Publicar en GitHub Pages
+## Cómo subir a GitHub
 
-1. Crea un repositorio nuevo en GitHub.
-2. Sube `index.html`, `styles.css`, `app.js`, `README.md` y `LICENSE`.
-3. Entra en Settings > Pages.
-4. Selecciona la rama `main` y la carpeta raíz `/root`.
-5. Guarda y abre la URL publicada.
+1. Crea un repositorio nuevo.
+2. Sube todos los archivos de esta carpeta.
+3. En GitHub, ve a Settings → Pages.
+4. Selecciona Deploy from branch.
+5. Rama: main, carpeta: root.
+6. Guarda y abre la URL que te da GitHub Pages.
 
-## Aviso
+## Nota
 
-Los cálculos son aproximados para una demo funcional. Para uso industrial real habría que conectar tablas reales de fabricante, calibraciones de máquina, ensayos de material y validaciones de seguridad.
+Esta demo funciona como prototipo avanzado de interfaz y lógica local. Para una versión industrial final real haría falta backend, autenticación, base de datos servidor, importación CAD real y conexión con máquinas CNC.
