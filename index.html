@@ -16,6 +16,7 @@
       <button class="nav" data-page="tools">Útiles recomendados</button>
       <button class="nav" data-page="development">Desarrollo</button>
       <button class="nav" data-page="simulation">Simulación</button>
+      <button class="nav" data-page="importai">Importar plano + IA</button>
       <button class="nav" data-page="database">Base de datos</button>
       <button class="nav" data-page="reports">Informes</button>
       <div class="sideCard"><span>Estado</span><b id="systemStatus">Listo</b><small id="lastSaved">Sin guardar</small></div>
@@ -80,6 +81,15 @@
 
       <section id="simulation" class="page">
         <div class="grid two"><div class="card"><h2>Simulación visual paso a paso</h2><canvas id="simCanvas" width="940" height="460"></canvas><input id="simStep" type="range" min="0" value="0" step="1" /><div class="actionsInline"><button id="prevStep" class="btn ghost">Anterior</button><button id="playSim" class="btn accent">Reproducir</button><button id="nextStep" class="btn ghost">Siguiente</button></div></div><div class="card"><h2>Secuencia de plegado</h2><div id="sequenceList" class="timeline"></div></div></div>
+      </section>
+
+
+      <section id="importai" class="page">
+        <div class="grid two">
+          <div class="card"><h2>Importar plano / cotas</h2><p class="hint">Puedes cargar un JSON, CSV o DXF simplificado. La beta extrae alas y plegados para crear automáticamente la pieza.</p><input type="file" id="planFile" accept=".json,.csv,.txt,.dxf" /><textarea id="planText" placeholder="Ejemplo CSV:\nPROYECTO;Soporte\nMATERIAL;S235\nESPESOR;1.5\nANCHO;780\nALA;35\nPLEGADO;90;1.5;up;interior\nALA;80\nPLEGADO;30;1;up;interior\nALA;120"></textarea><div class="actionsInline"><button id="importPlanBtn" class="btn accent">Importar y detectar plegados</button><button id="samplePlan" class="btn ghost">Cargar ejemplo de plano</button></div><p id="importFormatHelp" class="hint"></p></div>
+          <div class="card"><h2>IA de plegado</h2><p class="hint">IA local simulada: analiza geometría, desarrollo, secuencia y útiles Mecos recomendados. Funciona sin servidor para GitHub Pages.</p><button id="runAi" class="btn accent full">Analizar con IA</button><div id="aiResults" class="aiBox"></div></div>
+        </div>
+        <div class="card"><h2>Qué se genera automáticamente</h2><div class="summary"><div class="pill">Alas y cotas del desarrollo</div><div class="pill">Plegados interiores/exteriores</div><div class="pill">Secuencia recomendada</div><div class="pill">Punzón y matriz Mecos por plegado</div><div class="pill">Simulación visual paso a paso</div></div></div>
       </section>
 
       <section id="database" class="page">

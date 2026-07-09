@@ -4,3 +4,5 @@
 .grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}
 @media(max-width:1200px){.grid.four{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:760px){.grid.four{grid-template-columns:1fr}}
+
+.aiBox{display:grid;gap:10px;margin-top:14px}.aiItem{border:1px solid var(--line);border-radius:16px;background:rgba(0,209,255,.06);padding:13px;color:var(--text)}#planText{min-height:260px}.nav[data-page='importai']{border:1px solid rgba(0,209,255,.16)}
