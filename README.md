@@ -1,26 +1,51 @@
-# Plegado Pro
+# Plegar Pro Demo
 
-Aplicación web ligera para cálculo rápido de plegado de chapa.
+Demo funcional, ligera y sin dependencias para presentar el concepto de **Plegar Pro** en GitHub Pages.
 
-## Funciones
-- Tonelaje total y por metro.
-- Desarrollo aproximado.
-- BA y BD.
-- Biblioteca de matrices y punzones compatibles tipo Bystronic.
-- Diagnóstico de problemas frecuentes.
-- Secuencia orientativa de plegado.
-- Preparada como PWA.
+## Qué incluye
 
-## Ejecutar en local
-Abre `index.html` en el navegador.
+- Panel general con KPIs técnicos.
+- Editor de pieza: material, espesor, longitud, radio, matriz y pliegues.
+- Visualizador 2D/3D simulado con canvas.
+- Cálculos demo de desarrollo, fuerza, recuperación elástica y riesgo.
+- Secuencia de plegado recomendada.
+- Validaciones automáticas básicas.
+- Generador de CNC demo.
+- Plan de calidad y estimación de costes.
+- Biblioteca de materiales y herramientas.
+- Exportación de proyecto en JSON.
 
-## Publicar en GitHub Pages
-1. Crear repositorio en GitHub.
-2. Subir todos los archivos.
-3. Ir a Settings > Pages.
-4. Source: Deploy from branch.
-5. Branch: main / root.
-6. Abrir la URL publicada.
+## Cómo probarlo en local
+
+Abre el archivo `index.html` directamente en el navegador.
+
+También puedes usar un servidor local:
+
+```bash
+python3 -m http.server 8080
+```
+
+Después abre:
+
+```text
+http://localhost:8080
+```
+
+## Cómo subirlo a GitHub Pages
+
+1. Crea un repositorio en GitHub.
+2. Sube estos archivos a la raíz del repositorio:
+   - `index.html`
+   - `styles.css`
+   - `app.js`
+   - `README.md`
+3. En GitHub entra en **Settings > Pages**.
+4. En **Build and deployment**, selecciona:
+   - Source: `Deploy from a branch`
+   - Branch: `main`
+   - Folder: `/root`
+5. Guarda y espera a que GitHub genere la web.
 
 ## Aviso
-Cálculos orientativos para plegado al aire. Verificar con tablas reales de máquina, herramientas y material.
+
+Esta demo usa cálculos simplificados para presentación visual. No sustituye cálculos industriales certificados ni validaciones reales de máquina.
