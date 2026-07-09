@@ -1,51 +1,32 @@
-# Plegar Pro Demo
+# Plegar Pro · Demo Industrial para GitHub Pages
 
-Demo funcional, ligera y sin dependencias para presentar el concepto de **Plegar Pro** en GitHub Pages.
+Demo funcional, visual y sin dependencias externas de una plataforma tipo **Plegar Pro** para cálculo y simulación básica de plegado de chapa.
 
-## Qué incluye
+## Funciones incluidas
 
-- Panel general con KPIs técnicos.
-- Editor de pieza: material, espesor, longitud, radio, matriz y pliegues.
-- Visualizador 2D/3D simulado con canvas.
-- Cálculos demo de desarrollo, fuerza, recuperación elástica y riesgo.
-- Secuencia de plegado recomendada.
-- Validaciones automáticas básicas.
-- Generador de CNC demo.
-- Plan de calidad y estimación de costes.
-- Biblioteca de materiales y herramientas.
-- Exportación de proyecto en JSON.
+- Dashboard visual con métricas de fuerza, desarrollo plano, riesgo y tiempo de ciclo.
+- Simulador 2D en Canvas con pieza, punzón, matriz y ángulo.
+- Cálculos orientativos de:
+  - Bend Allowance
+  - Bend Deduction
+  - Desarrollo plano
+  - Recuperación elástica
+  - Fuerza aproximada de plegado
+- Biblioteca de materiales y utillaje.
+- Secuencia de fabricación recomendada.
+- Informe técnico automático.
+- Exportación de cálculo en JSON.
+- Diseño responsive compatible con GitHub Pages.
 
-## Cómo probarlo en local
+## Cómo publicarlo en GitHub Pages
 
-Abre el archivo `index.html` directamente en el navegador.
+1. Crea un repositorio nuevo en GitHub.
+2. Sube todos los archivos de esta carpeta.
+3. Entra en **Settings > Pages**.
+4. En **Build and deployment**, selecciona **Deploy from a branch**.
+5. Elige la rama `main` y la carpeta `/root`.
+6. Guarda y abre la URL que GitHub te indique.
 
-También puedes usar un servidor local:
+## Aviso técnico
 
-```bash
-python3 -m http.server 8080
-```
-
-Después abre:
-
-```text
-http://localhost:8080
-```
-
-## Cómo subirlo a GitHub Pages
-
-1. Crea un repositorio en GitHub.
-2. Sube estos archivos a la raíz del repositorio:
-   - `index.html`
-   - `styles.css`
-   - `app.js`
-   - `README.md`
-3. En GitHub entra en **Settings > Pages**.
-4. En **Build and deployment**, selecciona:
-   - Source: `Deploy from a branch`
-   - Branch: `main`
-   - Folder: `/root`
-5. Guarda y espera a que GitHub genere la web.
-
-## Aviso
-
-Esta demo usa cálculos simplificados para presentación visual. No sustituye cálculos industriales certificados ni validaciones reales de máquina.
+Esta demo utiliza fórmulas simplificadas y sirve como prototipo visual/funcional. Para uso industrial real deben calibrarse los cálculos con tablas de fabricante, herramientas reales, material, máquina, ensayos y validación técnica.

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Plegar Pro Demo</title>
+  <title>Plegar Pro · Demo Industrial</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -12,136 +12,140 @@
       <div class="brand">
         <div class="brand-mark">PP</div>
         <div>
-          <h1>Plegar Pro</h1>
-          <p>Demo funcional</p>
+          <strong>Plegar Pro</strong>
+          <span>Demo industrial</span>
         </div>
       </div>
       <nav>
-        <button class="nav-btn active" data-panel="dashboard">Panel</button>
-        <button class="nav-btn" data-panel="engineering">Ingeniería</button>
-        <button class="nav-btn" data-panel="simulation">Simulación</button>
-        <button class="nav-btn" data-panel="cnc">CNC</button>
-        <button class="nav-btn" data-panel="quality">Calidad</button>
-        <button class="nav-btn" data-panel="library">Biblioteca</button>
+        <button class="nav-item active" data-view="dashboard">Dashboard</button>
+        <button class="nav-item" data-view="engineering">Ingeniería</button>
+        <button class="nav-item" data-view="sequence">Secuencia</button>
+        <button class="nav-item" data-view="library">Biblioteca</button>
+        <button class="nav-item" data-view="report">Informe</button>
       </nav>
       <div class="sidebar-card">
-        <span>Estado</span>
-        <strong id="systemStatus">Operativo</strong>
-        <small>Modo local · Sin backend</small>
+        <span>Estado del proyecto</span>
+        <strong id="projectStatus">Validación pendiente</strong>
+        <div class="mini-progress"><i id="healthBar"></i></div>
       </div>
     </aside>
 
     <main class="main">
       <header class="topbar">
         <div>
-          <h2 id="panelTitle">Panel general</h2>
-          <p id="panelSubtitle">Resumen técnico de la pieza y del proceso.</p>
+          <p class="eyebrow">Smart bending workspace</p>
+          <h1>Demo funcional de cálculo y simulación de plegado</h1>
         </div>
         <div class="actions">
-          <button id="loadExampleBtn" class="secondary">Cargar ejemplo</button>
-          <button id="exportBtn" class="primary">Exportar proyecto</button>
+          <button id="loadExample" class="ghost">Cargar ejemplo</button>
+          <button id="exportJson" class="primary">Exportar JSON</button>
         </div>
       </header>
 
-      <section id="dashboard" class="panel active-panel">
-        <div class="grid stats">
-          <article class="stat"><span>Pliegues</span><strong id="statBends">4</strong></article>
-          <article class="stat"><span>Fuerza estimada</span><strong id="statForce">—</strong></article>
-          <article class="stat"><span>Desarrollo</span><strong id="statFlat">—</strong></article>
-          <article class="stat"><span>Riesgo</span><strong id="statRisk">—</strong></article>
-        </div>
-        <div class="workspace">
-          <section class="card visual-card">
-            <div class="card-header">
-              <h3>Visualizador de pieza</h3>
-              <span id="viewMode">Vista simulada</span>
+      <section class="hero-grid">
+        <article class="metric-card glow">
+          <span>Fuerza estimada</span>
+          <strong id="forceMetric">—</strong>
+          <small>Toneladas aproximadas</small>
+        </article>
+        <article class="metric-card">
+          <span>Desarrollo plano</span>
+          <strong id="flatMetric">—</strong>
+          <small>mm calculados</small>
+        </article>
+        <article class="metric-card">
+          <span>Riesgo</span>
+          <strong id="riskMetric">—</strong>
+          <small>Compatibilidad proceso</small>
+        </article>
+        <article class="metric-card">
+          <span>Tiempo ciclo</span>
+          <strong id="timeMetric">—</strong>
+          <small>Estimación demo</small>
+        </article>
+      </section>
+
+      <section class="view active" id="dashboard">
+        <div class="content-grid">
+          <article class="panel wide">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Simulador visual</p>
+                <h2>Pieza, matriz y punzón</h2>
+              </div>
+              <span class="badge" id="simulationBadge">Listo</span>
             </div>
-            <canvas id="partCanvas" width="900" height="520"></canvas>
-            <div class="legend">
-              <span><i class="ok"></i> Chapa</span>
-              <span><i class="warn"></i> Pliegues</span>
-              <span><i class="danger"></i> Zona de riesgo</span>
+            <canvas id="bendCanvas" width="1080" height="520"></canvas>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <p class="eyebrow">Alertas inteligentes</p>
+                <h2>Validación</h2>
+              </div>
             </div>
-          </section>
-          <section class="card">
-            <h3>Resumen inteligente</h3>
-            <div id="smartSummary" class="summary"></div>
-            <button id="simulateBtn" class="primary full">Recalcular simulación</button>
-          </section>
+            <div id="alerts" class="alerts"></div>
+          </article>
         </div>
       </section>
 
-      <section id="engineering" class="panel">
-        <div class="workspace two-cols">
-          <section class="card">
-            <h3>Datos de pieza</h3>
-            <label>Nombre de pieza<input id="partName" value="Soporte plegado demo" /></label>
-            <label>Material<select id="material"></select></label>
-            <label>Espesor mm<input id="thickness" type="number" step="0.1" min="0.5" value="2" /></label>
-            <label>Longitud pliegue mm<input id="bendLength" type="number" step="1" min="50" value="420" /></label>
-            <label>Radio interior mm<input id="insideRadius" type="number" step="0.1" min="0.2" value="2" /></label>
-            <label>Abertura V matriz mm<input id="vOpening" type="number" step="1" min="4" value="16" /></label>
-          </section>
-          <section class="card">
-            <h3>Pliegues</h3>
-            <div id="bendsList" class="bends-list"></div>
-            <button id="addBendBtn" class="secondary full">Añadir pliegue</button>
-          </section>
+      <section class="view" id="engineering">
+        <div class="content-grid">
+          <article class="panel form-panel">
+            <div class="panel-head"><div><p class="eyebrow">Entrada técnica</p><h2>Datos de pieza</h2></div></div>
+            <div class="form-grid">
+              <label>Material<select id="material"></select></label>
+              <label>Espesor mm<input id="thickness" type="number" min="0.5" step="0.1" /></label>
+              <label>Longitud plegado mm<input id="bendLength" type="number" min="20" step="1" /></label>
+              <label>Ángulo °<input id="angle" type="number" min="10" max="170" step="1" /></label>
+              <label>Radio interior mm<input id="radius" type="number" min="0.2" step="0.1" /></label>
+              <label>Apertura V mm<input id="dieV" type="number" min="4" step="1" /></label>
+              <label>Ala A mm<input id="legA" type="number" min="5" step="1" /></label>
+              <label>Ala B mm<input id="legB" type="number" min="5" step="1" /></label>
+            </div>
+            <button id="calculate" class="primary full">Recalcular proceso</button>
+          </article>
+
+          <article class="panel">
+            <div class="panel-head"><div><p class="eyebrow">Resultados</p><h2>Cálculo de plegado</h2></div></div>
+            <div class="result-list" id="results"></div>
+          </article>
         </div>
       </section>
 
-      <section id="simulation" class="panel">
-        <div class="workspace two-cols">
-          <section class="card">
-            <h3>Secuencia recomendada</h3>
-            <ol id="sequenceList" class="sequence"></ol>
-          </section>
-          <section class="card">
-            <h3>Validaciones</h3>
-            <div id="validationList" class="validation-list"></div>
-          </section>
+      <section class="view" id="sequence">
+        <div class="content-grid">
+          <article class="panel wide">
+            <div class="panel-head"><div><p class="eyebrow">Planificación</p><h2>Secuencia recomendada</h2></div><button id="shuffleSequence" class="ghost">Optimizar</button></div>
+            <div id="sequenceList" class="sequence-list"></div>
+          </article>
         </div>
       </section>
 
-      <section id="cnc" class="panel">
-        <section class="card">
-          <div class="card-header">
-            <h3>Programa CNC demo</h3>
-            <button id="copyCncBtn" class="secondary">Copiar</button>
-          </div>
-          <pre id="cncOutput"></pre>
-        </section>
-      </section>
-
-      <section id="quality" class="panel">
-        <div class="workspace two-cols">
-          <section class="card">
-            <h3>Plan de control</h3>
-            <div id="qualityPlan"></div>
-          </section>
-          <section class="card">
-            <h3>Coste estimado</h3>
-            <div id="costPanel"></div>
-          </section>
+      <section class="view" id="library">
+        <div class="content-grid">
+          <article class="panel">
+            <div class="panel-head"><div><p class="eyebrow">Materiales</p><h2>Biblioteca</h2></div></div>
+            <div id="materialLibrary" class="library-list"></div>
+          </article>
+          <article class="panel">
+            <div class="panel-head"><div><p class="eyebrow">Utillaje</p><h2>Punzones y matrices</h2></div></div>
+            <div id="toolLibrary" class="library-list"></div>
+          </article>
         </div>
       </section>
 
-      <section id="library" class="panel">
-        <div class="workspace two-cols">
-          <section class="card">
-            <h3>Materiales</h3>
-            <div id="materialsTable" class="table-like"></div>
-          </section>
-          <section class="card">
-            <h3>Herramientas</h3>
-            <div id="toolsTable" class="table-like"></div>
-          </section>
-        </div>
+      <section class="view" id="report">
+        <article class="panel wide report-panel">
+          <div class="panel-head"><div><p class="eyebrow">Documento técnico</p><h2>Informe automático</h2></div><button id="printReport" class="ghost">Imprimir / PDF</button></div>
+          <div id="reportContent" class="report-content"></div>
+        </article>
       </section>
     </main>
   </div>
 
-  <div id="toast" class="toast"></div>
+  <div id="toast" class="toast">Copiado</div>
   <script src="app.js"></script>
 </body>
 </html>

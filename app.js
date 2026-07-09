@@ -1,369 +1,60 @@
-const materials = [
-  { id: 'steel', name: 'Acero carbono S235', k: 0.42, tensile: 420, price: 1.35 },
-  { id: 'inox', name: 'Inoxidable 304', k: 0.38, tensile: 620, price: 3.9 },
-  { id: 'alu', name: 'Aluminio 5754', k: 0.5, tensile: 220, price: 4.2 },
-  { id: 'galv', name: 'Galvanizado DX51D', k: 0.44, tensile: 360, price: 1.8 }
-];
-
-const tools = [
-  { name: 'Punzón 86° R1', type: 'Punzón', range: '0.8–3 mm' },
-  { name: 'Punzón cuello cisne', type: 'Punzón', range: '1–4 mm' },
-  { name: 'Matriz V12', type: 'Matriz', range: '1–2 mm' },
-  { name: 'Matriz V16', type: 'Matriz', range: '1.5–3 mm' },
-  { name: 'Matriz V24', type: 'Matriz', range: '3–5 mm' }
-];
-
-let state = {
-  partName: 'Soporte plegado demo',
-  material: 'steel',
-  thickness: 2,
-  bendLength: 420,
-  insideRadius: 2,
-  vOpening: 16,
-  bends: [
-    { angle: 90, flange: 40 },
-    { angle: 90, flange: 70 },
-    { angle: 45, flange: 35 },
-    { angle: 90, flange: 50 }
-  ],
-  results: {}
+const materials = {
+  steel: { name: 'Acero S275', uts: 410, k: 0.42, spring: 1.5, color: '#45d6ff' },
+  stainless: { name: 'Inox 304', uts: 620, k: 0.38, spring: 2.4, color: '#d7e5f8' },
+  aluminum: { name: 'Aluminio 5754', uts: 230, k: 0.47, spring: 1.1, color: '#ffd166' },
+  galv: { name: 'Galvanizado DX51', uts: 330, k: 0.44, spring: 1.3, color: '#43e695' }
 };
-
-const $ = (id) => document.getElementById(id);
-
-function material() {
-  return materials.find(m => m.id === state.material) || materials[0];
+const tools = [
+  { name:'Punzón estándar 88°', type:'Punzón', radius:'0.8-3 mm', use:'Plegado general' },
+  { name:'Punzón cuello cisne', type:'Punzón', radius:'1-4 mm', use:'Cajas y retornos' },
+  { name:'Matriz V12', type:'Matriz', radius:'1-2 mm', use:'Chapa fina' },
+  { name:'Matriz V20', type:'Matriz', radius:'2-4 mm', use:'Chapa media' },
+  { name:'Matriz V32', type:'Matriz', radius:'4-6 mm', use:'Chapa gruesa' }
+];
+const state = { material:'steel', thickness:2, bendLength:500, angle:90, radius:2, dieV:16, legA:80, legB:60, optimized:false };
+const $ = id => document.getElementById(id);
+function init(){
+  const mat = $('material');
+  Object.entries(materials).forEach(([key,m])=>{ const o=document.createElement('option'); o.value=key; o.textContent=m.name; mat.appendChild(o); });
+  ['material','thickness','bendLength','angle','radius','dieV','legA','legB'].forEach(id=>{ $(id).value=state[id]; $(id).addEventListener('input', readAndRender); });
+  document.querySelectorAll('.nav-item').forEach(btn=>btn.addEventListener('click',()=>switchView(btn.dataset.view)));
+  $('calculate').addEventListener('click', readAndRender);
+  $('loadExample').addEventListener('click', loadExample);
+  $('shuffleSequence').addEventListener('click', ()=>{ state.optimized=!state.optimized; renderSequence(); toast('Secuencia optimizada'); });
+  $('exportJson').addEventListener('click', exportJson);
+  $('printReport').addEventListener('click', ()=>window.print());
+  renderLibraries(); readAndRender();
 }
-
-function round(n, d = 2) {
-  return Number(n || 0).toFixed(d);
+function switchView(id){ document.querySelectorAll('.nav-item').forEach(b=>b.classList.toggle('active',b.dataset.view===id)); document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id===id)); setTimeout(drawCanvas,40); }
+function readAndRender(){ ['thickness','bendLength','angle','radius','dieV','legA','legB'].forEach(id=>state[id]=Number($(id).value)); state.material=$('material').value; renderAll(); }
+function calc(){
+  const m=materials[state.material], t=state.thickness, L=state.bendLength, A=state.angle, R=state.radius, V=state.dieV;
+  const force = (1.42 * m.uts * t*t * L / Math.max(V,1)) / 10000;
+  const bendRad = (Math.PI/180) * A;
+  const ba = bendRad * (R + m.k * t);
+  const bd = 2 * (R+t) * Math.tan(bendRad/2) - ba;
+  const flat = state.legA + state.legB + ba;
+  const spring = (m.spring * (A/90) * (t/(R+t))).toFixed(2);
+  const minV = t*6, maxV=t*12;
+  let risk=18;
+  if(V<minV) risk+=35; if(V>maxV) risk+=12; if(R<t*.6) risk+=18; if(force>80) risk+=20; if(A<35||A>145) risk+=15;
+  risk=Math.min(100,Math.max(5,risk));
+  const cycle = 8 + L/180 + (risk/18) + (state.optimized?-3:0);
+  return { force, ba, bd, flat, spring, risk, cycle, minV, maxV, material:m };
 }
-
-function calculate() {
-  const mat = material();
-  const t = Number(state.thickness);
-  const r = Number(state.insideRadius);
-  const length = Number(state.bendLength);
-  const v = Number(state.vOpening);
-
-  const bendAllowance = state.bends.reduce((sum, b) => {
-    const angleRad = (Math.PI / 180) * Number(b.angle);
-    return sum + angleRad * (r + mat.k * t);
-  }, 0);
-
-  const flanges = state.bends.reduce((sum, b) => sum + Number(b.flange), 0);
-  const flat = flanges + bendAllowance;
-  const forceTons = (1.42 * mat.tensile * length * t * t) / (1000 * Math.max(v, 1));
-  const springback = Math.max(0.3, (mat.tensile / 1000) * (r / Math.max(t, .1)) * 1.2);
-  const minV = t * 6;
-  const riskScore = Math.min(100, Math.round(
-    (v < minV ? 25 : 0) +
-    (state.bends.length > 6 ? 20 : 0) +
-    (forceTons > 80 ? 30 : 0) +
-    (r < t ? 15 : 0) +
-    (state.bends.some(b => Number(b.flange) < t * 6) ? 20 : 0)
-  ));
-
-  state.results = { bendAllowance, flat, forceTons, springback, minV, riskScore };
-  return state.results;
+function renderAll(){ renderMetrics(); renderResults(); renderAlerts(); renderSequence(); renderReport(); drawCanvas(); }
+function renderMetrics(){ const c=calc(); $('forceMetric').textContent=c.force.toFixed(1)+' t'; $('flatMetric').textContent=c.flat.toFixed(1); $('riskMetric').textContent=c.risk<35?'Bajo':c.risk<65?'Medio':'Alto'; $('riskMetric').style.color=c.risk<35?'var(--good)':c.risk<65?'var(--warn)':'var(--bad)'; $('timeMetric').textContent=c.cycle.toFixed(1)+' s'; $('healthBar').style.width=(100-c.risk)+'%'; $('projectStatus').textContent=c.risk<65?'Proceso viable':'Revisión necesaria'; $('simulationBadge').textContent=c.risk<65?'Viable':'Atención'; $('simulationBadge').style.background=c.risk<65?'var(--good)':'var(--warn)'; }
+function renderResults(){ const c=calc(); const rows=[['Material',c.material.name],['K-Factor usado',c.material.k.toFixed(2)],['Bend allowance',c.ba.toFixed(2)+' mm'],['Bend deduction',c.bd.toFixed(2)+' mm'],['Desarrollo estimado',c.flat.toFixed(2)+' mm'],['Springback estimado',c.spring+'°'],['Apertura V recomendada',c.minV.toFixed(0)+' - '+c.maxV.toFixed(0)+' mm'],['Fuerza estimada',c.force.toFixed(2)+' toneladas']]; $('results').innerHTML=rows.map(([a,b])=>`<div class="result-item"><span>${a}</span><strong>${b}</strong></div>`).join(''); }
+function renderAlerts(){ const c=calc(); const list=[]; if(state.dieV<c.minV) list.push(['bad','La apertura V parece pequeña para el espesor. Puede marcar la pieza o exigir demasiada fuerza.']); if(state.dieV>c.maxV) list.push(['warn','La apertura V es grande. Puede aumentar el radio real y reducir precisión.']); if(state.radius<state.thickness*.6) list.push(['warn','Radio interior bajo respecto al espesor. Revisar riesgo de grieta.']); if(c.force>80) list.push(['bad','Fuerza elevada. Revisar capacidad de máquina y longitud de útil.']); if(!list.length) list.push(['good','La combinación material, radio, V y fuerza parece coherente para una demo.']); list.push(['','Consejo: valida siempre con tablas reales de máquina, material y herramienta antes de fabricar.']); $('alerts').innerHTML=list.map(([cls,t])=>`<div class="alert ${cls}">${t}</div>`).join(''); }
+function renderSequence(){ const base=[['Importar CAD','Reconocer espesor, material y pliegues'],['Seleccionar utillaje','Punzón 88° + matriz compatible'],['Preparar topes','Ajustar referencia y longitud de apoyo'],['Plegado principal','Ejecutar ángulo objetivo con compensación'],['Control calidad','Medir ángulo y registrar evidencia']]; const opt=[base[0],base[1],base[2],base[3],base[4]]; const arr=state.optimized?opt:base; $('sequenceList').innerHTML=arr.map((s,i)=>`<div class="step-card"><div class="step-index">${i+1}</div><div><b>${s[0]}</b><small>${s[1]}</small></div><span class="pill">${i===3?calc().cycle.toFixed(1)+' s':'OK'}</span></div>`).join(''); }
+function renderLibraries(){ $('materialLibrary').innerHTML=Object.values(materials).map(m=>`<div class="tool-card"><div><b>${m.name}</b><small>UTS ${m.uts} MPa · K ${m.k}</small></div><span class="pill">Activo</span></div>`).join(''); $('toolLibrary').innerHTML=tools.map(t=>`<div class="tool-card"><div><b>${t.name}</b><small>${t.type} · ${t.radius} · ${t.use}</small></div><span class="pill">Biblioteca</span></div>`).join(''); }
+function renderReport(){ const c=calc(); $('reportContent').innerHTML=`<h3>Informe técnico automático</h3><p><b>Pieza demo:</b> chapa ${c.material.name} de ${state.thickness} mm, plegado de ${state.bendLength} mm a ${state.angle}°.</p><p><b>Resultado:</b> desarrollo plano estimado de ${c.flat.toFixed(2)} mm, fuerza aproximada de ${c.force.toFixed(2)} toneladas y recuperación elástica estimada de ${c.spring}°.</p><p><b>Validación:</b> riesgo ${c.risk<35?'bajo':c.risk<65?'medio':'alto'}. ${c.risk<65?'La configuración es razonable para una demo funcional.':'Se recomienda revisar herramienta, radio o apertura V.'}</p><p><b>Nota:</b> demo orientativa para GitHub Pages. Los cálculos reales deben calibrarse con tablas del fabricante, ensayos y datos de producción.</p>`; }
+function drawCanvas(){ const canvas=$('bendCanvas'); if(!canvas) return; const ctx=canvas.getContext('2d'); const w=canvas.width,h=canvas.height; ctx.clearRect(0,0,w,h); const c=calc(); const bg=ctx.createLinearGradient(0,0,w,h); bg.addColorStop(0,'#0c1b31'); bg.addColorStop(1,'#070b14'); ctx.fillStyle=bg; ctx.fillRect(0,0,w,h); ctx.strokeStyle='rgba(255,255,255,.07)'; for(let x=0;x<w;x+=45){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke()} for(let y=0;y<h;y+=45){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke()}
+  const cx=w/2, cy=h*0.58, angle=(180-state.angle)*Math.PI/180, lenA=260, lenB=220; ctx.lineCap='round'; ctx.lineJoin='round'; ctx.lineWidth=28; ctx.strokeStyle=c.material.color; ctx.shadowColor=c.material.color; ctx.shadowBlur=18; ctx.beginPath(); ctx.moveTo(cx-lenA,cy); ctx.lineTo(cx,cy); ctx.lineTo(cx+Math.cos(-angle)*lenB,cy+Math.sin(-angle)*lenB); ctx.stroke(); ctx.shadowBlur=0; ctx.lineWidth=2; ctx.strokeStyle='rgba(255,255,255,.75)'; ctx.beginPath(); ctx.arc(cx,cy,70,-angle,0); ctx.stroke(); ctx.fillStyle='rgba(255,255,255,.85)'; ctx.font='bold 24px Inter,Arial'; ctx.fillText(state.angle+'°',cx+45,cy-28);
+  ctx.fillStyle='rgba(124,92,255,.7)'; ctx.beginPath(); ctx.moveTo(cx-80,cy+115); ctx.lineTo(cx,cy+35); ctx.lineTo(cx+80,cy+115); ctx.closePath(); ctx.fill(); ctx.fillStyle='rgba(69,214,255,.78)'; ctx.beginPath(); ctx.moveTo(cx-52,cy-170); ctx.lineTo(cx+52,cy-170); ctx.lineTo(cx,cy-70); ctx.closePath(); ctx.fill();
+  ctx.fillStyle='rgba(234,242,255,.95)'; ctx.font='bold 22px Inter,Arial'; ctx.fillText('Simulación de plegado · '+c.material.name,40,50); ctx.font='16px Inter,Arial'; ctx.fillStyle='rgba(142,162,189,.95)'; ctx.fillText(`Espesor ${state.thickness} mm · V${state.dieV} · Radio ${state.radius} mm · Fuerza ${c.force.toFixed(1)} t`,40,80);
 }
-
-function riskLabel(score) {
-  if (score < 25) return 'Bajo';
-  if (score < 55) return 'Medio';
-  return 'Alto';
-}
-
-function renderMaterialSelect() {
-  const select = $('material');
-  select.innerHTML = materials.map(m => `<option value="${m.id}">${m.name}</option>`).join('');
-  select.value = state.material;
-}
-
-function bindInputs() {
-  ['partName', 'material', 'thickness', 'bendLength', 'insideRadius', 'vOpening'].forEach(id => {
-    $(id).addEventListener('input', (e) => {
-      const value = e.target.type === 'number' ? Number(e.target.value) : e.target.value;
-      state[id] = value;
-      renderAll();
-    });
-  });
-
-  $('addBendBtn').addEventListener('click', () => {
-    state.bends.push({ angle: 90, flange: 40 });
-    renderAll();
-  });
-
-  $('simulateBtn').addEventListener('click', () => {
-    renderAll();
-    toast('Simulación recalculada');
-  });
-
-  $('loadExampleBtn').addEventListener('click', () => {
-    state = {
-      partName: 'Caja plegada con retorno',
-      material: 'inox',
-      thickness: 1.5,
-      bendLength: 600,
-      insideRadius: 1.5,
-      vOpening: 12,
-      bends: [
-        { angle: 90, flange: 25 },
-        { angle: 90, flange: 80 },
-        { angle: 90, flange: 120 },
-        { angle: 135, flange: 35 },
-        { angle: 90, flange: 45 }
-      ],
-      results: {}
-    };
-    syncInputs();
-    renderAll();
-    toast('Ejemplo cargado');
-  });
-
-  $('exportBtn').addEventListener('click', exportProject);
-  $('copyCncBtn').addEventListener('click', async () => {
-    await navigator.clipboard.writeText($('cncOutput').textContent);
-    toast('CNC copiado');
-  });
-
-  document.querySelectorAll('.nav-btn').forEach(btn => {
-    btn.addEventListener('click', () => switchPanel(btn.dataset.panel));
-  });
-}
-
-function syncInputs() {
-  $('partName').value = state.partName;
-  $('material').value = state.material;
-  $('thickness').value = state.thickness;
-  $('bendLength').value = state.bendLength;
-  $('insideRadius').value = state.insideRadius;
-  $('vOpening').value = state.vOpening;
-}
-
-function renderBends() {
-  $('bendsList').innerHTML = state.bends.map((b, i) => `
-    <div class="bend-row">
-      <label>Ángulo ${i + 1}<input type="number" min="1" max="179" value="${b.angle}" data-bend="${i}" data-field="angle"></label>
-      <label>Ala mm<input type="number" min="1" value="${b.flange}" data-bend="${i}" data-field="flange"></label>
-      <button title="Eliminar" data-remove="${i}">×</button>
-    </div>
-  `).join('');
-
-  document.querySelectorAll('[data-bend]').forEach(input => {
-    input.addEventListener('input', e => {
-      const i = Number(e.target.dataset.bend);
-      const field = e.target.dataset.field;
-      state.bends[i][field] = Number(e.target.value);
-      renderAll();
-    });
-  });
-  document.querySelectorAll('[data-remove]').forEach(btn => {
-    btn.addEventListener('click', e => {
-      state.bends.splice(Number(e.target.dataset.remove), 1);
-      renderAll();
-    });
-  });
-}
-
-function renderStats() {
-  const r = calculate();
-  $('statBends').textContent = state.bends.length;
-  $('statForce').textContent = `${round(r.forceTons, 1)} t`;
-  $('statFlat').textContent = `${round(r.flat, 1)} mm`;
-  $('statRisk').textContent = riskLabel(r.riskScore);
-}
-
-function renderSummary() {
-  const r = state.results;
-  const mat = material();
-  $('smartSummary').innerHTML = `
-    <p><strong>${state.partName}</strong> en ${mat.name}, espesor ${state.thickness} mm.</p>
-    <p>Desarrollo estimado: <strong>${round(r.flat, 1)} mm</strong>. Fuerza aproximada: <strong>${round(r.forceTons, 1)} toneladas</strong>.</p>
-    <p>Recuperación elástica estimada: <strong>${round(r.springback, 2)}°</strong>. Riesgo general: <strong>${riskLabel(r.riskScore)}</strong>.</p>
-    <p>Recomendación: usar matriz V próxima a <strong>${round(state.thickness * 8, 0)} mm</strong> para plegado estándar.</p>
-  `;
-}
-
-function renderSequence() {
-  const sequence = [...state.bends].map((b, i) => ({ ...b, original: i + 1 }))
-    .sort((a, b) => b.flange - a.flange || b.angle - a.angle);
-  $('sequenceList').innerHTML = sequence.map((b, i) => `
-    <li><strong>Paso ${i + 1}</strong> · Pliegue ${b.original}: ${b.angle}° · Ala ${b.flange} mm · compensar +${round(state.results.springback, 2)}°</li>
-  `).join('');
-}
-
-function renderValidation() {
-  const r = state.results;
-  const items = [
-    { label: 'Abertura V mínima recomendada', value: `${round(r.minV, 1)} mm`, ok: state.vOpening >= r.minV },
-    { label: 'Fuerza dentro de rango demo', value: `${round(r.forceTons, 1)} t`, ok: r.forceTons < 100 },
-    { label: 'Radio interior compatible', value: `${state.insideRadius} mm`, ok: state.insideRadius >= state.thickness * 0.6 },
-    { label: 'Longitud mínima de alas', value: 'Verificada', ok: !state.bends.some(b => Number(b.flange) < state.thickness * 6) }
-  ];
-  $('validationList').innerHTML = items.map(it => `
-    <div class="validation-item"><span>${it.label}</span><strong style="color:${it.ok ? 'var(--accent)' : 'var(--danger)'}">${it.ok ? 'OK' : 'Revisar'} · ${it.value}</strong></div>
-  `).join('');
-}
-
-function renderCnc() {
-  const lines = [];
-  lines.push('%');
-  lines.push(`(PLEGAR PRO DEMO - ${state.partName})`);
-  lines.push(`(MATERIAL: ${material().name})`);
-  lines.push(`(ESPESOR: ${state.thickness} MM)`);
-  lines.push(`(LONGITUD: ${state.bendLength} MM)`);
-  lines.push(`(DESARROLLO ESTIMADO: ${round(state.results.flat, 2)} MM)`);
-  lines.push('');
-  state.bends.forEach((b, i) => {
-    const corrected = Number(b.angle) + state.results.springback;
-    lines.push(`N${String((i + 1) * 10).padStart(3, '0')} BEND_${i + 1}`);
-    lines.push(`  TOOL PUNCH="P86_R1" DIE="V${state.vOpening}"`);
-    lines.push(`  ANGLE=${round(corrected, 2)} TARGET=${b.angle}`);
-    lines.push(`  FLANGE=${b.flange} BACKGAUGE=${round(Number(b.flange) + state.thickness * 2, 2)}`);
-    lines.push(`  FORCE=${round(state.results.forceTons / Math.max(state.bends.length,1), 2)}T`);
-  });
-  lines.push('');
-  lines.push('M30');
-  lines.push('%');
-  $('cncOutput').textContent = lines.join('\n');
-}
-
-function renderQualityAndCost() {
-  $('qualityPlan').innerHTML = [
-    ['Comprobar material', material().name],
-    ['Verificar espesor', `${state.thickness} mm`],
-    ['Medir primer ángulo', `±0.5°`],
-    ['Control desarrollo', `${round(state.results.flat, 1)} mm`],
-    ['Revisión visual', 'Sin grietas ni marcas']
-  ].map(([a,b]) => `<div class="quality-item"><span>${a}</span><strong>${b}</strong></div>`).join('');
-
-  const areaM2 = (state.results.flat / 1000) * (state.bendLength / 1000);
-  const density = state.material === 'alu' ? 2.7 : 7.85;
-  const kg = areaM2 * (state.thickness / 1000) * density * 1000;
-  const materialCost = kg * material().price;
-  const machineCost = (state.bends.length * 0.75 + 4) * 0.85;
-  const total = materialCost + machineCost + 3.5;
-  $('costPanel').innerHTML = [
-    ['Peso estimado', `${round(kg, 2)} kg`],
-    ['Material', `${round(materialCost, 2)} €`],
-    ['Máquina + preparación', `${round(machineCost, 2)} €`],
-    ['Control + indirectos', '3.50 €'],
-    ['Total demo', `${round(total, 2)} €`]
-  ].map(([a,b]) => `<div class="cost-row"><span>${a}</span><strong>${b}</strong></div>`).join('');
-}
-
-function renderLibrary() {
-  $('materialsTable').innerHTML = materials.map(m => `<div class="table-row"><span>${m.name}</span><strong>K ${m.k} · ${m.tensile} MPa</strong></div>`).join('');
-  $('toolsTable').innerHTML = tools.map(t => `<div class="table-row"><span>${t.name}</span><strong>${t.type} · ${t.range}</strong></div>`).join('');
-}
-
-function drawCanvas() {
-  const canvas = $('partCanvas');
-  const ctx = canvas.getContext('2d');
-  const w = canvas.width;
-  const h = canvas.height;
-  ctx.clearRect(0, 0, w, h);
-  ctx.strokeStyle = 'rgba(255,255,255,.08)';
-  ctx.lineWidth = 1;
-  for (let x = 0; x < w; x += 45) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke(); }
-  for (let y = 0; y < h; y += 45) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(w, y); ctx.stroke(); }
-
-  const startX = 120;
-  const baseY = 335;
-  const scale = Math.min(4, 620 / Math.max(120, state.results.flat));
-  let x = startX;
-  let y = baseY;
-  let dir = 0;
-  ctx.lineCap = 'round';
-  ctx.lineJoin = 'round';
-  ctx.strokeStyle = '#5bbcff';
-  ctx.lineWidth = Math.max(8, Number(state.thickness) * 4);
-  ctx.beginPath();
-  ctx.moveTo(x, y);
-  state.bends.forEach((b, i) => {
-    const len = Number(b.flange) * scale;
-    x += Math.cos(dir) * len;
-    y -= Math.sin(dir) * len;
-    ctx.lineTo(x, y);
-    ctx.save();
-    ctx.fillStyle = state.results.riskScore > 55 && i === state.bends.length - 1 ? '#ff5f6d' : '#ffcc66';
-    ctx.beginPath();
-    ctx.arc(x, y, 10, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.restore();
-    dir += (Math.PI / 180) * (180 - Number(b.angle));
-  });
-  ctx.stroke();
-
-  ctx.fillStyle = '#eef4ff';
-  ctx.font = 'bold 22px system-ui';
-  ctx.fillText(state.partName, 34, 46);
-  ctx.font = '15px system-ui';
-  ctx.fillStyle = '#9fb0ca';
-  ctx.fillText(`${material().name} · ${state.thickness} mm · ${state.bends.length} pliegues`, 34, 74);
-
-  ctx.fillStyle = 'rgba(57,217,138,.16)';
-  ctx.fillRect(640, 52, 210, 90);
-  ctx.strokeStyle = 'rgba(57,217,138,.4)';
-  ctx.strokeRect(640, 52, 210, 90);
-  ctx.fillStyle = '#39d98a';
-  ctx.font = 'bold 16px system-ui';
-  ctx.fillText('Simulación activa', 662, 84);
-  ctx.fillStyle = '#eef4ff';
-  ctx.fillText(`${round(state.results.forceTons, 1)} t · Riesgo ${riskLabel(state.results.riskScore)}`, 662, 112);
-}
-
-function switchPanel(panel) {
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active-panel'));
-  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  $(panel).classList.add('active-panel');
-  document.querySelector(`[data-panel="${panel}"]`).classList.add('active');
-  const titles = {
-    dashboard: ['Panel general', 'Resumen técnico de la pieza y del proceso.'],
-    engineering: ['Ingeniería', 'Datos editables de pieza, material y pliegues.'],
-    simulation: ['Simulación', 'Secuencia recomendada y validaciones automáticas.'],
-    cnc: ['CNC', 'Programa CNC demo generado desde los datos actuales.'],
-    quality: ['Calidad y costes', 'Plan de control y estimación económica.'],
-    library: ['Biblioteca', 'Materiales y herramientas incluidos en la demo.']
-  };
-  $('panelTitle').textContent = titles[panel][0];
-  $('panelSubtitle').textContent = titles[panel][1];
-}
-
-function exportProject() {
-  const payload = JSON.stringify({ ...state, exportedAt: new Date().toISOString() }, null, 2);
-  const blob = new Blob([payload], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'plegar-pro-demo-project.json';
-  a.click();
-  URL.revokeObjectURL(url);
-  toast('Proyecto exportado');
-}
-
-function toast(message) {
-  const t = $('toast');
-  t.textContent = message;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2200);
-}
-
-function renderAll() {
-  calculate();
-  renderStats();
-  renderBends();
-  renderSummary();
-  renderSequence();
-  renderValidation();
-  renderCnc();
-  renderQualityAndCost();
-  renderLibrary();
-  drawCanvas();
-}
-
-renderMaterialSelect();
-syncInputs();
-bindInputs();
-renderAll();
+function loadExample(){ Object.assign(state,{material:'stainless',thickness:1.5,bendLength:720,angle:90,radius:1.5,dieV:12,legA:95,legB:70,optimized:false}); Object.keys(state).forEach(k=>$(k)&&($(k).value=state[k])); renderAll(); toast('Ejemplo cargado'); }
+function exportJson(){ const payload={ project:'Plegar Pro Demo', date:new Date().toISOString(), input:state, calculations:calc() }; const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='plegar-pro-demo-calculo.json'; a.click(); URL.revokeObjectURL(a.href); toast('JSON exportado'); }
+function toast(text){ const t=$('toast'); t.textContent=text; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1800); }
+init();
