@@ -1,152 +1,77 @@
-const DEFAULT_DB = {
-  materials: [
-    {id:'S235', name:'Acero S235', density:7.85, tensile:360, yield:235, k:0.42, price:1.35, minRadiusFactor:1.0},
-    {id:'S355', name:'Acero S355', density:7.85, tensile:510, yield:355, k:0.40, price:1.55, minRadiusFactor:1.2},
-    {id:'INOX304', name:'Inox AISI 304', density:7.90, tensile:620, yield:215, k:0.38, price:3.90, minRadiusFactor:1.5},
-    {id:'AL5754', name:'Aluminio 5754', density:2.66, tensile:220, yield:100, k:0.44, price:4.20, minRadiusFactor:1.0},
-    {id:'GALV', name:'Galvanizado DX51D', density:7.85, tensile:330, yield:140, k:0.43, price:1.70, minRadiusFactor:1.0}
-  ],
-  punches: [
-    {id:'P-86-R08', name:'Punzón 86° R0.8', angle:86, radius:0.8, height:120, maxTonsM:80},
-    {id:'P-88-R10', name:'Punzón 88° R1.0', angle:88, radius:1.0, height:150, maxTonsM:100},
-    {id:'P-90-R15', name:'Punzón 90° R1.5', angle:90, radius:1.5, height:130, maxTonsM:120},
-    {id:'P-CU-R05', name:'Punzón cuello cisne R0.5', angle:86, radius:0.5, height:180, maxTonsM:65}
-  ],
-  dies: [
-    {id:'M-V06-86', name:'Matriz V6 86°', v:6, angle:86, minT:0.6, maxT:1.2, maxTonsM:65},
-    {id:'M-V08-86', name:'Matriz V8 86°', v:8, angle:86, minT:0.8, maxT:1.5, maxTonsM:80},
-    {id:'M-V12-86', name:'Matriz V12 86°', v:12, angle:86, minT:1.2, maxT:2.5, maxTonsM:120},
-    {id:'M-V16-86', name:'Matriz V16 86°', v:16, angle:86, minT:2.0, maxT:4.0, maxTonsM:160},
-    {id:'M-V24-86', name:'Matriz V24 86°', v:24, angle:86, minT:3.0, maxT:6.0, maxTonsM:220}
-  ]
+const DEFAULT_DB={
+ materials:[
+  {id:'S235',name:'Acero S235JR',density:7.85,tensile:360,yield:235,k:0.42,price:1.35,minRadiusFactor:1.0},
+  {id:'S355',name:'Acero S355',density:7.85,tensile:510,yield:355,k:0.40,price:1.55,minRadiusFactor:1.2},
+  {id:'INOX304',name:'Inox AISI 304',density:7.90,tensile:620,yield:215,k:0.38,price:3.90,minRadiusFactor:1.5},
+  {id:'AL5754',name:'Aluminio 5754',density:2.66,tensile:220,yield:100,k:0.44,price:4.20,minRadiusFactor:1.0},
+  {id:'GALV',name:'Galvanizado DX51D',density:7.85,tensile:330,yield:140,k:0.43,price:1.70,minRadiusFactor:1.0}
+ ],
+ punches:[
+  {id:'MECOS-P88-R08-H120',brand:'Mecos',name:'Mecos P88 R0.8 H120',angle:88,radius:0.8,height:120,maxTonsM:80,type:'recto'},
+  {id:'MECOS-P88-R10-H150',brand:'Mecos',name:'Mecos P88 R1.0 H150',angle:88,radius:1.0,height:150,maxTonsM:100,type:'recto alto'},
+  {id:'MECOS-P86-R05-CISNE',brand:'Mecos',name:'Mecos cuello cisne 86° R0.5',angle:86,radius:0.5,height:185,maxTonsM:65,type:'cuello cisne'},
+  {id:'MECOS-P85-R15-H160',brand:'Mecos',name:'Mecos P85 R1.5 H160',angle:85,radius:1.5,height:160,maxTonsM:120,type:'recto'},
+  {id:'MECOS-P90-R20-H145',brand:'Mecos',name:'Mecos P90 R2.0 H145',angle:90,radius:2.0,height:145,maxTonsM:130,type:'radio'},
+  {id:'MECOS-P30-HEM',brand:'Mecos',name:'Mecos aplastador / dobladillo',angle:30,radius:0.8,height:130,maxTonsM:90,type:'dobladillo'}
+ ],
+ dies:[
+  {id:'MECOS-MV06-86',brand:'Mecos',name:'Mecos matriz V6 86°',v:6,angle:86,minT:0.5,maxT:1.2,maxTonsM:65},
+  {id:'MECOS-MV08-86',brand:'Mecos',name:'Mecos matriz V8 86°',v:8,angle:86,minT:0.8,maxT:1.6,maxTonsM:80},
+  {id:'MECOS-MV10-86',brand:'Mecos',name:'Mecos matriz V10 86°',v:10,angle:86,minT:1.0,maxT:2.0,maxTonsM:100},
+  {id:'MECOS-MV12-86',brand:'Mecos',name:'Mecos matriz V12 86°',v:12,angle:86,minT:1.2,maxT:2.5,maxTonsM:120},
+  {id:'MECOS-MV16-86',brand:'Mecos',name:'Mecos matriz V16 86°',v:16,angle:86,minT:2.0,maxT:4.0,maxTonsM:160},
+  {id:'MECOS-MV20-86',brand:'Mecos',name:'Mecos matriz V20 86°',v:20,angle:86,minT:2.5,maxT:5.0,maxTonsM:190},
+  {id:'MECOS-MV24-86',brand:'Mecos',name:'Mecos matriz V24 86°',v:24,angle:86,minT:3.0,maxT:6.0,maxTonsM:220}
+ ]
 };
-const $ = id => document.getElementById(id);
-let db = JSON.parse(localStorage.getItem('plegarProDb') || 'null') || structuredClone(DEFAULT_DB);
-let project = JSON.parse(localStorage.getItem('plegarProProject') || 'null') || {
-  projectName:'Soporte plegado demo', clientName:'Cliente Demo', legA:80, legB:55, bendLength:500, thickness:1.5, angle:90, insideRadius:1.2, materialId:'S235', punchId:'P-88-R10', dieId:'M-V12-86', kFactor:0.42, quantity:25, machineRate:55
+const $=id=>document.getElementById(id);
+const clone=o=>JSON.parse(JSON.stringify(o));
+let db=JSON.parse(localStorage.getItem('ppDbMecos')||'null')||clone(DEFAULT_DB);
+let project=JSON.parse(localStorage.getItem('ppProjectMecos')||'null')||{
+ projectName:'Caja soporte multi-plegado',clientName:'Cliente Demo',bendLength:650,thickness:2,quantity:12,machineRate:62,materialId:'INOX304',kFactor:0.38,toolMode:'auto',punchId:'MECOS-P88-R10-H150',dieId:'MECOS-MV16-86',
+ segments:[70,120,80,45],
+ bends:[{angle:90,radius:2,direction:'up'},{angle:90,radius:2,direction:'up'},{angle:90,radius:2,direction:'down'}]
 };
-let result = {};
-const pageTitles = {dashboard:['Panel general','Resumen vivo del proyecto y simulación.'],project:['Proyecto','Datos de pieza, material y selección técnica.'],tools:['Herramientas','Compatibilidad de punzón, matriz y material.'],development:['Desarrollo','Cálculo de desarrollo, fuerza y coste.'],sequence:['Secuencia','Proceso propuesto para fabricar la pieza.'],database:['Base de datos','Materiales, punzones y matrices editables.'],reports:['Informes','Exportación, importación e informe técnico.']};
-function toast(msg){ const t=$('toast'); t.textContent=msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),2200); }
-function saveDb(){ localStorage.setItem('plegarProDb', JSON.stringify(db)); }
-function saveProject(){ readForm(); localStorage.setItem('plegarProProject', JSON.stringify(project)); $('lastSaved').textContent = 'Guardado: ' + new Date().toLocaleTimeString(); toast('Proyecto guardado en el navegador'); }
-function getMaterial(){ return db.materials.find(x=>x.id===project.materialId) || db.materials[0]; }
-function getPunch(){ return db.punches.find(x=>x.id===project.punchId) || db.punches[0]; }
-function getDie(){ return db.dies.find(x=>x.id===project.dieId) || db.dies[0]; }
+let result={}; let timer=null;
+const pages={dashboard:['Panel general','Cálculo multi-plegado, útiles Mecos y simulación visual.'],project:['Proyecto','Datos generales, material y modo de selección.'],bends:['Plegados','Añadir más de dos plegados y definir alas.'],tools:['Útiles recomendados','Selección automática de punzones y matrices Mecos.'],development:['Desarrollo','Longitud plana, compensaciones y costes.'],simulation:['Simulación','Plegado visual paso a paso.'],database:['Base de datos','Materiales, punzones Mecos y matrices Mecos editables.'],reports:['Informes','Exportación, importación e informe técnico.']};
+function toast(m){const t=$('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
+function saveDb(){localStorage.setItem('ppDbMecos',JSON.stringify(db))}
 function fillSelects(){
-  $('materialSelect').innerHTML = db.materials.map(x=>`<option value="${x.id}">${x.name}</option>`).join('');
-  $('punchSelect').innerHTML = db.punches.map(x=>`<option value="${x.id}">${x.name}</option>`).join('');
-  $('dieSelect').innerHTML = db.dies.map(x=>`<option value="${x.id}">${x.name}</option>`).join('');
+ $('materialSelect').innerHTML=db.materials.map(x=>`<option value="${x.id}">${x.name}</option>`).join('');
+ $('punchSelect').innerHTML=db.punches.map(x=>`<option value="${x.id}">${x.name}</option>`).join('');
+ $('dieSelect').innerHTML=db.dies.map(x=>`<option value="${x.id}">${x.name}</option>`).join('');
 }
-function writeForm(){
-  for (const k of ['projectName','clientName','legA','legB','bendLength','thickness','angle','insideRadius','kFactor','quantity','machineRate']) $(k).value = project[k];
-  $('materialSelect').value=project.materialId; $('punchSelect').value=project.punchId; $('dieSelect').value=project.dieId;
-}
-function readForm(){
-  for (const k of ['projectName','clientName']) project[k]=$(k).value;
-  for (const k of ['legA','legB','bendLength','thickness','angle','insideRadius','kFactor','quantity','machineRate']) project[k]=Number($(k).value)||0;
-  project.materialId=$('materialSelect').value; project.punchId=$('punchSelect').value; project.dieId=$('dieSelect').value;
-}
-function calc(){
-  readForm();
-  const m=getMaterial(), p=getPunch(), d=getDie();
-  const t=project.thickness, r=project.insideRadius, a=project.angle, bendLen=project.bendLength;
-  const bendAngle = 180 - a;
-  const ba = (Math.PI/180) * bendAngle * (r + project.kFactor * t);
-  const flat = project.legA + project.legB + ba;
-  const tonsPerM = (1.42 * m.tensile * t * t) / Math.max(d.v,1) / 10;
-  const totalTons = tonsPerM * (bendLen/1000);
-  const minV = Math.max(6*t, 4); const maxV = 12*t;
-  const matWeightKg = flat * bendLen * t * m.density / 1000000 * project.quantity;
-  const matCost = matWeightKg * m.price;
-  const setupMin = 10 + (d.v < minV || d.v > maxV ? 8 : 0);
-  const cycleMin = project.quantity * 0.42;
-  const machineCost = ((setupMin + cycleMin)/60) * project.machineRate;
-  const totalCost = matCost + machineCost;
-  const issues=[];
-  if(d.v < minV) issues.push(`V demasiado pequeña. Recomendada mínima: ${minV.toFixed(1)} mm`);
-  if(d.v > maxV) issues.push(`V grande para este espesor. Rango recomendado hasta: ${maxV.toFixed(1)} mm`);
-  if(t < d.minT || t > d.maxT) issues.push(`La matriz no está en rango de espesor (${d.minT}-${d.maxT} mm)`);
-  if(totalTons > d.maxTonsM*(bendLen/1000)) issues.push('La matriz puede superar su tonelaje recomendado');
-  if(totalTons > p.maxTonsM*(bendLen/1000)) issues.push('El punzón puede superar su tonelaje recomendado');
-  if(r < t*m.minRadiusFactor) issues.push(`Radio interior bajo. Recomendado >= ${(t*m.minRadiusFactor).toFixed(1)} mm`);
-  result={m,p,d,bendAngle,ba,flat,tonsPerM,totalTons,minV,maxV,matWeightKg,matCost,setupMin,cycleMin,machineCost,totalCost,issues};
-  renderAll();
-}
-function autoSelect(){
-  readForm(); const t=project.thickness; const target=8*t;
-  const compatible = db.dies.filter(d=>t>=d.minT && t<=d.maxT).sort((a,b)=>Math.abs(a.v-target)-Math.abs(b.v-target))[0] || db.dies[0];
-  project.dieId = compatible.id;
-  const p = db.punches.filter(p=>p.radius<=Math.max(project.insideRadius, t*1.5)).sort((a,b)=>b.maxTonsM-a.maxTonsM)[0] || db.punches[0];
-  project.punchId = p.id; writeForm(); calc(); toast('Herramienta compatible seleccionada');
-}
-function renderAll(){ renderKpis(); renderCards(); renderTables(); renderDb(); renderSequence(); renderReport(); drawPreview(); }
-function renderKpis(){
-  $('kpiMaterial').textContent = result.m?.name || '-';
-  $('kpiMaterialInfo').textContent = `${project.thickness} mm · ${project.bendLength} mm`;
-  $('kpiFlat').textContent = `${(result.flat||0).toFixed(2)} mm`;
-  $('kpiForce').textContent = `${(result.totalTons||0).toFixed(1)} T`;
-  $('kpiFeasible').textContent = result.issues?.length ? 'Revisar' : 'Compatible';
-  $('kpiFeasible').className = result.issues?.length ? 'statusWarn':'statusOk';
-  $('kpiFeasibleInfo').textContent = result.issues?.length ? `${result.issues.length} aviso(s)` : 'Sin avisos críticos';
-  $('systemStatus').textContent = result.issues?.length ? 'Revisar avisos' : 'Listo';
-  $('systemStatus').style.color = result.issues?.length ? 'var(--warn)' : 'var(--green)';
-  $('summary').innerHTML = [
-    `Proyecto: <b>${project.projectName}</b>`, `Cliente: <b>${project.clientName}</b>`, `Material: <b>${result.m.name}</b>`, `Punzón: <b>${result.p.name}</b>`, `Matriz: <b>${result.d.name}</b>`,
-    result.issues.length ? `<span class="statusWarn">Avisos: ${result.issues.join(' · ')}</span>` : `<span class="statusOk">La combinación es viable para demo.</span>`
-  ].map(x=>`<div class="pill">${x}</div>`).join('');
-}
-function card(obj){ return Object.entries(obj).map(([k,v])=>`<div class="pill"><b>${k}:</b>&nbsp;${v}</div>`).join(''); }
-function renderCards(){
-  $('materialCard').innerHTML = card({Nombre:result.m.name, Densidad:result.m.density+' kg/dm³', Tracción:result.m.tensile+' MPa', 'Precio':result.m.price+' €/kg', K:result.m.k});
-  $('punchCard').innerHTML = card({Ref:result.p.id, Ángulo:result.p.angle+'°', Radio:result.p.radius+' mm', Altura:result.p.height+' mm', Tonelaje:result.p.maxTonsM+' T/m'});
-  $('dieCard').innerHTML = card({Ref:result.d.id, V:result.d.v+' mm', Ángulo:result.d.angle+'°', Espesor:result.d.minT+'-'+result.d.maxT+' mm', Tonelaje:result.d.maxTonsM+' T/m'});
-  $('compatibility').innerHTML = result.issues.length ? result.issues.map(x=>`<p class="statusWarn">⚠ ${x}</p>`).join('') : '<p class="statusOk">✓ Material, punzón y matriz compatibles según la base de datos local.</p>';
-}
-function row(k,v){ return `<tr><td>${k}</td><td>${v}</td></tr>`; }
-function renderTables(){
-  $('calcTable').innerHTML = row('Bend angle', result.bendAngle.toFixed(1)+'°')+row('Bend allowance', result.ba.toFixed(3)+' mm')+row('Desarrollo plano', result.flat.toFixed(3)+' mm')+row('V recomendada', `${result.minV.toFixed(1)} - ${result.maxV.toFixed(1)} mm`)+row('Tonelaje / metro', result.tonsPerM.toFixed(1)+' T/m')+row('Tonelaje total', result.totalTons.toFixed(1)+' T');
-  $('costTable').innerHTML = row('Peso material', result.matWeightKg.toFixed(2)+' kg')+row('Coste material', result.matCost.toFixed(2)+' €')+row('Preparación', result.setupMin.toFixed(1)+' min')+row('Ciclo estimado', result.cycleMin.toFixed(1)+' min')+row('Coste máquina', result.machineCost.toFixed(2)+' €')+row('Total estimado', result.totalCost.toFixed(2)+' €')+row('Unitario', (result.totalCost/project.quantity).toFixed(2)+' €/ud');
-}
-function renderSequence(){
-  const steps=[['Revisar plano y material',`Confirmar ${result.m.name} de ${project.thickness} mm.`],['Montar herramientas',`${result.p.name} + ${result.d.name}.`],['Ajustar topes',`Longitud ala A ${project.legA} mm y ala B ${project.legB} mm.`],['Plegar',`Ángulo final ${project.angle}°, fuerza estimada ${result.totalTons.toFixed(1)} T.`],['Control de calidad',`Verificar ángulo, radio interior y longitud desarrollada ${result.flat.toFixed(2)} mm.`]];
-  $('sequenceList').innerHTML = steps.map((s,i)=>`<div class="step"><div class="num">${i+1}</div><div><b>${s[0]}</b><p class="hint">${s[1]}</p></div><span class="pill">OK</span></div>`).join('');
-}
-function renderDb(){
-  $('materialsDb').innerHTML = db.materials.map(x=>`<div class="dbItem" data-type="materials" data-id="${x.id}"><b>${x.name}</b><small>${x.id} · ${x.tensile} MPa · ${x.price} €/kg</small></div>`).join('');
-  $('punchesDb').innerHTML = db.punches.map(x=>`<div class="dbItem" data-type="punches" data-id="${x.id}"><b>${x.name}</b><small>${x.id} · R${x.radius} · ${x.maxTonsM} T/m</small></div>`).join('');
-  $('diesDb').innerHTML = db.dies.map(x=>`<div class="dbItem" data-type="dies" data-id="${x.id}"><b>${x.name}</b><small>${x.id} · V${x.v} · ${x.minT}-${x.maxT} mm</small></div>`).join('');
-  document.querySelectorAll('.dbItem').forEach(el=>el.onclick=()=>{ const type=el.dataset.type,id=el.dataset.id; if(type==='materials') project.materialId=id; if(type==='punches') project.punchId=id; if(type==='dies') project.dieId=id; writeForm(); calc(); toast('Registro seleccionado'); });
-}
-function report(){ return `PLEGAR PRO - INFORME TÉCNICO\n\nProyecto: ${project.projectName}\nCliente: ${project.clientName}\nMaterial: ${result.m.name}\nEspesor: ${project.thickness} mm\nPunzón: ${result.p.name}\nMatriz: ${result.d.name}\n\nDESARROLLO\nAla A: ${project.legA} mm\nAla B: ${project.legB} mm\nÁngulo: ${project.angle}°\nRadio interior: ${project.insideRadius} mm\nBend allowance: ${result.ba.toFixed(3)} mm\nDesarrollo plano: ${result.flat.toFixed(3)} mm\n\nFABRICACIÓN\nTonelaje total: ${result.totalTons.toFixed(1)} T\nCantidad: ${project.quantity}\nCoste total estimado: ${result.totalCost.toFixed(2)} €\nCoste unitario: ${(result.totalCost/project.quantity).toFixed(2)} €/ud\n\nVALIDACIÓN\n${result.issues.length ? result.issues.map(x=>'- '+x).join('\n') : 'Sin avisos críticos.'}\n`; }
-function renderReport(){ $('reportText').value = report(); }
-function drawPreview(){
-  const c=$('preview'), ctx=c.getContext('2d'); ctx.clearRect(0,0,c.width,c.height);
-  ctx.fillStyle='#081526'; ctx.fillRect(0,0,c.width,c.height);
-  ctx.strokeStyle='rgba(255,255,255,.08)'; for(let x=0;x<c.width;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,c.height);ctx.stroke()} for(let y=0;y<c.height;y+=40){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(c.width,y);ctx.stroke()}
-  const cx=430, cy=260, scale=Math.min(3, 300/Math.max(project.legA,project.legB,80)); const a=project.angle*Math.PI/180;
-  const x1=cx-project.legA*scale, y1=cy; const x2=cx, y2=cy; const x3=cx+Math.cos(Math.PI-a)*project.legB*scale; const y3=cy-Math.sin(Math.PI-a)*project.legB*scale;
-  ctx.lineWidth=16; ctx.lineCap='round'; ctx.strokeStyle='#45e38a'; ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.lineTo(x3,y3); ctx.stroke();
-  ctx.lineWidth=4; ctx.strokeStyle='#ffcc66'; ctx.beginPath(); ctx.arc(cx,cy,28,Math.PI,Math.PI-a,true); ctx.stroke();
-  ctx.fillStyle='#00d1ff'; ctx.fillRect(cx-90,315,180,18); ctx.fillStyle='#6c5cff'; ctx.beginPath(); ctx.moveTo(cx-60,160); ctx.lineTo(cx+60,160); ctx.lineTo(cx,220); ctx.closePath(); ctx.fill();
-  ctx.fillStyle='#eaf2ff'; ctx.font='18px system-ui'; ctx.fillText(`Desarrollo: ${result.flat.toFixed(2)} mm`,30,38); ctx.fillText(`${result.m.name} · ${project.thickness} mm`,30,66); ctx.fillStyle='#8fa6c7'; ctx.font='14px system-ui'; ctx.fillText('Vista simplificada de pieza, matriz y punzón',30,92);
-}
-function exportJson(){ readForm(); const data={project,db,calculation:result,exportedAt:new Date().toISOString()}; download('plegar-pro-proyecto.json', JSON.stringify(data,null,2),'application/json'); toast('Proyecto exportado'); }
-function download(name,content,type){ const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([content],{type})); a.download=name; a.click(); URL.revokeObjectURL(a.href); }
-function addDb(){
-  const type=$('dbType').value, name=$('dbName').value.trim(), a=$('dbA').value.trim(), b=$('dbB').value.trim(); if(!name) return toast('Escribe un nombre');
-  const id = name.toUpperCase().replace(/[^A-Z0-9]+/g,'-') + '-' + Math.floor(Math.random()*999);
-  if(type==='materials') db.materials.push({id,name,density:Number(a)||7.85,tensile:Number(b)||400,yield:200,k:.42,price:2,minRadiusFactor:1});
-  if(type==='punches') db.punches.push({id,name,angle:Number(a)||86,radius:Number(b)||1,height:120,maxTonsM:80});
-  if(type==='dies') db.dies.push({id,name,v:Number(a)||12,angle:86,minT:.5,maxT:Number(b)||3,maxTonsM:120});
-  saveDb(); fillSelects(); writeForm(); calc(); $('dbName').value=$('dbA').value=$('dbB').value=''; toast('Registro añadido a la base de datos');
-}
-function initNav(){ document.querySelectorAll('.nav').forEach(b=>b.onclick=()=>{ document.querySelectorAll('.nav,.page').forEach(x=>x.classList.remove('active')); b.classList.add('active'); $(b.dataset.page).classList.add('active'); $('pageTitle').textContent=pageTitles[b.dataset.page][0]; $('pageSub').textContent=pageTitles[b.dataset.page][1]; }); }
-function initEvents(){
-  document.querySelectorAll('input,select').forEach(el=>el.addEventListener('input',()=>calc()));
-  $('calculateMain').onclick=()=>{calc();toast('Cálculo actualizado')}; $('autoSelect').onclick=autoSelect; $('saveProject').onclick=saveProject; $('exportProject').onclick=exportJson; $('loadExample').onclick=()=>{project={projectName:'Caja inox con un pliegue',clientName:'Demo Taller',legA:120,legB:75,bendLength:650,thickness:2,angle:90,insideRadius:2.5,materialId:'INOX304',punchId:'P-90-R15',dieId:'M-V16-86',kFactor:.38,quantity:12,machineRate:62}; writeForm(); calc(); toast('Ejemplo cargado');};
-  $('addDb').onclick=addDb; $('resetDb').onclick=()=>{db=structuredClone(DEFAULT_DB); saveDb(); fillSelects(); project.materialId=db.materials[0].id; project.punchId=db.punches[0].id; project.dieId=db.dies[1].id; writeForm(); calc(); toast('Base de datos restaurada');};
-  $('generateReport').onclick=()=>{renderReport();toast('Informe generado')}; $('downloadReport').onclick=()=>download('informe-plegar-pro.txt',report(),'text/plain');
-  $('importProject').onclick=()=>{ const f=$('importFile').files[0]; if(!f) return toast('Selecciona un JSON'); const r=new FileReader(); r.onload=()=>{ try{ const data=JSON.parse(r.result); if(data.db) db=data.db; if(data.project) project=data.project; saveDb(); fillSelects(); writeForm(); calc(); toast('Proyecto importado'); }catch(e){toast('JSON no válido')} }; r.readAsText(f); };
-}
-fillSelects(); writeForm(); initNav(); initEvents(); calc();
+function writeForm(){['projectName','clientName','bendLength','thickness','quantity','machineRate','kFactor','toolMode','materialSelect','punchSelect','dieSelect'].forEach(id=>{if(!$(id))return});
+ $('projectName').value=project.projectName;$('clientName').value=project.clientName;$('bendLength').value=project.bendLength;$('thickness').value=project.thickness;$('quantity').value=project.quantity;$('machineRate').value=project.machineRate;$('kFactor').value=project.kFactor;$('toolMode').value=project.toolMode||'auto';$('materialSelect').value=project.materialId;$('punchSelect').value=project.punchId;$('dieSelect').value=project.dieId;renderBendEditor();}
+function readForm(){project.projectName=$('projectName').value;project.clientName=$('clientName').value;project.bendLength=+$('bendLength').value||1;project.thickness=+$('thickness').value||1;project.quantity=+$('quantity').value||1;project.machineRate=+$('machineRate').value||1;project.kFactor=+$('kFactor').value||.42;project.toolMode=$('toolMode').value;project.materialId=$('materialSelect').value;project.punchId=$('punchSelect').value;project.dieId=$('dieSelect').value;readBends();}
+function renderBendEditor(){const wrap=$('bendsEditor');wrap.innerHTML='';project.segments.forEach((s,i)=>{wrap.insertAdjacentHTML('beforeend',`<div class="bendRow"><b>Ala ${i+1}</b><label>Longitud<input class="segInput" data-i="${i}" type="number" value="${s}" min="1" step="0.1"></label>${i<project.bends.length?`<b>Plegado ${i+1}</b><label>Ángulo<input class="bendAngle" data-i="${i}" type="number" value="${project.bends[i].angle}" min="1" max="179"></label><label>Radio<input class="bendRadius" data-i="${i}" type="number" value="${project.bends[i].radius}" min="0.1" step="0.1"></label><label>Dirección<select class="bendDir" data-i="${i}"><option value="up" ${project.bends[i].direction==='up'?'selected':''}>Arriba</option><option value="down" ${project.bends[i].direction==='down'?'selected':''}>Abajo</option></select></label>`:''}</div>`)});wrap.querySelectorAll('input,select').forEach(e=>e.oninput=()=>calc());}
+function readBends(){document.querySelectorAll('.segInput').forEach(e=>project.segments[+e.dataset.i]=+e.value||1);document.querySelectorAll('.bendAngle').forEach(e=>project.bends[+e.dataset.i].angle=+e.value||90);document.querySelectorAll('.bendRadius').forEach(e=>project.bends[+e.dataset.i].radius=+e.value||project.thickness);document.querySelectorAll('.bendDir').forEach(e=>project.bends[+e.dataset.i].direction=e.value);}
+function find(type,id){return db[type].find(x=>x.id===id)||db[type][0]}
+function bendAllowance(angle,r,k,t){const bendAngle=180-angle;return (Math.PI/180)*bendAngle*(r+k*t)}
+function tonsPerM(mat,t,v){return (1.42*mat.tensile*t*t)/(v*10)}
+function scoreTool(p,d,b,mat,t){let score=0,issues=[];const recMin=6*t,recMax=10*t;if(d.v<recMin)issues.push('V pequeña');if(d.v>recMax)issues.push('V grande');if(t<d.minT||t>d.maxT)issues.push('espesor fuera de rango');if(p.radius>b.radius*1.8)issues.push('radio de punzón alto');if(p.maxTonsM<tonsPerM(mat,t,d.v))issues.push('punzón justo');if(d.maxTonsM<tonsPerM(mat,t,d.v))issues.push('matriz justa');score+=Math.abs(d.v-8*t)*4+Math.abs(p.radius-b.radius)*8+issues.length*100;return{p,d,score,issues}}
+function recommendForBend(b){const mat=find('materials',project.materialId),t=project.thickness;let best=null;db.punches.forEach(p=>db.dies.forEach(d=>{const s=scoreTool(p,d,b,mat,t);if(!best||s.score<best.score)best=s}));return best}
+function calc(){readForm();const mat=find('materials',project.materialId);if(project.kFactor!==mat.k&&document.activeElement?.id!=='kFactor')project.kFactor=mat.k;let flat=project.segments.reduce((a,b)=>a+(+b||0),0), totalTons=0, issues=[], bendResults=[];
+ project.bends.forEach((b,i)=>{const rec=project.toolMode==='manual'?{p:find('punches',project.punchId),d:find('dies',project.dieId),issues:[]} : recommendForBend(b);const ba=bendAllowance(b.angle,b.radius,project.kFactor,project.thickness);const tpm=tonsPerM(mat,project.thickness,rec.d.v);const tons=tpm*(project.bendLength/1000);flat+=ba;totalTons+=tons;bendResults.push({index:i+1,b,ba,tpm,tons,rec}); if(b.radius<project.thickness*mat.minRadiusFactor*.75)issues.push(`Plegado ${i+1}: radio interior bajo para ${mat.name}`); rec.issues.forEach(x=>issues.push(`Plegado ${i+1}: ${x}`));});
+ const weight=flat*project.bendLength*project.thickness*mat.density/1e6;const matCost=weight*mat.price;const setup=12+project.bends.length*2.5;const cycle=project.quantity*(0.35+project.bends.length*0.28);const machineCost=((setup+cycle)/60)*project.machineRate;result={mat,flat,totalTons,issues,bendResults,weight,matCost,setup,cycle,machineCost,totalCost:matCost+machineCost,mainTool:bendResults[0]?.rec};renderAll();}
+function renderAll(){renderKpis();renderCards();renderTables();renderDb();renderReport();drawPreview();drawSim();}
+function pill(s){return `<div class="pill">${s}</div>`}
+function renderKpis(){$('kpiMaterial').textContent=result.mat.name;$('kpiMaterialInfo').textContent=`${project.thickness} mm · ${project.bendLength} mm ancho`;$('kpiBends').textContent=project.bends.length;$('kpiFlat').textContent=result.flat.toFixed(2)+' mm';$('kpiFeasible').textContent=result.issues.length?'Revisar':'Compatible';$('kpiFeasible').className=result.issues.length?'statusWarn':'statusOk';$('kpiFeasibleInfo').textContent=result.issues.length?`${result.issues.length} aviso(s)`:'Sin avisos críticos';$('systemStatus').textContent=result.issues.length?'Revisar avisos':'Listo';$('summary').innerHTML=[pill(`Proyecto: <b>${project.projectName}</b>`),pill(`Material: <b>${result.mat.name}</b>`),pill(`Plegados: <b>${project.bends.length}</b>`),pill(`Desarrollo total: <b>${result.flat.toFixed(2)} mm</b>`),pill(`Fuerza acumulada: <b>${result.totalTons.toFixed(1)} T</b>`),result.issues.length?pill(`<span class="statusWarn">${result.issues.length} avisos técnicos</span>`):pill(`<span class="statusOk">Combinación viable para beta</span>`)].join('');}
+function renderCards(){const tr=result.mainTool; $('toolRecommendation').innerHTML=tr?`<div class="bigTool"><b>${tr.p.name}</b><span>Punzón recomendado</span></div><div class="bigTool"><b>${tr.d.name}</b><span>Matriz recomendada · V${tr.d.v}</span></div><p class="hint">El sistema calcula la mejor combinación por plegado según espesor, radio, V, tonelaje y compatibilidad.</p>`:'';$('compatibility').innerHTML=result.issues.length?result.issues.map(x=>`<p class="statusWarn">⚠ ${x}</p>`).join(''):'<p class="statusOk">✓ Material y útiles compatibles según la base local Mecos.</p>';$('perBendTools').innerHTML=result.bendResults.map(r=>`<div class="toolCard"><b>Plegado ${r.index}</b><span>${r.rec.p.name}</span><span>${r.rec.d.name}</span><small>BA ${r.ba.toFixed(2)} mm · ${r.tons.toFixed(1)} T</small></div>`).join('');}
+function row(a,b){return `<tr><td>${a}</td><td>${b}</td></tr>`}
+function renderTables(){$('calcTable').innerHTML=row('Alas',project.segments.map(x=>x+' mm').join(' + '))+row('Nº de plegados',project.bends.length)+row('Suma alas',project.segments.reduce((a,b)=>a+b,0).toFixed(2)+' mm')+row('Suma compensaciones',result.bendResults.reduce((a,b)=>a+b.ba,0).toFixed(3)+' mm')+row('Desarrollo plano total',result.flat.toFixed(3)+' mm')+row('Fuerza acumulada',result.totalTons.toFixed(1)+' T');$('costTable').innerHTML=row('Peso estimado',result.weight.toFixed(2)+' kg')+row('Coste material',result.matCost.toFixed(2)+' €')+row('Preparación',result.setup.toFixed(1)+' min')+row('Ciclo lote',result.cycle.toFixed(1)+' min')+row('Coste máquina',result.machineCost.toFixed(2)+' €')+row('Total estimado',result.totalCost.toFixed(2)+' €')+row('Unitario',(result.totalCost/project.quantity).toFixed(2)+' €/ud');$('bendTable').innerHTML=result.bendResults.map((r,i)=>`<tr><td>${r.index}</td><td>${project.segments[i]} mm</td><td>${r.b.angle}° ${r.b.direction==='up'?'↑':'↓'}</td><td>${r.b.radius} mm</td><td>${r.ba.toFixed(3)} mm</td><td>${r.rec.p.id}<br>${r.rec.d.id}</td><td>${r.tons.toFixed(1)} T</td></tr>`).join('');renderSequence();}
+function renderSequence(){$('sequenceList').innerHTML=result.bendResults.map((r,i)=>`<div class="step"><div class="num">${i+1}</div><div><b>Plegado ${i+1}: ${r.b.angle}° ${r.b.direction==='up'?'arriba':'abajo'}</b><p class="hint">Usar ${r.rec.p.name} con ${r.rec.d.name}. Fuerza aprox. ${r.tons.toFixed(1)} T.</p></div><span class="pill">${r.rec.issues.length?'Revisar':'OK'}</span></div>`).join('');$('simStep').max=project.bends.length;}
+function renderDb(){$('materialsDb').innerHTML=db.materials.map(x=>`<div class="dbItem" data-type="materials" data-id="${x.id}"><b>${x.name}</b><small>${x.id} · ${x.tensile} MPa · ${x.price} €/kg</small></div>`).join('');$('punchesDb').innerHTML=db.punches.map(x=>`<div class="dbItem" data-type="punches" data-id="${x.id}"><b>${x.name}</b><small>${x.id} · R${x.radius} · ${x.maxTonsM} T/m</small></div>`).join('');$('diesDb').innerHTML=db.dies.map(x=>`<div class="dbItem" data-type="dies" data-id="${x.id}"><b>${x.name}</b><small>${x.id} · V${x.v} · ${x.minT}-${x.maxT} mm</small></div>`).join('');document.querySelectorAll('.dbItem').forEach(el=>el.onclick=()=>{if(el.dataset.type==='materials')project.materialId=el.dataset.id;if(el.dataset.type==='punches')project.punchId=el.dataset.id;if(el.dataset.type==='dies')project.dieId=el.dataset.id;writeForm();calc();toast('Registro seleccionado')})}
+function drawFlat(ctx,w,h){ctx.fillStyle='#071426';ctx.fillRect(0,0,w,h);ctx.strokeStyle='rgba(255,255,255,.08)';for(let x=0;x<w;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke()}const margin=60,y=h/2,total=result.flat||1,scale=(w-margin*2)/total;let x=margin;ctx.lineWidth=26;ctx.strokeStyle='#45e38a';ctx.beginPath();ctx.moveTo(x,y);project.segments.forEach((s,i)=>{x+=s*scale;ctx.lineTo(x,y);if(i<project.bends.length){ctx.stroke();ctx.strokeStyle='#ffcc66';ctx.lineWidth=4;ctx.beginPath();ctx.moveTo(x,y-55);ctx.lineTo(x,y+55);ctx.stroke();ctx.fillStyle='#ffcc66';ctx.fillText(`P${i+1}`,x-8,y-68);ctx.strokeStyle='#45e38a';ctx.lineWidth=26;ctx.beginPath();ctx.moveTo(x,y)}});ctx.stroke();ctx.fillStyle='#eaf2ff';ctx.font='18px system-ui';ctx.fillText(`Desarrollo total: ${result.flat.toFixed(2)} mm`,30,38);ctx.fillStyle='#8fa6c7';ctx.font='14px system-ui';ctx.fillText('Líneas amarillas = plegados · Base local Mecos',30,65)}
+function drawPreview(){drawFlat($('preview').getContext('2d'),$('preview').width,$('preview').height)}
+function polylineForStep(step){let pts=[[0,0]],ang=0;for(let i=0;i<project.segments.length;i++){let len=project.segments[i];let last=pts[pts.length-1];pts.push([last[0]+Math.cos(ang)*len,last[1]-Math.sin(ang)*len]);if(i<step&&i<project.bends.length){let b=project.bends[i];let delta=(180-b.angle)*Math.PI/180*(b.direction==='up'?1:-1);ang+=delta;}}return pts}
+function drawSim(){const c=$('simCanvas'),ctx=c.getContext('2d'),step=+$('simStep').value||0;ctx.fillStyle='#071426';ctx.fillRect(0,0,c.width,c.height);ctx.strokeStyle='rgba(255,255,255,.08)';for(let x=0;x<c.width;x+=40){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,c.height);ctx.stroke()}const pts=polylineForStep(step);let xs=pts.map(p=>p[0]),ys=pts.map(p=>p[1]),minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);let scale=Math.min((c.width-160)/(maxX-minX||1),(c.height-160)/(maxY-minY||1),4);let ox=c.width/2-(minX+maxX)/2*scale,oy=c.height/2-(minY+maxY)/2*scale;ctx.lineWidth=18;ctx.lineCap='round';ctx.strokeStyle='#45e38a';ctx.beginPath();pts.forEach((p,i)=>{let x=ox+p[0]*scale,y=oy+p[1]*scale;i?ctx.lineTo(x,y):ctx.moveTo(x,y)});ctx.stroke();for(let i=1;i<pts.length-1;i++){let x=ox+pts[i][0]*scale,y=oy+pts[i][1]*scale;ctx.fillStyle=i<=step?'#ffcc66':'#6f7d96';ctx.beginPath();ctx.arc(x,y,8,0,Math.PI*2);ctx.fill();}ctx.fillStyle='#00d1ff';ctx.fillRect(c.width/2-110,c.height-60,220,16);ctx.fillStyle='#6c5cff';ctx.beginPath();ctx.moveTo(c.width/2-65,c.height-170);ctx.lineTo(c.width/2+65,c.height-170);ctx.lineTo(c.width/2,c.height-105);ctx.closePath();ctx.fill();ctx.fillStyle='#eaf2ff';ctx.font='18px system-ui';ctx.fillText(`Paso ${step} de ${project.bends.length}`,30,38);ctx.fillStyle='#8fa6c7';ctx.font='14px system-ui';ctx.fillText(step===0?'Pieza en plano':`Aplicados ${step} plegado(s)`,30,64)}
+function report(){return `PLEGAR PRO BETA MECOS - INFORME\n\nProyecto: ${project.projectName}\nCliente: ${project.clientName}\nMaterial: ${result.mat.name}\nEspesor: ${project.thickness} mm\nAncho/longitud de plegado: ${project.bendLength} mm\n\nDESARROLLO\nAlas: ${project.segments.join(' + ')} mm\nPlegados: ${project.bends.length}\nDesarrollo plano total: ${result.flat.toFixed(3)} mm\n\nÚTILES RECOMENDADOS\n${result.bendResults.map(r=>`Plegado ${r.index}: ${r.rec.p.name} + ${r.rec.d.name} · BA ${r.ba.toFixed(3)} mm · ${r.tons.toFixed(1)} T`).join('\n')}\n\nCOSTE\nTotal estimado: ${result.totalCost.toFixed(2)} €\nUnitario: ${(result.totalCost/project.quantity).toFixed(2)} €/ud\n\nVALIDACIÓN\n${result.issues.length?result.issues.map(x=>'- '+x).join('\n'):'Sin avisos críticos.'}\n\nNota: base Mecos demostrativa/local editable para beta. Validar con catálogo real antes de fabricar.`}
+function renderReport(){$('reportText').value=report()}
+function download(name,content,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([content],{type}));a.download=name;a.click();URL.revokeObjectURL(a.href)}
+function saveProject(){readForm();localStorage.setItem('ppProjectMecos',JSON.stringify(project));$('lastSaved').textContent='Guardado: '+new Date().toLocaleTimeString();toast('Proyecto guardado')}
+function exportJson(){readForm();download('plegar-pro-beta-mecos.json',JSON.stringify({project,db,calculation:result,exportedAt:new Date().toISOString()},null,2),'application/json');toast('Proyecto exportado')}
+function addDb(){const type=$('dbType').value,name=$('dbName').value.trim(),a=+$('dbA').value,b=+$('dbB').value;if(!name)return toast('Escribe un nombre');const id='MECOS-'+name.toUpperCase().replace(/[^A-Z0-9]+/g,'-')+'-'+Math.floor(Math.random()*999);if(type==='materials')db.materials.push({id,name,density:7.85,tensile:a||400,yield:200,k:.42,price:b||2,minRadiusFactor:1});if(type==='punches')db.punches.push({id,brand:'Mecos',name,angle:a||88,radius:b||1,height:140,maxTonsM:100,type:'personalizado'});if(type==='dies')db.dies.push({id,brand:'Mecos',name,v:a||12,angle:86,minT:.5,maxT:b||3,maxTonsM:120});saveDb();fillSelects();writeForm();calc();toast('Añadido a la base local')}
+function initNav(){document.querySelectorAll('.nav').forEach(b=>b.onclick=()=>{document.querySelectorAll('.nav,.page').forEach(x=>x.classList.remove('active'));b.classList.add('active');$(b.dataset.page).classList.add('active');$('pageTitle').textContent=pages[b.dataset.page][0];$('pageSub').textContent=pages[b.dataset.page][1];drawSim();drawPreview();})}
+function initEvents(){document.querySelectorAll('input,select').forEach(e=>e.addEventListener('input',()=>calc()));$('calculateMain').onclick=()=>{calc();toast('Cálculo actualizado')};$('autoSelect').onclick=()=>{$('toolMode').value='auto';project.toolMode='auto';calc();toast('Útiles Mecos recomendados')};$('saveProject').onclick=saveProject;$('exportProject').onclick=exportJson;$('loadExample').onclick=()=>{project={projectName:'Caja inox multi-plegado',clientName:'Demo Taller',bendLength:650,thickness:2,quantity:12,machineRate:62,materialId:'INOX304',kFactor:.38,toolMode:'auto',punchId:'MECOS-P88-R10-H150',dieId:'MECOS-MV16-86',segments:[70,120,80,45],bends:[{angle:90,radius:2,direction:'up'},{angle:90,radius:2,direction:'up'},{angle:90,radius:2,direction:'down'}]};writeForm();calc();toast('Ejemplo multi-plegado cargado')};$('addBend').onclick=()=>{readBends();project.bends.push({angle:90,radius:project.thickness,direction:'up'});project.segments.push(50);renderBendEditor();calc();toast('Plegado añadido')};$('removeBend').onclick=()=>{if(project.bends.length>1){project.bends.pop();project.segments.pop();renderBendEditor();calc();toast('Último plegado eliminado')}};$('addDb').onclick=addDb;$('resetDb').onclick=()=>{db=clone(DEFAULT_DB);saveDb();fillSelects();writeForm();calc();toast('Base Mecos restaurada')};$('generateReport').onclick=()=>{renderReport();toast('Informe generado')};$('downloadReport').onclick=()=>download('informe-plegar-pro-beta-mecos.txt',report(),'text/plain');$('importProject').onclick=()=>{const f=$('importFile').files[0];if(!f)return toast('Selecciona un JSON');const r=new FileReader();r.onload=()=>{try{const data=JSON.parse(r.result);if(data.db)db=data.db;if(data.project)project=data.project;saveDb();fillSelects();writeForm();calc();toast('Proyecto importado')}catch(e){toast('JSON no válido')}};r.readAsText(f)};$('simStep').oninput=drawSim;$('prevStep').onclick=()=>{$('simStep').value=Math.max(0,+$('simStep').value-1);drawSim()};$('nextStep').onclick=()=>{$('simStep').value=Math.min(project.bends.length,+$('simStep').value+1);drawSim()};$('playSim').onclick=()=>{clearInterval(timer);$('simStep').value=0;timer=setInterval(()=>{let n=+$('simStep').value+1;if(n>project.bends.length){clearInterval(timer);return}$('simStep').value=n;drawSim()},700)}}
+fillSelects();writeForm();initNav();initEvents();calc();

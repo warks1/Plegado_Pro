@@ -1,29 +1,27 @@
-# Plegar Pro · Demo funcional para GitHub Pages
+# Plegar Pro · Beta Mecos funcional
 
-Demo web estática, sin backend y sin dependencias, pensada para subir directamente a GitHub Pages.
+Demo web estática para GitHub Pages.
 
-## Funciones incluidas
+## Incluye
 
-- Menú lateral por módulos.
-- Base de datos local editable de materiales, punzones y matrices.
-- Guardado en LocalStorage.
-- Importación/exportación de proyectos JSON.
-- Cálculo de desarrollo plano.
-- Bend Allowance, K-Factor, fuerza aproximada y coste estimado.
-- Selección automática de herramienta compatible.
-- Validaciones de matriz, punzón, radio y tonelaje.
-- Simulación 2D simplificada en canvas.
-- Informe técnico descargable.
+- Más de 2 plegados configurables.
+- Alas y plegados editables.
+- Base de datos local de materiales, punzones Mecos y matrices Mecos.
+- Recomendación automática de útiles por plegado.
+- Cálculo de desarrollo plano total.
+- Simulación visual paso a paso del plegado.
+- Coste estimado.
+- Informe técnico.
+- Importación/exportación JSON.
+- Guardado local en LocalStorage.
 
-## Cómo subir a GitHub
+## Uso en GitHub Pages
 
-1. Crea un repositorio nuevo.
-2. Sube todos los archivos de esta carpeta.
-3. En GitHub, ve a Settings → Pages.
-4. Selecciona Deploy from branch.
-5. Rama: main, carpeta: root.
-6. Guarda y abre la URL que te da GitHub Pages.
+1. Sube todos los archivos al repositorio.
+2. Entra en Settings > Pages.
+3. Elige rama `main` y carpeta `/root`.
+4. Abre la URL generada.
 
 ## Nota
 
-Esta demo funciona como prototipo avanzado de interfaz y lógica local. Para una versión industrial final real haría falta backend, autenticación, base de datos servidor, importación CAD real y conexión con máquinas CNC.
+La base Mecos incluida es demostrativa y editable para la beta. Antes de fabricar piezas reales hay que contrastar referencias, capacidades y geometrías con el catálogo oficial disponible en el taller.
