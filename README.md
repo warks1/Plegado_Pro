@@ -1,27 +1,22 @@
-# Plegar Pro · Beta Mecos funcional
+# Plegar Pro · Beta Mecos + Bystronic
 
-Demo web estática para GitHub Pages.
+Demo web funcional para GitHub Pages.
 
-## Incluye
+## Novedades de esta versión
 
-- Más de 2 plegados configurables.
-- Alas y plegados editables.
-- Base de datos local de materiales, punzones Mecos y matrices Mecos.
+- Base local Mecos ampliada con matrices de 30°.
+- Base local Mecos ampliada con punzones de 30°.
+- Añadidos punzones tipo pata de cabra.
+- Selector de plegado interior / exterior en cada pliegue.
 - Recomendación automática de útiles por plegado.
-- Cálculo de desarrollo plano total.
-- Simulación visual paso a paso del plegado.
-- Coste estimado.
-- Informe técnico.
-- Importación/exportación JSON.
-- Guardado local en LocalStorage.
+- Mejor orden de plegado recomendado en la secuencia.
+- Plegadora incluida: Bystronic Xpert 3100 mm / 100 toneladas / año 2006.
+- Validación básica por longitud y tonelaje de máquina.
+- Desarrollo plano y simulación visual paso a paso.
+- Base de datos local editable mediante LocalStorage.
 
-## Uso en GitHub Pages
+## Uso
 
-1. Sube todos los archivos al repositorio.
-2. Entra en Settings > Pages.
-3. Elige rama `main` y carpeta `/root`.
-4. Abre la URL generada.
+Abre `index.html` en el navegador o sube todos los archivos a GitHub Pages.
 
-## Nota
-
-La base Mecos incluida es demostrativa y editable para la beta. Antes de fabricar piezas reales hay que contrastar referencias, capacidades y geometrías con el catálogo oficial disponible en el taller.
+> Nota: las referencias y datos técnicos son demostrativos para beta. Antes de fabricar, deben validarse con catálogo Mecos real, manual de máquina y procedimientos del taller.

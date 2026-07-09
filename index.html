@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Plegar Pro · Beta Mecos</title>
+  <title>Plegar Pro · Beta Mecos + Bystronic</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="app">
     <aside class="sidebar">
-      <div class="brand"><div class="logo">PP</div><div><b>Plegar Pro</b><span>Beta Mecos</span></div></div>
+      <div class="brand"><div class="logo">PP</div><div><b>Plegar Pro</b><span>Beta Mecos + Bystronic</span></div></div>
       <button class="nav active" data-page="dashboard">Panel</button>
       <button class="nav" data-page="project">Proyecto</button>
       <button class="nav" data-page="bends">Plegados</button>
@@ -59,6 +59,7 @@
             <label>Modo de útiles<select id="toolMode"><option value="auto">Automático Mecos</option><option value="manual">Manual</option></select></label>
             <label>Punzón manual<select id="punchSelect"></select></label>
             <label>Matriz manual<select id="dieSelect"></select></label>
+            <label>Plegadora<select id="machineSelect"></select></label>
           </div><button id="autoSelect" class="btn full">Recomendar útiles Mecos</button></div>
         </div>
       </section>
@@ -74,7 +75,7 @@
 
       <section id="development" class="page">
         <div class="grid two"><div class="card"><h2>Desarrollo plano</h2><table><tbody id="calcTable"></tbody></table></div><div class="card"><h2>Coste estimado</h2><table><tbody id="costTable"></tbody></table></div></div>
-        <div class="card"><h2>Tabla de plegados</h2><div class="tableWrap"><table><thead><tr><th>#</th><th>Ala antes</th><th>Ángulo</th><th>Radio</th><th>BA</th><th>Útiles</th><th>Fuerza</th></tr></thead><tbody id="bendTable"></tbody></table></div></div>
+        <div class="card"><h2>Tabla de plegados</h2><div class="tableWrap"><table><thead><tr><th>#</th><th>Ala antes</th><th>Ángulo / tipo</th><th>Radio</th><th>BA</th><th>Útiles</th><th>Fuerza</th></tr></thead><tbody id="bendTable"></tbody></table></div></div>
       </section>
 
       <section id="simulation" class="page">
@@ -82,8 +83,8 @@
       </section>
 
       <section id="database" class="page">
-        <div class="grid three"><div class="card"><h2>Materiales</h2><div id="materialsDb" class="dbList"></div></div><div class="card"><h2>Punzones Mecos</h2><div id="punchesDb" class="dbList"></div></div><div class="card"><h2>Matrices Mecos</h2><div id="diesDb" class="dbList"></div></div></div>
-        <div class="card"><h2>Editar / añadir registro local</h2><div class="form row"><select id="dbType"><option value="materials">Material</option><option value="punches">Punzón Mecos</option><option value="dies">Matriz Mecos</option></select><input id="dbName" placeholder="Nombre / referencia" /><input id="dbA" placeholder="Dato A: V o ángulo" /><input id="dbB" placeholder="Dato B: radio o espesor máx" /><button id="addDb" class="btn accent">Añadir</button><button id="resetDb" class="btn ghost">Restaurar BD Mecos</button></div><p class="hint">Base local en LocalStorage. Las referencias Mecos son una base demostrativa editable para la beta.</p></div>
+        <div class="grid four"><div class="card"><h2>Materiales</h2><div id="materialsDb" class="dbList"></div></div><div class="card"><h2>Punzones Mecos</h2><div id="punchesDb" class="dbList"></div></div><div class="card"><h2>Matrices Mecos</h2><div id="diesDb" class="dbList"></div></div><div class="card"><h2>Plegadora</h2><div id="machinesDb" class="dbList"></div></div></div>
+        <div class="card"><h2>Editar / añadir registro local</h2><div class="form row"><select id="dbType"><option value="materials">Material</option><option value="punches">Punzón Mecos</option><option value="dies">Matriz Mecos</option><option value="machines">Plegadora</option></select><input id="dbName" placeholder="Nombre / referencia" /><input id="dbA" placeholder="Dato A: V o ángulo" /><input id="dbB" placeholder="Dato B: radio o espesor máx" /><button id="addDb" class="btn accent">Añadir</button><button id="resetDb" class="btn ghost">Restaurar BD Mecos</button></div><p class="hint">Base local en LocalStorage. Las referencias Mecos son una base demostrativa editable para la beta.</p></div>
       </section>
 
       <section id="reports" class="page">
