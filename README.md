@@ -1,38 +1,29 @@
-# Plegar Pro · Beta Mecos + Bystronic + Importación + IA
+# Plegar Pro Ultra Beta · Cámara + IA
 
-Demo funcional para GitHub Pages.
+Demo autocontenida y funcional para GitHub Pages. Todo está dentro de `index.html`; no necesita instalación ni dependencias.
 
-## Novedades de esta versión
+## Funciones incluidas
 
-- Matrices Mecos de 30° ampliadas: V6, V8, V12, V16, V20, V24 y V32.
-- Punzón recto Mecos de 30° y 100 mm de altura.
-- Punzones de pata de cabra Mecos para plegados interiores.
-- Plegado interior/exterior por cada operación.
-- Recomendación automática de útiles por plegado.
-- Mejor orden de plegado calculado por la demo.
-- Plegadora Bystronic Xpert 3100 mm / 100 toneladas / año 2006.
-- Importador de planos/cotas desde JSON, CSV o DXF simplificado.
-- Panel de IA local simulada para analizar pieza, útiles y secuencia.
-- Desarrollo plano y simulación visual paso a paso.
+- Captura de plano mediante cámara trasera del móvil o selección de fotografía.
+- Flujo de interpretación asistida por IA local demostrativa.
+- Detección simulada de cotas, ángulos, alas y líneas de plegado, con aplicación editable al proyecto.
+- Plegados ilimitados, interiores o exteriores, hacia arriba o abajo.
+- Optimización de la secuencia.
+- Desarrollo plano acotado.
+- Simulación visual paso a paso.
+- Base local editable de materiales, punzones Mecos y matrices Mecos de 30°/88°.
+- Punzón recto Mecos 30° H100 y pata de cabra.
+- Bystronic Xpert 3100/100 t, año 2006.
+- Recomendación automática de útiles y cálculo aproximado de fuerza.
+- Generación de programa de trabajo.
+- Guardado de procesos en LocalStorage e importación/exportación JSON.
 
-## Cómo usar
+## Publicación en GitHub Pages
 
-Abre `index.html` o sube el contenido a GitHub Pages.
+1. Crea un repositorio.
+2. Sube `index.html` y `README.md` a la raíz.
+3. En **Settings → Pages**, selecciona **Deploy from a branch**, `main` y `/root`.
 
-## Formato CSV de ejemplo
+## Importante sobre la cámara e IA
 
-```csv
-PROYECTO;Soporte importado
-MATERIAL;S235
-ESPESOR;1.5
-ANCHO;780
-ALA;35
-PLEGADO;90;1.5;up;interior
-ALA;80
-PLEGADO;30;1;up;interior
-ALA;120
-```
-
-## Nota importante
-
-La base Mecos y la ficha Bystronic son demostrativas para la beta. Antes de fabricar piezas reales deben validarse contra catálogo, manual de máquina y utillaje disponible en taller.
+La captura con cámara es real y funciona en navegadores móviles compatibles. La interpretación de planos de esta beta es una demostración local con datos detectados simulados y revisión manual. Para una versión de producción con lectura fiable de cotas, símbolos y geometría se deberá conectar un backend de visión/OCR industrial y validar siempre el resultado antes de fabricar.
