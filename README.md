@@ -1,11 +1,14 @@
-# Plegar Pro v15.0 Visible Complete Beta
+# Plegar Pro v18.0 Industrial Vision Ultimate
 
-Versión sin caché PWA, con todos los módulos visibles desde la pantalla principal.
+Incluye todo lo anterior y añade:
+- Secuencia automática completa de todos los pliegues.
+- Control de velocidad: lenta, normal y rápida.
+- Captura de la escena 3D en PNG.
+- Línea visual de secuencia con pliegues activos y completados.
+- Matriz 3D adaptada a la V seleccionada.
+- Punzón 3D adaptado a recto o pata de cabra.
+- Diagnóstico visual de posibles interferencias.
+- Panel ampliado de estado de cámara, calidad, velocidad y secuencia.
+- Mejoras adicionales de acabado y navegación táctil.
 
-## Verificación rápida
-- En el inicio aparece un banner verde con la versión 15.0.
-- El botón “Ver matrices y punzones” abre una comprobación visible con V6, V12, V16, V22, V24, V32, V36, V40 y V50, cada una en 30°, 60°, 88° y 90°.
-- El botón “Ver WhatsApp y correo” abre el CRM.
-- El botón “Ver multiplegado” abre la secuencia de varios pliegues.
-
-Abra index.html. Esta versión elimina registros de service worker y cachés antiguas para evitar mostrar una beta anterior.
+Los cálculos, geometrías y colisiones son orientativos hasta validarse con datos y modelos reales.

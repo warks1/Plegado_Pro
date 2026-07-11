@@ -125,6 +125,119 @@ radial-gradient(circle at 50% 18%,#234968 0,#0c2338 34%,#06111c 78%);border-radi
 .version-banner b{font-size:18px}.module-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}.module-link{background:#0c2336;border:1px solid #31536d;color:#eef7ff;border-radius:12px;padding:12px;text-align:left;cursor:pointer}.module-link strong{display:block}.module-link small{color:#9fb6ca}.tool-proof{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.tool-proof div{background:#0a2133;border:1px solid #2b4d68;border-radius:10px;padding:9px}
 @media(max-width:900px){.module-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tool-proof{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:460px){.module-grid,.tool-proof{grid-template-columns:1fr}.nav{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+.hamburger{display:none;border:1px solid #355f80;background:#10283d;color:white;border-radius:11px;padding:9px 12px;font-size:20px;cursor:pointer;flex:0 0 auto}
+.menu-close{display:none;width:100%;border:1px solid #355f80;background:#10283d;color:#fff;border-radius:10px;padding:10px;margin-bottom:8px}
+.menu-search{margin-bottom:10px}.menu-search input{width:100%;background:#061522;border:1px solid #31546f;color:white;border-radius:10px;padding:10px}
+.nav-group{display:grid;gap:5px;margin-bottom:14px}.nav-title{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:#7491aa;padding:4px 10px}
+.nav-group button{padding:10px 12px}
+@media(max-width:900px){
+  .app{display:block;padding-bottom:0}
+  .sidebar{position:fixed;z-index:100;left:0;top:0;bottom:0;width:min(86vw,340px);height:100vh;padding:14px;transform:translateX(-105%);transition:transform .22s ease;box-shadow:20px 0 50px #0009;border-right:1px solid var(--line);overflow-y:auto}
+  body.menu-open .sidebar{transform:translateX(0)}
+  body.menu-open:after{content:"";position:fixed;inset:0;background:#0009;z-index:90}
+  .brand,.version{display:block}
+  .menu-close{display:block}
+  .nav{display:block;overflow:visible}
+  .nav button{display:block;width:100%;text-align:left;white-space:normal}
+  .hamburger{display:block}
+  .main{padding:10px}
+}
+
+
+/* v16 Industrial Vision Ultimate */
+:root{
+  --metal:#cbd6df;--steel:#60788d;--machine:#15324b;--machine2:#0d2438;
+  --cyan:#50ddff;--green:#47dfbd;--amber:#ffbe62;
+}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:
+linear-gradient(115deg,#ffffff05 0 1px,transparent 1px 100%),
+radial-gradient(circle at 75% 5%,#4eb9ff12,transparent 22%);background-size:34px 34px,auto;z-index:-1}
+.card{position:relative;backdrop-filter:blur(13px);-webkit-backdrop-filter:blur(13px)}
+.card:before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(145deg,#ffffff08,transparent 28%,#4eb9ff04);mix-blend-mode:screen}
+.kpi{position:relative;overflow:hidden}.kpi:after{content:"";position:absolute;width:90px;height:90px;right:-32px;top:-38px;border-radius:50%;background:#4eb9ff12;box-shadow:0 0 45px #4eb9ff18}
+.btn{box-shadow:0 8px 20px #22c7a922;transition:transform .15s ease,filter .15s ease,box-shadow .15s ease}.btn:hover{transform:translateY(-1px);filter:brightness(1.08);box-shadow:0 11px 25px #22c7a933}
+.tool-card{position:relative;overflow:hidden;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}.tool-card:hover{transform:translateY(-2px);border-color:#4eb9ff;box-shadow:0 14px 30px #0005}
+.tool-card:before{content:"";position:absolute;inset:0;background:linear-gradient(130deg,#ffffff07,transparent 42%);pointer-events:none}
+.sim-card{padding:0!important;overflow:hidden!important;background:#030910!important}
+.sim-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 16px;border-bottom:1px solid #28445d;background:linear-gradient(180deg,#102439,#0b1a29)}
+.sim-title-wrap h2{margin:0}.sim-title-wrap p{margin:4px 0 0;color:var(--muted);font-size:12px}
+.sim-badges{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end}
+.sim-stage{position:relative;background:#02070d;overflow:hidden}
+.sim-stage canvas{height:clamp(480px,68vh,760px);border-radius:0;background:#02070d}
+.sim-hud{position:absolute;inset:0;pointer-events:none}
+.hud-panel{position:absolute;background:#06121de8;border:1px solid #345772;border-radius:12px;padding:9px 11px;box-shadow:0 10px 25px #0008;backdrop-filter:blur(8px)}
+.hud-left{left:12px;top:12px}.hud-right{right:12px;top:12px;text-align:right}.hud-bottom{left:12px;bottom:12px;display:flex;gap:8px;flex-wrap:wrap;max-width:calc(100% - 24px)}
+.hud-label{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:#7394ae}.hud-value{font-size:14px;font-weight:900;margin-top:2px}
+.sim-controls{display:grid;grid-template-columns:1fr auto;gap:12px;padding:13px 15px;background:#091827;border-top:1px solid #28445d}
+.sim-control-left,.sim-control-right{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.view-buttons{display:flex;gap:6px;flex-wrap:wrap}.view-btn{border:1px solid #365d7c;background:#10283d;color:#d8ebf9;padding:8px 10px;border-radius:9px;cursor:pointer}.view-btn.active{border-color:#50ddff;background:#123a51;color:white;box-shadow:0 0 0 2px #50ddff19}
+.quality-select{background:#071522;border:1px solid #365d7c;color:white;border-radius:9px;padding:8px}
+.mini-gauge{display:grid;grid-template-columns:auto 85px;align-items:center;gap:7px;font-size:11px;color:#9fb6ca}.mini-gauge i{height:6px;border-radius:99px;background:#10283d;overflow:hidden}.mini-gauge i:after{content:"";display:block;width:72%;height:100%;background:linear-gradient(90deg,#47dfbd,#50ddff);border-radius:inherit}
+.graphic-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:10px}
+.graphic-chip{background:linear-gradient(145deg,#10283e,#0a1c2b);border:1px solid #2e506a;border-radius:12px;padding:10px}.graphic-chip b{display:block;font-size:15px}.graphic-chip span{font-size:11px;color:var(--muted)}
+@media(max-width:900px){.sim-controls{grid-template-columns:1fr}.sim-control-right{justify-content:flex-start}.graphic-strip{grid-template-columns:repeat(2,minmax(0,1fr))}.sim-stage canvas{height:min(65vh,600px)}}
+@media(max-width:560px){.sim-head{align-items:flex-start;flex-direction:column}.sim-badges{justify-content:flex-start}.hud-right{top:auto;bottom:62px}.graphic-strip{grid-template-columns:1fr 1fr}.sim-stage canvas{height:500px}.view-buttons{display:grid;grid-template-columns:repeat(3,1fr);width:100%}.view-btn{font-size:11px;padding:8px 6px}}
+
+
+/* v17 Industrial Vision Ultimate */
+.sim-sidepanel{
+  display:grid;grid-template-columns:280px minmax(0,1fr);gap:0;background:#030910;
+}
+.sim-config{
+  border-right:1px solid #28445d;background:linear-gradient(180deg,#0b1b2a,#07131f);
+  padding:14px;overflow:auto;max-height:clamp(480px,68vh,760px)
+}
+.sim-config h3{margin:0 0 10px}
+.sim-config .field{margin-bottom:9px}
+.sim-readout{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:10px}
+.readout{background:#0b2234;border:1px solid #2a4f6c;border-radius:10px;padding:9px}
+.readout span{display:block;color:#8faac0;font-size:10px;text-transform:uppercase;letter-spacing:.08em}
+.readout b{display:block;margin-top:3px;font-size:15px}
+.scene-toggle{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.scene-toggle button{border:1px solid #365d7c;background:#0d2538;color:#d9eafa;border-radius:8px;padding:7px 9px;cursor:pointer}
+.scene-toggle button.active{background:#13415a;border-color:#50ddff}
+.scene-help{font-size:11px;color:#86a2b8;line-height:1.45;margin-top:10px}
+.sim-stage-wrap{min-width:0}
+.machine-badge{
+  position:absolute;left:50%;top:15px;transform:translateX(-50%);
+  background:linear-gradient(180deg,#18364fdd,#0c1e2ddd);border:1px solid #4b6f8b;
+  padding:7px 12px;border-radius:999px;font-size:11px;letter-spacing:.08em;text-transform:uppercase
+}
+.panel-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.panel-stat{background:linear-gradient(150deg,#10283c,#091a29);border:1px solid #2c4f6b;border-radius:13px;padding:11px}
+.panel-stat span{display:block;font-size:11px;color:#8ba7bc}.panel-stat b{display:block;font-size:19px;margin-top:4px}
+@media(max-width:980px){
+  .sim-sidepanel{grid-template-columns:1fr}
+  .sim-config{border-right:0;border-bottom:1px solid #28445d;max-height:none}
+  .sim-readout{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
+@media(max-width:620px){
+  .sim-readout{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .panel-grid{grid-template-columns:1fr}
+}
+
+
+/* v18 Industrial Vision Ultimate */
+.scene-toolbar{display:flex;gap:8px;flex-wrap:wrap;padding:10px 14px;background:#07131f;border-top:1px solid #28445d}
+.scene-toolbar .btn{padding:8px 11px}
+.scene-status{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;padding:12px 14px;background:#081521;border-top:1px solid #20394f}
+.scene-status .readout{min-height:62px}
+.collision-panel{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;background:#0b1d2b;border:1px solid #294b66;border-radius:12px;padding:10px;margin-top:10px}
+.collision-dot{width:14px;height:14px;border-radius:50%;background:#47dfbd;box-shadow:0 0 15px #47dfbd88}
+.collision-dot.warn{background:#ffbe62;box-shadow:0 0 15px #ffbe6288}
+.collision-dot.danger{background:#ff6f7d;box-shadow:0 0 15px #ff6f7d88}
+.sequence-track{display:flex;gap:6px;overflow:auto;padding:8px 0}
+.seq-step{flex:0 0 auto;min-width:82px;background:#0a2133;border:1px solid #2a4f6a;border-radius:10px;padding:8px;text-align:center;cursor:pointer}
+.seq-step.active{border-color:#50ddff;background:#10384f;box-shadow:0 0 0 2px #50ddff1a}
+.seq-step.done{border-color:#47dfbd;background:#0e332d}
+.seq-step b{display:block;font-size:12px}.seq-step span{font-size:10px;color:#91adc1}
+.legend-3d{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin-top:10px}
+.legend-item{display:flex;align-items:center;gap:7px;font-size:11px;color:#9fb6ca}
+.legend-swatch{width:14px;height:14px;border-radius:4px;border:1px solid #ffffff33}
+@media(max-width:900px){.scene-status{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.scene-status{grid-template-columns:1fr 1fr}.scene-toolbar .btn{flex:1 1 120px}}
+
 </style>
 </head>
 <body>
@@ -136,19 +249,26 @@ radial-gradient(circle at 50% 18%,#234968 0,#0c2338 34%,#06111c 78%);border-radi
 </aside>
 <main class="main">
   <div class="header">
+    <button class="hamburger" onclick="toggleMenu(true)" aria-label="Abrir menú">☰</button>
     <div><h1 id="pageTitle">Panel principal</h1><p id="pageSub">Gemelo digital integral y sistema operativo industrial</p></div>
     <div class="status" id="deviceStatus">● Detectando dispositivo</div>
   </div>
 
 <section class="page active" data-page="dashboard">
-<div class="version-banner"><b>VERSIÓN 15.0 · CONTENIDO VERIFICABLE</b><br><span>36 matrices Mecos, punzones solicitados, multiplegado, simulación, WhatsApp, correo, CRM, presupuestos, inventarios y más.</span><div class="actions"><button class="btn" onclick="go('tools')">Ver matrices y punzones</button><button class="btn secondary" onclick="go('clients')">Ver WhatsApp y correo</button><button class="btn secondary" onclick="go('bends')">Ver multiplegado</button></div></div>
+<div class="version-banner"><b>VERSIÓN 18.0 · CONTENIDO VERIFICABLE</b><br><span>36 matrices Mecos, punzones solicitados, multiplegado, simulación, WhatsApp, correo, CRM, presupuestos, inventarios y más.</span><div class="actions"><button class="btn" onclick="go('tools')">Ver matrices y punzones</button><button class="btn secondary" onclick="go('clients')">Ver WhatsApp y correo</button><button class="btn secondary" onclick="go('bends')">Ver multiplegado</button></div></div>
 <div class="grid">
   <div class="card"><div class="kpis">
     <div class="kpi"><span>Dispositivo</span><b id="kDevice">—</b></div>
     <div class="kpi"><span>Pliegues activos</span><b id="kBends">3</b></div>
     <div class="kpi"><span>Herramientas</span><b id="kTools">—</b></div>
     <div class="kpi"><span>Tiempo estimado</span><b id="kTime">0 min</b></div>
-  </div></div>
+  </div>
+<div class="graphic-strip">
+  <div class="graphic-chip"><b>3D Ultimate</b><span>Gemelo visual con utillaje dinámico, secuencia automática y captura</span></div>
+  <div class="graphic-chip"><b>36 matrices</b><span>Mecos V6–V50 y cuatro ángulos</span></div>
+  <div class="graphic-chip"><b>21 módulos</b><span>Ingeniería, producción, CRM e IA</span></div>
+  <div class="graphic-chip"><b>100 % responsive</b><span>Diseño fluido sin desplazamiento lateral</span></div>
+</div></div>
   <div class="card c8">
     <h2>Trabajo actual</h2>
     <div class="fields cols3">
@@ -242,27 +362,130 @@ radial-gradient(circle at 50% 18%,#234968 0,#0c2338 34%,#06111c 78%);border-radi
   </div>
 </div></section>
 
+
+
 <section class="page" data-page="simulation">
 <div class="grid">
-  <div class="card">
-    <h2>Simulación 3D mejorada · Vista de plegadora</h2>
-    <div class="sim-shell">
-      <canvas id="sim"></canvas>
-      <div class="legend">
-        <div><span class="dot" style="background:#c9d6df"></span>Trancha / ariete</div>
-        <div><span class="dot" style="background:#f0f5f8"></span>Punzón</div>
-        <div><span class="dot" style="background:#5f7890"></span>Mesa y matriz</div>
-        <div><span class="dot" style="background:#43d2b6"></span>Chapa</div>
+  <div class="card sim-card">
+    <div class="sim-head">
+      <div class="sim-title-wrap">
+        <h2>Simulación industrial 3D · Gemelo digital de plegadora</h2>
+        <p>Escena interactiva con máquina, utillaje, topes, apoyos, chapa y secuencia multiplegado.</p>
+      </div>
+      <div class="sim-badges">
+        <span class="pill">Motor v17</span><span class="pill">Perspectiva dinámica</span><span class="pill">Utillaje enlazado</span>
       </div>
     </div>
-    <div class="range-row"><span>Vista</span><input id="viewSlider" type="range" min="-45" max="45" value="0" oninput="drawSim()"><span id="viewVal">0°</span></div>
-    <div class="actions">
-      <button class="btn" onclick="toggleSim()">▶ / ⏸</button>
-      <button class="btn secondary" onclick="stepSim(-1)">Anterior</button>
-      <button class="btn secondary" onclick="stepSim(1)">Siguiente</button>
-      <button class="btn secondary" onclick="resetSim()">Reiniciar</button>
-      <span class="pill" id="simInfo">Pliegue 1/3 · 0°</span>
-      <span class="pill" id="collisionInfo">Sin colisiones</span>
+
+    <div class="sim-sidepanel">
+      <aside class="sim-config">
+        <h3>Configuración de escena</h3>
+        <div class="field"><label>Vista</label>
+          <select id="cameraSelect" onchange="setCameraView(this.value)">
+            <option value="operator">Operador</option><option value="front">Frontal</option>
+            <option value="side">Lateral</option><option value="top">Superior</option>
+            <option value="iso">Isométrica</option>
+          </select>
+        </div>
+        <div class="field"><label>Calidad gráfica</label>
+          <select id="renderQuality" onchange="setRenderQuality(this.value)">
+            <option value="high">Alta</option><option value="medium">Media</option><option value="mobile">Móvil</option>
+          </select>
+        </div>
+        <div class="field"><label>Acabado de chapa</label>
+          <select id="sheetFinish" onchange="drawSim()">
+            <option value="steel">Acero</option><option value="inox">Inoxidable</option>
+            <option value="aluminium">Aluminio</option><option value="galvanized">Galvanizado</option>
+          </select>
+        </div>
+        <div class="field"><label>Espesor visual</label>
+          <input id="visualThickness" type="range" min="1" max="8" step="1" value="3" oninput="drawSim()">
+        </div>
+        <div class="field"><label>Zoom</label>
+          <input id="sceneZoom" type="range" min="70" max="130" value="100" oninput="drawSim()">
+        </div>
+        <div class="scene-toggle">
+          <button id="toggleBackgauge" class="active" onclick="toggleScenePart('backgauge',this)">Topes</button>
+          <button id="toggleSupports" class="active" onclick="toggleScenePart('supports',this)">Apoyos</button>
+          <button id="toggleSafety" class="active" onclick="toggleScenePart('safety',this)">Seguridad</button>
+        </div>
+
+        <div class="sim-readout">
+          <div class="readout"><span>Pliegue</span><b id="readBend">1/3</b></div>
+          <div class="readout"><span>Ángulo</span><b id="readAngle">0°</b></div>
+          <div class="readout"><span>V</span><b id="readV">V16</b></div>
+          <div class="readout"><span>Punzón</span><b id="readPunch">30°</b></div>
+        </div>
+        <div class="scene-help">Arrastra sobre la escena para girar la vista. Usa la rueda o el gesto de pellizco para acercar y alejar.</div>
+        <div class="collision-panel">
+          <div><b>Estado de colisión</b><br><span id="collisionDetail" class="muted">Sin interferencias detectadas.</span></div>
+          <div id="collisionDot" class="collision-dot"></div>
+        </div>
+        <div class="legend-3d">
+          <div class="legend-item"><span class="legend-swatch" style="background:#cad3da"></span>Ariete / trancha</div>
+          <div class="legend-item"><span class="legend-swatch" style="background:#eef3f6"></span>Punzón</div>
+          <div class="legend-item"><span class="legend-swatch" style="background:#6c8294"></span>Matriz</div>
+          <div class="legend-item"><span class="legend-swatch" style="background:#4ce0be"></span>Chapa</div>
+        </div>
+      </aside>
+
+      <div class="sim-stage-wrap">
+        <div class="sim-stage">
+          <canvas id="sim"></canvas>
+          <div class="machine-badge">Bystronic Xpert 3100 × 100 t · Mecos</div>
+          <div class="sim-hud">
+            <div class="hud-panel hud-left">
+              <div class="hud-label">Máquina</div><div class="hud-value">Bystronic Xpert</div>
+              <div class="mini-gauge"><span>Carga</span><i></i></div>
+            </div>
+            <div class="hud-panel hud-right">
+              <div class="hud-label">Operación activa</div><div class="hud-value" id="simInfo">Pliegue 1/3 · 0°</div>
+              <div id="collisionInfo" class="good" style="font-size:12px;margin-top:3px">Sin colisiones</div>
+            </div>
+            <div class="hud-bottom">
+              <span class="pill" id="hudTool">Punzón recto 30°</span>
+              <span class="pill" id="hudDie">Matriz V16 88°</span>
+              <span class="pill" id="hudMaterial">Chapa 2,0 mm</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="scene-toolbar">
+      <button class="btn secondary" onclick="playFullSequence()">▶ Secuencia completa</button>
+      <button class="btn secondary" onclick="setSpeed(0.6)">Lenta</button>
+      <button class="btn secondary" onclick="setSpeed(1)">Normal</button>
+      <button class="btn secondary" onclick="setSpeed(1.8)">Rápida</button>
+      <button class="btn secondary" onclick="captureScene()">Capturar vista</button>
+    </div>
+    <div class="scene-status">
+      <div class="readout"><span>Cámara</span><b id="statusCamera">Operador</b></div>
+      <div class="readout"><span>Velocidad</span><b id="statusSpeed">Normal</b></div>
+      <div class="readout"><span>Secuencia</span><b id="statusSequence">Manual</b></div>
+      <div class="readout"><span>Calidad</span><b id="statusQuality">Alta</b></div>
+      <div class="readout"><span>FPS objetivo</span><b>60</b></div>
+    </div>
+    <div style="padding:0 14px 12px;background:#081521"><div class="sequence-track" id="sequenceTrack"></div></div>
+    <div class="sim-controls">
+      <div class="sim-control-left">
+        <button class="btn" onclick="toggleSim()">▶ Reproducir / Pausa</button>
+        <button class="btn secondary" onclick="stepSim(-1)">◀ Anterior</button>
+        <button class="btn secondary" onclick="stepSim(1)">Siguiente ▶</button>
+        <button class="btn secondary" onclick="resetSim()">↺ Reiniciar</button>
+      </div>
+      <div class="sim-control-right">
+        <span class="pill">Arrastre táctil</span><span class="pill">Zoom</span><span class="pill">Multiplegado</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Estado visual del trabajo</h2>
+    <div class="panel-grid">
+      <div class="panel-stat"><span>Herramienta superior</span><b id="statPunch">Recto 30°</b></div>
+      <div class="panel-stat"><span>Herramienta inferior</span><b id="statDie">V16 88°</b></div>
+      <div class="panel-stat"><span>Secuencia</span><b id="statSequence">3 pliegues</b></div>
     </div>
   </div>
 </div></section>
@@ -275,7 +498,13 @@ radial-gradient(circle at 50% 18%,#234968 0,#0c2338 34%,#06111c 78%);border-radi
       <div class="field"><label>Fabricante / casa</label><select id="fBrand" onchange="renderTools()"><option>Todos</option><option>Mecos</option><option>Bystronic</option><option>TRUMPF</option><option>AMADA</option><option>Corplec</option></select></div>
       <div class="field"><label>Tipo</label><select id="fType" onchange="renderTools()"><option>Todos</option><option>Punzón</option><option>Matriz</option></select></div>
       <div class="field"><label>Ángulo</label><select id="fAngle" onchange="renderTools()"><option>Todos</option><option>30</option><option>60</option><option>88</option><option>90</option></select></div>
-      <div class="field"><label>Buscar</label><input id="fSearch" oninput="renderTools()" placeholder="V16, pata de cabra, recto..."></div>
+      <div class="field"><label>Buscar matriz o punzón</label>
+      <input id="fSearch" oninput="renderTools()" placeholder="Ej.: V16, Bystronic, Mecos, 90°, pata de cabra">
+    </div>
+    <div class="actions" style="margin-top:4px">
+      <button class="btn secondary" onclick="clearToolFilters()">Limpiar filtros</button>
+      <span class="pill" id="toolCount">0 coincidencias</span>
+    </div>
     </div>
     <h3>Montaje seleccionado</h3>
     <div id="mountInfo" class="notice">Selecciona un punzón y una matriz.</div>
@@ -527,9 +756,40 @@ const PAGE_META={
 };
 const LABELS={dashboard:'Panel',import:'Importar',bends:'Pliegues',calc:'Comparar V',simulation:'3D',tools:'Utillaje',production:'Tiempos',quality:'Calidad',clients:'Clientes',quotes:'Presup.',planner:'Planificar',inventory:'Inventario',documents:'Docs',analytics:'Indicadores',preparation:'Preparar',strategies:'Escenarios',calibration:'Calibrar',traceability:'Trazabilidad',rules:'Reglas',ai:'IA'};
 const nav=document.getElementById('nav');
-Object.entries(LABELS).forEach(([k,v],i)=>{const b=document.createElement('button');b.textContent=v;b.dataset.page=k;b.className=i?'':'active';b.onclick=()=>go(k);nav.appendChild(b)});
+const MENU_GROUPS=[
+  ['Trabajo',['dashboard','import','bends','simulation','calc','tools']],
+  ['Producción',['production','quality','preparation','strategies','calibration']],
+  ['Gestión',['clients','quotes','planner','inventory','documents','analytics']],
+  ['Conocimiento',['traceability','rules','ai']]
+];
+MENU_GROUPS.forEach(([title,items])=>{
+  const group=document.createElement('div');group.className='nav-group';
+  group.innerHTML=`<div class="nav-title">${title}</div>`;
+  items.forEach((k)=>{
+    const b=document.createElement('button');
+    b.textContent=LABELS[k];
+    b.dataset.page=k;
+    b.dataset.search=(LABELS[k]+' '+PAGE_META[k][0]+' '+PAGE_META[k][1]).toLowerCase();
+    b.className=k==='dashboard'?'active':'';
+    b.onclick=()=>{go(k);if(innerWidth<=900)toggleMenu(false)};
+    group.appendChild(b);
+  });
+  nav.appendChild(group);
+});
 const launcher=document.getElementById('moduleLauncher');if(launcher){Object.entries(LABELS).forEach(([k,v])=>{launcher.insertAdjacentHTML('beforeend',`<button class="module-link" onclick="go('${k}')"><strong>${v}</strong><small>${PAGE_META[k]?.[1]||''}</small></button>`);});}
 function go(k){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.dataset.page===k));document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===k));pageTitle.textContent=PAGE_META[k][0];pageSub.textContent=PAGE_META[k][1];if(k==='simulation')setTimeout(drawSim,40)}
+function toggleMenu(open){document.body.classList.toggle('menu-open',open)}
+function filterMenu(){
+  const q=normalizeText(menuSearch.value);
+  document.querySelectorAll('.nav-group').forEach(g=>{
+    let visible=0;
+    g.querySelectorAll('button[data-page]').forEach(b=>{
+      const show=!q||normalizeText(b.dataset.search).includes(q);
+      b.style.display=show?'':'none';if(show)visible++;
+    });
+    g.style.display=visible?'':'none';
+  });
+}
 function detectDevice(){const w=window.innerWidth;let d=w<=760?'Móvil':w<=1100?'Tablet':'PC';kDevice.textContent=d;deviceStatus.textContent='● '+d+' · interfaz adaptada';document.body.dataset.device=d.toLowerCase()}
 window.addEventListener('resize',()=>{detectDevice();if(document.querySelector('[data-page="simulation"]').classList.contains('active'))drawSim()});detectDevice();
 
@@ -587,38 +847,273 @@ tools.push(
  {brand:'Corplec',family:'Corplec',type:'Matriz',name:'Matriz estándar V12 90°',angle:90,v:12,shape:'V',ref:'COR-V12-90'}
 );
 let selPunch=null,selDie=null;
-function renderTools(){const brand=fBrand.value,type=fType.value,angle=fAngle.value,q=fSearch.value.toLowerCase();const list=tools.filter(t=>(brand==='Todos'||t.brand===brand)&&(type==='Todos'||t.type===type)&&(angle==='Todos'||String(t.angle)===angle)&&(!q||(`${t.name} ${t.ref}`).toLowerCase().includes(q)));
-toolGrid.innerHTML=list.map((t,i)=>{const idx=tools.indexOf(t);const selected=(selPunch===idx||selDie===idx)?' selected':'';return `<div class="tool-card${selected}" onclick="selectTool(${idx})"><b>${t.name}</b><small>${t.brand} · ${t.family}</small><small>${t.type} · ${t.angle}° · ${t.v?'V'+t.v:'R'+(t.r||'—')}</small><small>Ref. ${t.ref}</small></div>`}).join('')||'<div class="muted">No hay coincidencias.</div>';kTools.textContent=tools.length}
+function normalizeText(value){
+  return String(value??'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[°º]/g,'').replace(/\s+/g,' ').trim();
+}
+function toolSearchText(t){
+  return normalizeText([
+    t.brand,t.family,t.type,t.name,t.angle,t.v?`v${t.v}`:'',t.v||'',t.r?`r${t.r}`:'',
+    t.shape,t.ref,`${t.angle} grados`,t.type==='Matriz'?'matriz die':'punzon punch'
+  ].join(' '));
+}
+function renderTools(){
+  const brand=normalizeText(fBrand.value),type=normalizeText(fType.value),angle=normalizeText(fAngle.value);
+  const query=normalizeText(fSearch.value);
+  const terms=query.split(' ').filter(Boolean);
+  const list=tools.filter(t=>{
+    const hay=toolSearchText(t);
+    const brandOk=brand==='todos'||normalizeText(t.brand)===brand||normalizeText(t.family)===brand||hay.includes(brand);
+    const typeOk=type==='todos'||normalizeText(t.type)===type;
+    const angleOk=angle==='todos'||String(t.angle)===angle;
+    const searchOk=!terms.length||terms.every(term=>hay.includes(term));
+    return brandOk&&typeOk&&angleOk&&searchOk;
+  });
+  toolGrid.innerHTML=list.map(t=>{
+    const idx=tools.indexOf(t);
+    const selected=(selPunch===idx||selDie===idx)?' selected':'';
+    return `<div class="tool-card${selected}" onclick="selectTool(${idx})">
+      <b>${t.name}</b>
+      <small>${t.brand} · Compatible/familia ${t.family}</small>
+      <small>${t.type} · ${t.angle}° · ${t.v?'V'+t.v:'R'+(t.r||'—')}</small>
+      <small>Ref. ${t.ref}</small>
+      <button class="btn secondary" style="margin-top:8px;width:100%" onclick="event.stopPropagation();selectTool(${idx})">Seleccionar</button>
+    </div>`;
+  }).join('')||`<div class="notice"><b>No hay coincidencias con los filtros actuales.</b><br>Prueba a pulsar “Limpiar filtros” o busca solo por V, ángulo, marca o tipo.</div>`;
+  toolCount.textContent=`${list.length} coincidencia${list.length===1?'':'s'}`;
+  kTools.textContent=tools.length;
+}
+function clearToolFilters(){
+  fBrand.value='Todos';fType.value='Todos';fAngle.value='Todos';fSearch.value='';renderTools();
+document.addEventListener('keydown',e=>{if(e.key==='Escape')toggleMenu(false)});
+}
 function selectTool(i){const t=tools[i];if(t.type==='Punzón')selPunch=i;else selDie=i;renderTools();const p=selPunch!=null?tools[selPunch]:null,d=selDie!=null?tools[selDie]:null;mountInfo.innerHTML=`<b>Punzón:</b> ${p?p.name:'Pendiente'}<br><b>Matriz:</b> ${d?d.name:'Pendiente'}${p&&d?`<br><span class="${Math.abs(p.angle-d.angle)<=2?'good':'warntext'}">${Math.abs(p.angle-d.angle)<=2?'Montaje angular compatible de forma preliminar.':'Revisar compatibilidad angular y método de plegado.'}</span>`:''}`}
 renderTools();
 
-const cv=document.getElementById('sim'),ctx=cv.getContext('2d');let simStep=0,simProgress=0,playing=false,lastT=0;
-function iso(x,y,z,scale,cx,cy,view){const a=(30+view*.18)*Math.PI/180;return [cx+(x-z)*Math.cos(a)*scale,cy+(x+z)*Math.sin(a)*scale-y*scale]}
-function poly(points,fill,stroke='#0000'){ctx.beginPath();ctx.moveTo(points[0][0],points[0][1]);points.slice(1).forEach(p=>ctx.lineTo(p[0],p[1]));ctx.closePath();ctx.fillStyle=fill;ctx.fill();if(stroke!=='#0000'){ctx.strokeStyle=stroke;ctx.stroke()}}
-function box(x,y,z,w,h,d,fill,scale,cx,cy,view){const P=(X,Y,Z)=>iso(X,Y,Z,scale,cx,cy,view);const p000=P(x,y,z),p100=P(x+w,y,z),p110=P(x+w,y+h,z),p010=P(x,y+h,z),p001=P(x,y,z+d),p101=P(x+w,y,z+d),p111=P(x+w,y+h,z+d),p011=P(x,y+h,z+d);
-poly([p000,p100,p101,p001],fill);poly([p010,p110,p111,p011],shade(fill,18));poly([p100,p110,p111,p101],shade(fill,-16));}
-function shade(hex,amt){let c=hex.replace('#','');if(c.length===3)c=c.split('').map(x=>x+x).join('');let n=parseInt(c,16),r=Math.max(0,Math.min(255,(n>>16)+amt)),g=Math.max(0,Math.min(255,((n>>8)&255)+amt)),b=Math.max(0,Math.min(255,(n&255)+amt));return `rgb(${r},${g},${b})`}
-function drawSim(){const dpr=Math.min(devicePixelRatio||1,2);cv.width=Math.max(1,cv.clientWidth*dpr);cv.height=Math.max(1,cv.clientHeight*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);const w=cv.clientWidth,h=cv.clientHeight;ctx.clearRect(0,0,w,h);
-const view=+viewSlider.value;viewVal.textContent=view+'°';const scale=Math.min(w/520,h/500);const cx=w*.5,cy=h*.72;
-const floor=ctx.createLinearGradient(0,h*.4,0,h);floor.addColorStop(0,'#10283d');floor.addColorStop(1,'#06101a');ctx.fillStyle=floor;ctx.fillRect(0,0,w,h);
-ctx.globalAlpha=.22;ctx.strokeStyle='#6d8ca4';for(let i=-8;i<=8;i++){let a=iso(i*45,0,-240,scale,cx,cy,view),b=iso(i*45,0,240,scale,cx,cy,view);ctx.beginPath();ctx.moveTo(...a);ctx.lineTo(...b);ctx.stroke()}ctx.globalAlpha=1;
-box(-205,0,-115,410,32,230,'#415b70',scale,cx,cy,view); // mesa
-box(-225,-35,-135,38,350,270,'#233a4d',scale,cx,cy,view); // montante izq
-box(187,-35,-135,38,350,270,'#233a4d',scale,cx,cy,view); // montante der
-box(-205,280,-115,410,45,230,'#c1ccd5',scale,cx,cy,view); // trancha
-const ramDrop=120*simProgress;box(-188,210-ramDrop,-85,376,38,170,'#d5dde4',scale,cx,cy,view); // ariete móvil
-box(-165,95-ramDrop,-20,330,120,40,'#eef3f6',scale,cx,cy,view); // punzón
-// matriz base
-box(-170,34,-36,340,42,72,'#62798e',scale,cx,cy,view);
-const p1=iso(-165,78,-3,scale,cx,cy,view),p2=iso(0,40,-3,scale,cx,cy,view),p3=iso(165,78,-3,scale,cx,cy,view);poly([p1,p2,p3], '#1c2f40');
-const bend=bends[Math.min(simStep,bends.length-1)]||{angle:90,dir:'Arriba'};const target=Math.min(145,180-bend.angle);const ang=(target*simProgress)*(bend.dir==='Abajo'?-1:1)*Math.PI/180;
-const center=iso(0,88,0,scale,cx,cy,view);ctx.lineCap='round';ctx.lineWidth=Math.max(5,8*scale);ctx.strokeStyle='#42d5b8';ctx.shadowColor='#42d5b8';ctx.shadowBlur=8;
-ctx.beginPath();const left=iso(-180,88,0,scale,cx,cy,view);ctx.moveTo(...left);ctx.lineTo(...center);const len=180*scale;ctx.lineTo(center[0]+Math.cos(-ang)*len,center[1]-Math.sin(-ang)*len*.55);ctx.stroke();ctx.shadowBlur=0;
-simInfo.textContent=`Pliegue ${Math.min(simStep+1,bends.length)}/${bends.length} · ${Math.round((bend.angle||90)*simProgress)}°`;collisionInfo.textContent=simProgress>.85&&bends.length>4?'Revisar giro de pieza':'Sin colisiones detectadas'}
-function animate(t){if(playing){if(!lastT)lastT=t;simProgress+=((t-lastT)/1700);lastT=t;if(simProgress>=1){simProgress=1;playing=false}drawSim()}requestAnimationFrame(animate)}
+
+const cv=document.getElementById('sim'),ctx=cv.getContext('2d');
+let simStep=0,simProgress=0,playing=false,lastT=0;
+let cameraView='operator',renderMode='high',orbitX=0,orbitY=0,dragging=false,lastPointer=null;
+let sceneParts={backgauge:true,supports:true,safety:true};let pinchDistance=0;let simSpeed=1;let fullSequence=false;
+
+const CAMERA_PRESETS={
+  operator:{yaw:-8,pitch:8,zoom:1.0},
+  front:{yaw:0,pitch:0,zoom:1.04},
+  side:{yaw:62,pitch:3,zoom:.93},
+  top:{yaw:0,pitch:66,zoom:.90},
+  iso:{yaw:-34,pitch:22,zoom:.92}
+};
+function setCameraView(name,btn){
+  cameraView=name;
+  if(document.getElementById('statusCamera'))statusCamera.textContent=({operator:'Operador',front:'Frontal',side:'Lateral',top:'Superior',iso:'Isométrica'})[name]||name;
+  if(document.getElementById('cameraSelect'))cameraSelect.value=name;
+  document.querySelectorAll('.view-btn').forEach(b=>b.classList.toggle('active',b===btn));
+  orbitX=0;orbitY=0;renderSequenceTrack();drawSim();
+}
+function setRenderQuality(v){renderMode=v;if(document.getElementById('statusQuality'))statusQuality.textContent=({high:'Alta',medium:'Media',mobile:'Móvil'})[v]||v;drawSim()}
+function toggleScenePart(part,btn){
+  sceneParts[part]=!sceneParts[part];
+  btn.classList.toggle('active',sceneParts[part]);
+  drawSim();
+}
+function setSpeed(v){simSpeed=v;if(document.getElementById('statusSpeed'))statusSpeed.textContent=v<1?'Lenta':v>1?'Rápida':'Normal'}
+function playFullSequence(){
+  fullSequence=true;simStep=0;simProgress=0;playing=true;lastT=0;
+  if(document.getElementById('statusSequence'))statusSequence.textContent='Automática';
+  renderSequenceTrack();
+}
+function captureScene(){
+  try{
+    const a=document.createElement('a');
+    a.href=cv.toDataURL('image/png');
+    a.download=`PlegarPro_pliegue_${simStep+1}.png`;
+    a.click();
+  }catch(e){alert('No se pudo capturar la vista.');}
+}
+function renderSequenceTrack(){
+  const el=document.getElementById('sequenceTrack');if(!el)return;
+  el.innerHTML=bends.map((b,i)=>`<div class="seq-step ${i<simStep?'done':''} ${i===simStep?'active':''}" onclick="simStep=${i};simProgress=0;playing=false;fullSequence=false;renderSequenceTrack();drawSim()"><b>#${i+1}</b><span>${b.angle}° · ${b.dir}</span></div>`).join('');
+}
+function hexShade(hex,amt){
+  let c=hex.replace('#','');if(c.length===3)c=c.split('').map(x=>x+x).join('');
+  let n=parseInt(c,16),r=Math.max(0,Math.min(255,(n>>16)+amt)),
+  g=Math.max(0,Math.min(255,((n>>8)&255)+amt)),b=Math.max(0,Math.min(255,(n&255)+amt));
+  return `rgb(${r},${g},${b})`;
+}
+function project3D(x,y,z,scene){
+  const preset=CAMERA_PRESETS[cameraView],yaw=(preset.yaw+orbitX)*Math.PI/180,pitch=(preset.pitch+orbitY)*Math.PI/180;
+  let X=x*Math.cos(yaw)-z*Math.sin(yaw),Z=x*Math.sin(yaw)+z*Math.cos(yaw);
+  let Y=y*Math.cos(pitch)-Z*Math.sin(pitch);Z=y*Math.sin(pitch)+Z*Math.cos(pitch);
+  const perspective=scene.depth/(scene.depth+Z+420);
+  return [scene.cx+X*scene.scale*preset.zoom*perspective,scene.cy-Y*scene.scale*preset.zoom*perspective,perspective,Z];
+}
+function face(points,fill,stroke='#0000',alpha=1){
+  const sorted=points;ctx.globalAlpha=alpha;ctx.beginPath();ctx.moveTo(sorted[0][0],sorted[0][1]);for(let i=1;i<sorted.length;i++)ctx.lineTo(sorted[i][0],sorted[i][1]);ctx.closePath();
+  if(fill instanceof CanvasGradient||fill instanceof CanvasPattern)ctx.fillStyle=fill;else ctx.fillStyle=fill;ctx.fill();
+  if(stroke!=='#0000'){ctx.strokeStyle=stroke;ctx.lineWidth=1;ctx.stroke()}ctx.globalAlpha=1;
+}
+function box3D(x,y,z,w,h,d,color,scene,edge='#0000'){
+  const P=(X,Y,Z)=>project3D(X,Y,Z,scene);
+  const A=P(x,y,z),B=P(x+w,y,z),C=P(x+w,y+h,z),D=P(x,y+h,z),E=P(x,y,z+d),F=P(x+w,y,z+d),G=P(x+w,y+h,z+d),H=P(x,y+h,z+d);
+  face([A,B,C,D],hexShade(color,10),edge);face([B,F,G,C],hexShade(color,-23),edge);face([D,C,G,H],hexShade(color,25),edge);face([E,F,G,H],color,edge);
+}
+function cylinder3D(x,y,z,r,h,color,scene){
+  const rings=18,top=[],bottom=[];for(let i=0;i<rings;i++){const a=i/rings*Math.PI*2;bottom.push(project3D(x+Math.cos(a)*r,y,z+Math.sin(a)*r,scene));top.push(project3D(x+Math.cos(a)*r,y+h,z+Math.sin(a)*r,scene))}
+  face(bottom,color);for(let i=0;i<rings;i++){face([bottom[i],bottom[(i+1)%rings],top[(i+1)%rings],top[i]],hexShade(color,(i-rings/2)*1.6))}
+  face(top,hexShade(color,28));
+}
+function line3D(a,b,color,width,scene,glow=0){
+  const A=project3D(...a,scene),B=project3D(...b,scene);ctx.save();ctx.beginPath();ctx.moveTo(A[0],A[1]);ctx.lineTo(B[0],B[1]);ctx.lineWidth=width*A[2];ctx.strokeStyle=color;ctx.lineCap='round';
+  if(glow){ctx.shadowColor=color;ctx.shadowBlur=glow}ctx.stroke();ctx.restore();
+}
+function drawFloor(scene,w,h){
+  const g=ctx.createLinearGradient(0,h*.15,0,h);g.addColorStop(0,'#0b1e2d');g.addColorStop(.65,'#06111b');g.addColorStop(1,'#02070b');ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
+  const horizon=project3D(0,0,300,scene);const glow=ctx.createRadialGradient(w/2,horizon[1],10,w/2,horizon[1],w*.65);glow.addColorStop(0,'#4fc9ff16');glow.addColorStop(1,'#0000');ctx.fillStyle=glow;ctx.fillRect(0,0,w,h);
+  ctx.save();ctx.strokeStyle='#6a8ba51c';ctx.lineWidth=1;
+  for(let x=-600;x<=600;x+=60){const a=project3D(x,0,-380,scene),b=project3D(x,0,420,scene);ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke()}
+  for(let z=-380;z<=420;z+=60){const a=project3D(-600,0,z,scene),b=project3D(600,0,z,scene);ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke()}ctx.restore();
+}
+function drawMachine(scene,w,h){
+  // floor shadow
+  const sh=ctx.createRadialGradient(w/2,h*.76,10,w/2,h*.76,w*.34);sh.addColorStop(0,'#000b');sh.addColorStop(1,'#0000');ctx.fillStyle=sh;ctx.fillRect(0,h*.48,w,h*.52);
+  // feet and lower cabinet
+  box3D(-242,0,-110,48,42,220,'#142c40',scene,'#315069');
+  box3D(194,0,-110,48,42,220,'#142c40',scene,'#315069');
+  box3D(-210,32,-105,420,62,210,'#17364f',scene,'#365a75');
+  // side frames
+  box3D(-245,82,-125,52,330,250,'#17364f',scene,'#375c77');
+  box3D(193,82,-125,52,330,250,'#17364f',scene,'#375c77');
+  // rear frame/bridge
+  box3D(-205,360,-118,410,55,236,'#1d405d',scene,'#426b88');
+  // hydraulic cylinders
+  cylinder3D(-150,385,-22,25,88,'#c3cdd5',scene);
+  cylinder3D(150,385,-22,25,88,'#c3cdd5',scene);
+  cylinder3D(-150,385,-22,15,70,'#718899',scene);
+  cylinder3D(150,385,-22,15,70,'#718899',scene);
+  // table and support rails
+  box3D(-216,88,-104,432,48,208,'#566f84',scene,'#8398aa');
+  box3D(-202,132,-84,404,22,168,'#8da0af',scene,'#b5c1ca');
+  // segmented die holder
+  for(let i=0;i<12;i++)box3D(-180+i*30,152,-25,28,34,50,i%2?'#6b8294':'#768c9e',scene,'#9babb7');
+  // V die visible top
+  const activeDie=selDie!=null?tools[selDie]:null;
+  const dieOpen=Math.max(12,Math.min(62,(activeDie&&activeDie.v?activeDie.v:16)*1.35));
+  const dieL=project3D(-178,187,0,scene),dieLC=project3D(-dieOpen/2,166,0,scene),dieRC=project3D(dieOpen/2,166,0,scene),dieR=project3D(178,187,0,scene);
+  face([dieL,dieLC,dieRC,dieR],'#172936','#8797a3');
+  // upper ram
+  const ramDrop=130*simProgress;
+  box3D(-210,296-ramDrop,-98,420,72,196,'#cad3da',scene,'#eef4f7');
+  box3D(-196,274-ramDrop,-80,392,27,160,'#93a6b5',scene,'#c9d4dc');
+  // adapters segmented
+  for(let i=0;i<10;i++)box3D(-175+i*35,241-ramDrop,-27,33,37,54,i%2?'#abb9c4':'#bac6cf',scene,'#e0e6ea');
+  // punch geometry linked to selected tool
+  const activePunch=selPunch!=null?tools[selPunch]:null;
+  const isGooseneck=activePunch&&/pata|goose/i.test(activePunch.name);
+  box3D(-176,197-ramDrop,-18,352,46,36,'#e9eef1',scene,'#ffffff');
+  if(isGooseneck){
+    box3D(-176,176-ramDrop,-18,352,22,36,'#e9eef1',scene,'#ffffff');
+    box3D(-176,156-ramDrop,-18,95,22,36,'#e9eef1',scene,'#ffffff');
+    box3D(81,156-ramDrop,-18,95,22,36,'#e9eef1',scene,'#ffffff');
+    const pA=project3D(-95,156-ramDrop,0,scene),pB=project3D(95,156-ramDrop,0,scene),pC=project3D(0,136-ramDrop,0,scene);
+    face([pA,pB,pC],'#f5f7f9','#c9d3da');
+  }else{
+    const punchAngle=activePunch&&activePunch.angle?activePunch.angle:30;
+    const tipY=172-ramDrop-(punchAngle>80?4:0);
+    const pA=project3D(-176,197-ramDrop,0,scene),pB=project3D(176,197-ramDrop,0,scene),pC=project3D(0,tipY,0,scene);
+    face([pA,pB,pC],'#f5f7f9','#c9d3da');
+  }
+  // control panel
+  box3D(210,226,-88,44,100,58,'#203f58',scene,'#52708a');
+  const screen=project3D(233,280,-90,scene);ctx.save();ctx.fillStyle='#4ee3ff';ctx.shadowColor='#4ee3ff';ctx.shadowBlur=10;ctx.fillRect(screen[0]-10,screen[1]-7,20,14);ctx.restore();
+  // backgauge rails and fingers
+  if(sceneParts.backgauge){
+    box3D(-150,180,86,300,20,24,'#263f53',scene,'#4c6579');
+    for(let s of [-90,90]){box3D(s-16,178,74,32,28,55,'#657c8f',scene,'#9bb0bf');box3D(s-6,165,25,12,20,58,'#8ca1b0',scene)}
+  }
+  // front support arms
+  if(sceneParts.supports){
+    for(let s of [-125,125]){box3D(s-13,94,-230,26,20,170,'#2b4a61',scene,'#55718a');box3D(s-28,82,-250,56,12,45,'#647f93',scene)}
+  }
+  if(sceneParts.safety){
+    line3D([-245,85,-160],[-245,410,-160],'#ff6f7d',3,scene,10);
+    line3D([245,85,-160],[245,410,-160],'#ff6f7d',3,scene,10);
+  }
+}
+function drawSheet(scene){
+  const bend=bends[Math.min(simStep,bends.length-1)]||{angle:90,dir:'Arriba'};
+  const target=Math.max(0,180-(bend.angle||90)),sign=bend.dir==='Abajo'?-1:1,ang=target*simProgress*sign*Math.PI/180;
+  const center=[0,190,0],left=[-175,190,0],right=[175*Math.cos(ang),190+Math.sin(ang)*145,0];
+  const finish=(document.getElementById('sheetFinish')?.value)||'steel';
+  const palette={
+    steel:['#4ce0be','#a8fff0','#177a69'],
+    inox:['#dce7ee','#ffffff','#718897'],
+    aluminium:['#b9d9ea','#effaff','#6f9ab2'],
+    galvanized:['#9fb9c8','#e8f1f5','#627b8a']
+  }[finish];
+  const thick=+(document.getElementById('visualThickness')?.value||3);
+  line3D(left,center,palette[0],8+thick,scene,12);line3D(center,right,palette[0],8+thick,scene,12);
+  line3D([-175,194,5],[0,194,5],palette[1],2,scene);line3D([0,194,5],[175*Math.cos(ang),194+Math.sin(ang)*145,5],palette[1],2,scene);
+  line3D([-175,186-thick,-4],[0,186-thick,-4],palette[2],2+thick*.6,scene);line3D([0,186-thick,-4],[175*Math.cos(ang),186-thick+Math.sin(ang)*145,-4],palette[2],2+thick*.6,scene);
+}
+function drawLights(scene,w,h){
+  const lg=ctx.createLinearGradient(0,0,w,h);lg.addColorStop(0,'#ffffff10');lg.addColorStop(.4,'#0000');lg.addColorStop(1,'#50ddff08');ctx.fillStyle=lg;ctx.fillRect(0,0,w,h);
+  if(renderMode==='high'){ctx.save();ctx.globalCompositeOperation='screen';const bloom=ctx.createRadialGradient(w*.5,h*.35,0,w*.5,h*.35,w*.35);bloom.addColorStop(0,'#bdeaff12');bloom.addColorStop(1,'#0000');ctx.fillStyle=bloom;ctx.fillRect(0,0,w,h);ctx.restore()}
+}
+function drawSim(){
+  if(!cv)return;
+  const maxDpr=renderMode==='high'?2:renderMode==='medium'?1.5:1;
+  const dpr=Math.min(devicePixelRatio||1,maxDpr),w=cv.clientWidth,h=cv.clientHeight;
+  cv.width=Math.max(1,Math.round(w*dpr));cv.height=Math.max(1,Math.round(h*dpr));ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
+  const zoom=(+(document.getElementById('sceneZoom')?.value||100))/100;const scene={cx:w*.5,cy:h*.77,scale:Math.min(w/610,h/630)*zoom,depth:900};
+  drawFloor(scene,w,h);drawMachine(scene,w,h);drawSheet(scene);drawLights(scene,w,h);
+  const bend=bends[Math.min(simStep,bends.length-1)]||{angle:90};
+  simInfo.textContent=`Pliegue ${Math.min(simStep+1,bends.length)}/${bends.length} · ${Math.round((bend.angle||90)*simProgress)}°`;
+  const collisionRisk=(simProgress>.88&&bends.length>5)||(cameraView==='side'&&simProgress>.94&&bend.dir==='Abajo');
+  collisionInfo.textContent=collisionRisk?'Revisar posible interferencia':'Sin colisiones detectadas';
+  collisionInfo.className=collisionRisk?'warntext':'good';
+  if(document.getElementById('collisionDetail'))collisionDetail.textContent=collisionRisk?'La geometría actual puede aproximarse a topes, mesa o ala posterior. Revisar secuencia y herramienta.':'Sin interferencias detectadas en esta comprobación visual.';
+  if(document.getElementById('collisionDot'))collisionDot.className='collision-dot'+(collisionRisk?' warn':'');
+  renderSequenceTrack();
+  const p=selPunch!=null?tools[selPunch]:null,d=selDie!=null?tools[selDie]:null;
+  if(document.getElementById('hudTool'))hudTool.textContent=p?p.name:'Punzón recto 30°';
+  if(document.getElementById('hudDie'))hudDie.textContent=d?d.name:'Matriz V16 88°';
+  if(document.getElementById('hudMaterial'))hudMaterial.textContent=`Chapa ${jobThickness?.value||2} mm`;
+  if(document.getElementById('readBend'))readBend.textContent=`${Math.min(simStep+1,bends.length)}/${bends.length}`;
+  if(document.getElementById('readAngle'))readAngle.textContent=`${Math.round((bend.angle||90)*simProgress)}°`;
+  if(document.getElementById('readV'))readV.textContent=d&&d.v?`V${d.v}`:'V16';
+  if(document.getElementById('readPunch'))readPunch.textContent=p?`${p.angle}°`:'30°';
+  if(document.getElementById('statPunch'))statPunch.textContent=p?p.name:'Recto 30°';
+  if(document.getElementById('statDie'))statDie.textContent=d?d.name:'V16 88°';
+  if(document.getElementById('statSequence'))statSequence.textContent=`${bends.length} pliegues`;
+}
+function animate(t){
+  if(playing){if(!lastT)lastT=t;simProgress+=(t-lastT)/(1900/simSpeed);lastT=t;if(simProgress>=1){simProgress=1;if(fullSequence&&simStep<bends.length-1){simStep++;simProgress=0;lastT=t;renderSequenceTrack()}else{playing=false;fullSequence=false;if(document.getElementById('statusSequence'))statusSequence.textContent='Manual'}}drawSim()}
+  renderSequenceTrack();requestAnimationFrame(animate);
+}
 function toggleSim(){playing=!playing;lastT=0}
-function stepSim(d){if(d>0){if(simProgress<1)simProgress=1;else{simStep=Math.min(bends.length-1,simStep+1);simProgress=0}}else{if(simProgress>0)simProgress=0;else simStep=Math.max(0,simStep-1)}drawSim()}
-function resetSim(){simStep=0;simProgress=0;playing=false;drawSim()}requestAnimationFrame(animate);
+function stepSim(d){
+  if(d>0){if(simProgress<1)simProgress=1;else{simStep=Math.min(bends.length-1,simStep+1);simProgress=0}}
+  else{if(simProgress>0)simProgress=0;else simStep=Math.max(0,simStep-1)}
+  drawSim();
+}
+function resetSim(){simStep=0;simProgress=0;playing=false;fullSequence=false;if(document.getElementById('statusSequence'))statusSequence.textContent='Manual';renderSequenceTrack();drawSim()}
+cv.addEventListener('pointerdown',e=>{dragging=true;lastPointer=[e.clientX,e.clientY];cv.setPointerCapture(e.pointerId)});
+cv.addEventListener('pointermove',e=>{if(!dragging)return;orbitX+=(e.clientX-lastPointer[0])*.18;orbitY=Math.max(-25,Math.min(55,orbitY+(e.clientY-lastPointer[1])*.12));lastPointer=[e.clientX,e.clientY];drawSim()});
+cv.addEventListener('pointerup',()=>{dragging=false;lastPointer=null});
+cv.addEventListener('touchmove',e=>{
+  if(e.touches.length===2){
+    const dx=e.touches[0].clientX-e.touches[1].clientX,dy=e.touches[0].clientY-e.touches[1].clientY;
+    const dist=Math.hypot(dx,dy);
+    if(pinchDistance){
+      const z=document.getElementById('sceneZoom');
+      z.value=Math.max(70,Math.min(130,+z.value+(dist-pinchDistance)*.08));
+      drawSim();
+    }
+    pinchDistance=dist;e.preventDefault();
+  }
+},{passive:false});
+cv.addEventListener('touchend',()=>{pinchDistance=0});
+cv.addEventListener('wheel',e=>{e.preventDefault();orbitY=Math.max(-25,Math.min(55,orbitY+e.deltaY*.025));drawSim()},{passive:false});
+requestAnimationFrame(animate);
 
 function calcProduction(){const q=+pQty.value,b=+pBends.value,bt=+pBend.value,ha=+pHandle.value,pr=+pProg.value,to=+pTool.value,se=+pSetup.value;const per=b*(bt+ha),run=per*q/60,total=pr+to+se+run;kTime.textContent=total.toFixed(0)+' min';productionResult.innerHTML=`<div class="table-wrap"><table><tr><td>Programación</td><td>${pr.toFixed(1)} min</td></tr><tr><td>Montaje/cambio de utillaje</td><td>${to.toFixed(1)} min</td></tr><tr><td>Reglaje y primera pieza</td><td>${se.toFixed(1)} min</td></tr><tr><td>Tiempo por pieza</td><td>${per.toFixed(0)} s</td></tr><tr><td>Serie</td><td>${run.toFixed(1)} min</td></tr><tr><th>Total</th><th>${total.toFixed(1)} min</th></tr></table></div><div class="progress"><i style="width:100%"></i></div>`}
 let timerInt=null,timerSec=0;function tick(){timerSec++;timer.textContent=[Math.floor(timerSec/3600),Math.floor(timerSec%3600/60),timerSec%60].map(x=>String(x).padStart(2,'0')).join(':')}function startTimer(){if(!timerInt)timerInt=setInterval(tick,1000)}function pauseTimer(){clearInterval(timerInt);timerInt=null}function resetTimer(){pauseTimer();timerSec=0;timer.textContent='00:00:00'}
