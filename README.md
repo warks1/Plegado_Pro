@@ -1,18 +1,18 @@
-# Plegar Pro v6.1 Ultimate AI
+# Plegar Pro v7.0 Ultimate Workshop
 
-Beta acumulativa para GitHub Pages. Mantiene importación, simulación, producción, biblioteca, catálogos oficiales y copiloto IA.
+Versión acumulativa que recupera y amplía las funciones anteriores.
 
-## Novedad principal
-Motor de compensación por cambio de apertura V:
-- Ganancia o pérdida de medida final manteniendo el mismo desarrollo.
-- Corrección del desarrollo para mantener las cotas.
-- Variación total y reparto orientativo por ala.
-- Cotas interiores o exteriores.
-- Radio de punzón, material, espesor, ángulo y factor K.
-- Aviso orientativo de agujeros próximos al pliegue.
-- Calibración local con correcciones reales del taller.
+## Mejoras principales
+- Simulación gráfica mejorada con estructura de plegadora, montantes, mesa, trancha/ariete, punzón, matriz y chapa.
+- Secuencia editable de múltiples pliegues.
+- Interfaz responsive real para móvil, tablet y PC.
+- Biblioteca Mecos/Bystronic con matrices V6, V12, V16, V22, V24, V32, V36, V40 y V50 en 30°, 60°, 88° y 90°.
+- Punzón Mecos recto 30° y pata de cabra 90°.
+- Comparador de aperturas V con desarrollo, pérdida/ganancia de medida y corrección por ala.
+- Importación universal, producción, cronómetro, control de calidad y copiloto IA.
 
-## Uso
-Abre `index.html` o publica el contenido en GitHub Pages.
+## Ejecución
+Abre `index.html` o publica los archivos en GitHub Pages.
 
-Los cálculos son orientativos y deben validarse con tablas oficiales, máquina, utillaje y probeta.
+## Seguridad técnica
+Los cálculos son orientativos y deben validarse con tablas reales del fabricante, máquina, material, utillaje y pruebas de taller.
