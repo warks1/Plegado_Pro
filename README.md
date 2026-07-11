@@ -1,18 +1,25 @@
-# Plegar Pro v7.0 Ultimate Workshop
+# Plegar Pro v14.0 Industrial OS Beta
 
-Versión acumulativa que recupera y amplía las funciones anteriores.
+Beta web acumulativa para móvil, tablet y PC.
 
-## Mejoras principales
-- Simulación gráfica mejorada con estructura de plegadora, montantes, mesa, trancha/ariete, punzón, matriz y chapa.
-- Secuencia editable de múltiples pliegues.
-- Interfaz responsive real para móvil, tablet y PC.
-- Biblioteca Mecos/Bystronic con matrices V6, V12, V16, V22, V24, V32, V36, V40 y V50 en 30°, 60°, 88° y 90°.
-- Punzón Mecos recto 30° y pata de cabra 90°.
-- Comparador de aperturas V con desarrollo, pérdida/ganancia de medida y corrección por ala.
-- Importación universal, producción, cronómetro, control de calidad y copiloto IA.
+## Módulos incluidos
+- Importación de planos y modelos.
+- Secuencia multiplegado.
+- Comparador V: desarrollo, radio y pérdida/ganancia de medida.
+- Simulación de plegadora con mesa, trancha, punzón, matriz y chapa.
+- Biblioteca Mecos/Bystronic y selección de montaje.
+- Producción, cronómetro y control de calidad.
+- Clientes, WhatsApp y correo.
+- Presupuestos, planificación, inventario, documentación e indicadores.
+- Asistente de preparación.
+- Modo “Qué pasaría si…”.
+- Calibraciones por máquina, material, espesor y V.
+- Pasaporte digital y trazabilidad.
+- Reglas y procedimientos del taller.
+- Copiloto IA local de demostración.
 
-## Ejecución
-Abre `index.html` o publica los archivos en GitHub Pages.
+## Puesta en marcha
+Abra `index.html` o publique la carpeta en GitHub Pages.
 
-## Seguridad técnica
-Los cálculos son orientativos y deben validarse con tablas reales del fabricante, máquina, material, utillaje y pruebas de taller.
+## Nota
+Los cálculos y verificaciones son orientativos. Antes de fabricar deben validarse con la máquina, las tablas reales del fabricante, el material, el utillaje y una primera pieza de prueba.

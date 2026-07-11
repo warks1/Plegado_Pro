@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#07111f">
-<title>Plegar Pro v7.0 Ultimate Workshop</title>
+<title>Plegar Pro v14.0 Industrial OS Beta</title>
 <link rel="manifest" href="manifest.webmanifest">
 <style>
 :root{
@@ -73,6 +73,9 @@ radial-gradient(circle at 50% 18%,#234968 0,#0c2338 34%,#06111c 78%);border-radi
 .msg{max-width:88%;padding:10px 12px;border-radius:12px;margin:8px 0;line-height:1.4}.msg.user{margin-left:auto;background:#163e5c}.msg.ai{background:#10342f;border:1px solid #23665a}
 .chatrow{display:flex;gap:8px;margin-top:9px}.chatrow input{flex:1;min-width:0;background:#071522;border:1px solid #31546f;color:white;border-radius:10px;padding:10px}
 .progress{height:10px;border-radius:999px;background:#061522;overflow:hidden}.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+
+.client-list{display:grid;gap:8px;max-height:420px;overflow:auto}.client-row{background:#0b2134;border:1px solid #294b66;border-radius:12px;padding:10px;cursor:pointer}.client-row.active{outline:2px solid var(--accent);background:#10332e}.comm-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.comm-card{background:#0b2134;border:1px solid #294b66;border-radius:13px;padding:12px}.comm-card h3{margin-top:0}.small{font-size:12px}.badge{display:inline-block;padding:4px 8px;border-radius:999px;background:#17354e;border:1px solid #355f80;font-size:11px;color:#cfe7fb}.contact-actions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.contact-actions .btn{width:100%}
+
 .mobile-top{display:none}
 @media(max-width:1100px){
   .app{grid-template-columns:210px minmax(0,1fr)}
@@ -93,6 +96,7 @@ radial-gradient(circle at 50% 18%,#234968 0,#0c2338 34%,#06111c 78%);border-radi
   .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
   .fields,.fields.cols3{grid-template-columns:1fr}
   .tool-grid{grid-template-columns:1fr}
+  .comm-grid,.contact-actions{grid-template-columns:1fr}
   .bend-item{grid-template-columns:44px 1fr}.bend-item .field:nth-child(3){grid-column:2}.bend-item button{grid-column:2}
   canvas{height:min(58vh,470px)}
   .actions .btn{flex:1 1 130px}
@@ -105,18 +109,29 @@ radial-gradient(circle at 50% 18%,#234968 0,#0c2338 34%,#06111c 78%);border-radi
   .card{padding:10px}
   canvas{height:390px}
 }
+
+.strategy-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.strategy-card{background:#0a2133;border:1px solid #2b4d68;border-radius:14px;padding:12px}
+.checklist{display:grid;gap:8px}
+.check{display:flex;gap:10px;align-items:flex-start;padding:10px;background:#0a2133;border:1px solid #2b4d68;border-radius:12px}
+.check input{margin-top:3px;transform:scale(1.2)}
+.timeline{display:grid;gap:9px}
+.timeline-item{display:grid;grid-template-columns:105px 1fr;gap:10px;padding:10px;background:#0a2133;border-left:3px solid var(--accent2);border-radius:8px}
+.rule-row{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:end;padding:9px;background:#0a2133;border:1px solid #294b66;border-radius:12px;margin-bottom:8px}
+@media(max-width:760px){.strategy-grid{grid-template-columns:1fr}.rule-row{grid-template-columns:1fr}.timeline-item{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
 <div class="app">
 <aside class="sidebar">
   <div class="brand">PLEGAR <span>PRO</span></div>
-  <div class="version">v7.0 Ultimate Workshop</div>
+  <div class="version">v14.0 Industrial OS Beta</div>
   <nav class="nav" id="nav"></nav>
 </aside>
 <main class="main">
   <div class="header">
-    <div><h1 id="pageTitle">Panel principal</h1><p id="pageSub">Proyecto acumulativo profesional</p></div>
+    <div><h1 id="pageTitle">Panel principal</h1><p id="pageSub">Gemelo digital integral y sistema operativo industrial</p></div>
     <div class="status" id="deviceStatus">● Detectando dispositivo</div>
   </div>
 
@@ -302,6 +317,175 @@ radial-gradient(circle at 50% 18%,#234968 0,#0c2338 34%,#06111c 78%);border-radi
   <div class="card c7"><h2>Diagnóstico IA</h2><div id="qualityResult" class="notice">Introduce las medidas reales de la primera pieza.</div></div>
 </div></section>
 
+<section class="page" data-page="clients">
+<div class="grid">
+  <div class="card c4">
+    <h2>Clientes y contactos</h2>
+    <div class="fields" style="grid-template-columns:1fr">
+      <div class="field"><label>Buscar cliente</label><input id="clientSearch" oninput="renderClients()" placeholder="Empresa, contacto o teléfono"></div>
+    </div>
+    <div class="client-list" id="clientList"></div>
+    <div class="actions"><button class="btn" onclick="newClient()">Nuevo cliente</button><button class="btn secondary" onclick="saveClient()">Guardar</button></div>
+  </div>
+  <div class="card c8">
+    <h2>Ficha del cliente</h2>
+    <div class="fields cols3">
+      <div class="field"><label>Empresa</label><input id="clCompany"></div>
+      <div class="field"><label>Persona de contacto</label><input id="clContact"></div>
+      <div class="field"><label>CIF/NIF</label><input id="clTax"></div>
+      <div class="field"><label>Teléfono / WhatsApp</label><input id="clPhone" inputmode="tel" placeholder="34600111222"></div>
+      <div class="field"><label>Correo electrónico</label><input id="clEmail" type="email" placeholder="cliente@empresa.com"></div>
+      <div class="field"><label>Dirección</label><input id="clAddress"></div>
+    </div>
+    <div class="field" style="margin-top:10px"><label>Observaciones</label><textarea id="clNotes" rows="3"></textarea></div>
+    <h3>Comunicación</h3>
+    <div class="comm-grid">
+      <div class="comm-card"><h3>WhatsApp</h3><div class="field"><label>Mensaje</label><textarea id="waMessage" rows="4">Hola, le escribimos desde Plegar Pro sobre su trabajo.</textarea></div><div class="contact-actions"><button class="btn" onclick="openWhatsApp()">Abrir WhatsApp</button><button class="btn secondary" onclick="copyWhatsApp()">Copiar mensaje</button></div><p class="muted small">Abre una conversación usando el número guardado. El envío de archivos se completa desde WhatsApp.</p></div>
+      <div class="comm-card"><h3>Correo electrónico</h3><div class="field"><label>Asunto</label><input id="mailSubject" value="Información de su trabajo - Plegar Pro"></div><div class="field"><label>Mensaje</label><textarea id="mailBody" rows="4">Hola, adjuntamos la información correspondiente a su trabajo.</textarea></div><div class="contact-actions"><button class="btn" onclick="openEmail()">Redactar correo</button><button class="btn secondary" onclick="copyEmail()">Copiar contenido</button></div><p class="muted small">Abre la aplicación de correo configurada en el dispositivo.</p></div>
+    </div>
+    <h3>Historial del cliente</h3>
+    <div class="table-wrap"><table><tr><th>Fecha</th><th>Trabajo</th><th>Estado</th><th>Canal</th></tr><tbody id="clientHistory"></tbody></table></div>
+  </div>
+</div></section>
+
+
+<section class="page" data-page="quotes">
+<div class="grid">
+  <div class="card c5"><h2>Presupuesto técnico</h2><div class="fields">
+    <div class="field"><label>Cliente</label><input id="qClient" value="Cliente seleccionado"></div>
+    <div class="field"><label>Referencia</label><input id="qRef" value="SOP-001"></div>
+    <div class="field"><label>Cantidad</label><input id="qQty" type="number" value="20"></div>
+    <div class="field"><label>Material (€)</label><input id="qMaterial" type="number" step=".01" value="42"></div>
+    <div class="field"><label>Máquina €/h</label><input id="qMachine" type="number" step=".01" value="55"></div>
+    <div class="field"><label>Mano de obra €/h</label><input id="qLabor" type="number" step=".01" value="28"></div>
+    <div class="field"><label>Tiempo total (min)</label><input id="qMinutes" type="number" value="35"></div>
+    <div class="field"><label>Margen (%)</label><input id="qMargin" type="number" value="25"></div>
+  </div><div class="actions"><button class="btn" onclick="calcQuote()">Calcular presupuesto</button><button class="btn secondary" onclick="printQuote()">Imprimir / PDF</button></div></div>
+  <div class="card c7"><h2>Resumen</h2><div id="quoteResult" class="muted">Pendiente de cálculo.</div></div>
+</div></section>
+
+<section class="page" data-page="planner">
+<div class="grid"><div class="card c4"><h2>Nueva orden</h2><div class="fields" style="grid-template-columns:1fr">
+<div class="field"><label>Trabajo</label><input id="plJob" value="Soporte multiplegado"></div><div class="field"><label>Entrega</label><input id="plDate" type="date"></div><div class="field"><label>Máquina</label><select id="plMachine"><option>Bystronic Xpert 3100 × 100 t</option><option>Otra máquina</option></select></div><div class="field"><label>Prioridad</label><select id="plPriority"><option>Normal</option><option>Alta</option><option>Urgente</option></select></div></div><div class="actions"><button class="btn" onclick="addPlan()">Añadir orden</button></div></div>
+<div class="card c8"><h2>Plan de producción</h2><div class="table-wrap"><table id="planTable"><tr><th>Trabajo</th><th>Entrega</th><th>Máquina</th><th>Prioridad</th><th>Estado</th></tr></table></div></div></div></section>
+
+<section class="page" data-page="inventory">
+<div class="grid"><div class="card c6"><h2>Inventario de materiales</h2><div class="fields cols3"><div class="field"><label>Material</label><input id="invMat" value="S235"></div><div class="field"><label>Espesor</label><input id="invThk" value="2 mm"></div><div class="field"><label>Cantidad</label><input id="invQty" type="number" value="12"></div></div><div class="actions"><button class="btn" onclick="addMaterialStock()">Añadir material</button></div><div class="table-wrap"><table id="matStock"><tr><th>Material</th><th>Espesor</th><th>Stock</th></tr></table></div></div>
+<div class="card c6"><h2>Inventario de utillaje</h2><div class="fields cols3"><div class="field"><label>Código</label><input id="invToolCode" value="MEC-V16-88"></div><div class="field"><label>Ubicación</label><input id="invToolLoc" value="Armario A-2"></div><div class="field"><label>Estado</label><select id="invToolState"><option>Disponible</option><option>Montado</option><option>Mantenimiento</option></select></div></div><div class="actions"><button class="btn" onclick="addToolStock()">Añadir útil</button></div><div class="table-wrap"><table id="toolStock"><tr><th>Código</th><th>Ubicación</th><th>Estado</th></tr></table></div></div></div></section>
+
+<section class="page" data-page="documents">
+<div class="grid"><div class="card c5"><h2>Documentos del trabajo</h2><input id="docInput" type="file" multiple><div class="actions"><button class="btn" onclick="saveDocs()">Registrar documentos</button><button class="btn secondary" onclick="exportBackup()">Exportar copia JSON</button></div><p class="muted">Planos, fotografías, certificados, desarrollos y notas.</p></div><div class="card c7"><h2>Registro documental</h2><div id="docList" class="muted">Sin documentos registrados.</div></div></div></section>
+
+<section class="page" data-page="analytics">
+<div class="grid"><div class="card"><h2>Indicadores del taller</h2><div class="kpis"><div class="kpi"><span>Órdenes activas</span><b id="aOrders">0</b></div><div class="kpi"><span>Stock materiales</span><b id="aMaterials">0</b></div><div class="kpi"><span>Útiles inventariados</span><b id="aTools">0</b></div><div class="kpi"><span>Presupuesto último</span><b id="aQuote">0 €</b></div></div></div><div class="card"><h2>Resumen operativo</h2><div id="analyticsText" class="notice">Los indicadores se actualizan al usar los módulos de presupuestos, planificación e inventario.</div></div></div></section>
+
+
+<section class="page" data-page="preparation">
+<div class="grid">
+  <div class="card c6">
+    <h2>Asistente de preparación</h2>
+    <div class="checklist" id="prepChecklist">
+      <label class="check"><input type="checkbox"><span><b>Plano y revisión correctos</b><br><span class="muted">Confirmar que se utiliza la versión vigente.</span></span></label>
+      <label class="check"><input type="checkbox"><span><b>Material y espesor verificados</b><br><span class="muted">Comparar orden, plano y material físico.</span></span></label>
+      <label class="check"><input type="checkbox"><span><b>Punzón y matriz disponibles</b><br><span class="muted">Comprobar montaje, longitud y estado.</span></span></label>
+      <label class="check"><input type="checkbox"><span><b>Secuencia y simulación revisadas</b><br><span class="muted">Validar pliegues, giros y posibles interferencias.</span></span></label>
+      <label class="check"><input type="checkbox"><span><b>Primera pieza y cota crítica definidas</b><br><span class="muted">Preparar medición y corrección.</span></span></label>
+    </div>
+    <div class="actions"><button class="btn" onclick="validatePreparation()">Validar preparación</button><button class="btn secondary" onclick="resetPreparation()">Reiniciar</button></div>
+  </div>
+  <div class="card c6">
+    <h2>Informe previo</h2>
+    <div id="prepResult" class="notice">Completa la lista antes de iniciar el trabajo.</div>
+    <h3>Riesgos revisados</h3>
+    <div class="table-wrap"><table>
+      <tr><th>Riesgo</th><th>Comprobación</th></tr>
+      <tr><td>Colisión con pieza o máquina</td><td>Simulación multiplegado</td></tr>
+      <tr><td>Agujero próximo al pliegue</td><td>Comparador V y radio</td></tr>
+      <tr><td>Tonelaje o herramienta incorrecta</td><td>Montaje y biblioteca</td></tr>
+      <tr><td>Error de medida por cambio de V</td><td>Pérdida/ganancia y desarrollo</td></tr>
+    </table></div>
+  </div>
+</div></section>
+
+<section class="page" data-page="strategies">
+<div class="grid">
+  <div class="card c4">
+    <h2>Modo “Qué pasaría si…”</h2>
+    <div class="fields" style="grid-template-columns:1fr">
+      <div class="field"><label>Material</label><select id="sMaterial"><option>Acero S235</option><option>Acero inoxidable</option><option>Aluminio</option></select></div>
+      <div class="field"><label>Espesor (mm)</label><input id="sThickness" type="number" step=".1" value="2"></div>
+      <div class="field"><label>V escenario A</label><select id="sV1"></select></div>
+      <div class="field"><label>V escenario B</label><select id="sV2"></select></div>
+      <div class="field"><label>Cantidad</label><input id="sQty" type="number" value="20"></div>
+    </div>
+    <div class="actions"><button class="btn" onclick="compareStrategies()">Comparar estrategias</button></div>
+  </div>
+  <div class="card c8">
+    <h2>Comparación</h2>
+    <div class="strategy-grid" id="strategyResult">
+      <div class="strategy-card"><b>Precisión</b><p class="muted">Pendiente.</p></div>
+      <div class="strategy-card"><b>Producción</b><p class="muted">Pendiente.</p></div>
+      <div class="strategy-card"><b>Riesgo</b><p class="muted">Pendiente.</p></div>
+    </div>
+  </div>
+</div></section>
+
+<section class="page" data-page="calibration">
+<div class="grid">
+  <div class="card c5">
+    <h2>Calibración por máquina</h2>
+    <div class="fields">
+      <div class="field"><label>Máquina</label><select id="calMachine"><option>Bystronic Xpert 3100 × 100 t</option></select></div>
+      <div class="field"><label>Material</label><select id="calMaterial"><option>S235</option><option>Inoxidable</option><option>Aluminio</option></select></div>
+      <div class="field"><label>Espesor</label><input id="calThickness" type="number" step=".1" value="2"></div>
+      <div class="field"><label>Matriz V</label><select id="calV"></select></div>
+      <div class="field"><label>Error teórico/real (mm)</label><input id="calError" type="number" step=".01" value="0.20"></div>
+      <div class="field"><label>Corrección angular (°)</label><input id="calAngle" type="number" step=".1" value="1"></div>
+    </div>
+    <div class="actions"><button class="btn" onclick="saveCalibration()">Guardar calibración</button></div>
+  </div>
+  <div class="card c7">
+    <h2>Curvas y experiencia del taller</h2>
+    <div class="table-wrap"><table id="calTable"><tr><th>Máquina</th><th>Material</th><th>Espesor</th><th>V</th><th>Corrección</th><th>Ángulo</th></tr></table></div>
+  </div>
+</div></section>
+
+<section class="page" data-page="traceability">
+<div class="grid">
+  <div class="card c5">
+    <h2>Pasaporte digital de la pieza</h2>
+    <div class="fields">
+      <div class="field"><label>Referencia</label><input id="trRef" value="SOP-001-R1"></div>
+      <div class="field"><label>Cliente</label><input id="trClient" value="Taller Ejemplo"></div>
+      <div class="field"><label>Revisión</label><input id="trRevision" value="R1"></div>
+      <div class="field"><label>Operario</label><input id="trOperator" value="Operario 1"></div>
+      <div class="field"><label>Máquina</label><input id="trMachine" value="Bystronic Xpert 3100 × 100 t"></div>
+      <div class="field"><label>Resultado</label><select id="trResult"><option>Correcta</option><option>Con corrección</option><option>Incidencia</option></select></div>
+    </div>
+    <div class="actions"><button class="btn" onclick="addTrace()">Registrar hito</button></div>
+  </div>
+  <div class="card c7">
+    <h2>Trazabilidad</h2>
+    <div class="timeline" id="traceTimeline"><div class="timeline-item"><b>Inicio</b><span>Pasaporte preparado para registrar ingeniería, fabricación, calidad y comunicación.</span></div></div>
+  </div>
+</div></section>
+
+<section class="page" data-page="rules">
+<div class="grid">
+  <div class="card c5">
+    <h2>Reglas del taller</h2>
+    <div class="fields" style="grid-template-columns:1fr">
+      <div class="field"><label>Condición</label><input id="ruleCondition" value="Inoxidable 1,5 mm con agujero próximo"></div>
+      <div class="field"><label>Recomendación</label><input id="ruleAction" value="Priorizar V12 y verificar deformación"></div>
+    </div>
+    <div class="actions"><button class="btn" onclick="addRule()">Añadir regla</button></div>
+  </div>
+  <div class="card c7">
+    <h2>Biblioteca de procedimientos</h2>
+    <div id="ruleList"></div>
+  </div>
+</div></section>
+
 <section class="page" data-page="ai">
 <div class="grid">
   <div class="card">
@@ -322,9 +506,20 @@ const PAGE_META={
  tools:['Utillaje','Biblioteca Mecos, Bystronic y multimarca'],
  production:['Producción','Preparación, montaje, fabricación y tiempo real'],
  quality:['Calidad','Corrección de primera pieza'],
+ clients:['Clientes y comunicación','WhatsApp, correo e historial'],
+ quotes:['Presupuestos','Coste, margen y precio por pieza'],
+ planner:['Planificación','Órdenes, prioridad y carga de máquina'],
+ inventory:['Inventario','Materiales y utillaje disponible'],
+ documents:['Documentación','Planos, certificados y copias de seguridad'],
+ analytics:['Indicadores','Resumen operativo del taller'],
+ preparation:['Preparación','Checklist y validación previa'],
+ strategies:['Qué pasaría si','Comparación de matrices, tiempos y riesgos'],
+ calibration:['Calibración','Correcciones reales por máquina y material'],
+ traceability:['Trazabilidad','Pasaporte digital de la pieza'],
+ rules:['Reglas del taller','Procedimientos y experiencia interna'],
  ai:['Copiloto IA','Asistente técnico de plegado']
 };
-const LABELS={dashboard:'Panel',import:'Importar',bends:'Pliegues',calc:'Comparar V',simulation:'3D',tools:'Utillaje',production:'Tiempos',quality:'Calidad',ai:'IA'};
+const LABELS={dashboard:'Panel',import:'Importar',bends:'Pliegues',calc:'Comparar V',simulation:'3D',tools:'Utillaje',production:'Tiempos',quality:'Calidad',clients:'Clientes',quotes:'Presup.',planner:'Planificar',inventory:'Inventario',documents:'Docs',analytics:'Indicadores',preparation:'Preparar',strategies:'Escenarios',calibration:'Calibrar',traceability:'Trazabilidad',rules:'Reglas',ai:'IA'};
 const nav=document.getElementById('nav');
 Object.entries(LABELS).forEach(([k,v],i)=>{const b=document.createElement('button');b.textContent=v;b.dataset.page=k;b.className=i?'':'active';b.onclick=()=>go(k);nav.appendChild(b)});
 function go(k){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.dataset.page===k));document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===k));pageTitle.textContent=PAGE_META[k][0];pageSub.textContent=PAGE_META[k][1];if(k==='simulation')setTimeout(drawSim,40)}
@@ -431,6 +626,99 @@ else if(/pantalla|móvil|tablet|pc/i.test(q))r='La interfaz usa diseño fluido, 
 else if(/tiempo|tarda|producci/i.test(q))r='El módulo de tiempos separa programación, montaje, reglaje, plegado, manipulación, tiempo por pieza y total de serie.';
 chat.insertAdjacentHTML('beforeend',`<div class="msg ai">${r}</div>`);chatInput.value='';chat.scrollTop=chat.scrollHeight}
 chatInput.addEventListener('keydown',e=>{if(e.key==='Enter')askAI()});
+
+
+const CLIENT_KEY='plegarProClientsV71';
+let clients=JSON.parse(localStorage.getItem(CLIENT_KEY)||'null')||[
+ {company:'Taller Ejemplo',contact:'Juan Pérez',tax:'B12345678',phone:'34600111222',email:'compras@tallerejemplo.es',address:'Polígono Industrial',notes:'Cliente de demostración',history:[{date:new Date().toLocaleDateString('es-ES'),job:'Soporte multiplegado',status:'Preparación',channel:'Aplicación'}]}
+];
+let activeClient=0;
+function renderClients(){const q=(clientSearch?.value||'').toLowerCase();clientList.innerHTML='';clients.forEach((c,i)=>{if(q&&!(`${c.company} ${c.contact} ${c.phone}`).toLowerCase().includes(q)))return;const d=document.createElement('div');d.className='client-row'+(i===activeClient?' active':'');d.innerHTML=`<b>${c.company||'Sin empresa'}</b><div class="muted small">${c.contact||'Sin contacto'} · ${c.phone||'Sin teléfono'}</div>`;d.onclick=()=>loadClient(i);clientList.appendChild(d)});}
+function loadClient(i){activeClient=i;const c=clients[i];clCompany.value=c.company||'';clContact.value=c.contact||'';clTax.value=c.tax||'';clPhone.value=c.phone||'';clEmail.value=c.email||'';clAddress.value=c.address||'';clNotes.value=c.notes||'';clientHistory.innerHTML=(c.history||[]).map(h=>`<tr><td>${h.date}</td><td>${h.job}</td><td>${h.status}</td><td>${h.channel}</td></tr>`).join('')||'<tr><td colspan="4" class="muted">Sin historial.</td></tr>';renderClients()}
+function newClient(){clients.push({company:'Nuevo cliente',contact:'',tax:'',phone:'',email:'',address:'',notes:'',history:[]});activeClient=clients.length-1;loadClient(activeClient)}
+function saveClient(){if(activeClient==null)return;const c=clients[activeClient];Object.assign(c,{company:clCompany.value.trim(),contact:clContact.value.trim(),tax:clTax.value.trim(),phone:clPhone.value.trim(),email:clEmail.value.trim(),address:clAddress.value.trim(),notes:clNotes.value.trim()});localStorage.setItem(CLIENT_KEY,JSON.stringify(clients));renderClients();mountInfo && (mountInfo.dataset.saved='1')}
+function normalizedPhone(){return (clPhone.value||'').replace(/[^0-9]/g,'')}
+function addClientHistory(channel){const c=clients[activeClient];if(!c)return;c.history=c.history||[];c.history.unshift({date:new Date().toLocaleDateString('es-ES'),job:jobName.value||'Trabajo sin nombre',status:'Comunicación preparada',channel});saveClient();loadClient(activeClient)}
+function openWhatsApp(){saveClient();const phone=normalizedPhone();if(!phone){alert('Añade un número de teléfono con prefijo internacional.');return}const msg=encodeURIComponent(waMessage.value||'');addClientHistory('WhatsApp');window.open(`https://wa.me/${phone}?text=${msg}`,'_blank','noopener')}
+async function copyWhatsApp(){await navigator.clipboard.writeText(waMessage.value||'');addClientHistory('WhatsApp copiado')}
+function openEmail(){saveClient();const email=(clEmail.value||'').trim();if(!email){alert('Añade un correo electrónico válido.');return}const url=`mailto:${encodeURIComponent(email)}?subject=${encodeURIComponent(mailSubject.value||'')}&body=${encodeURIComponent(mailBody.value||'')}`;addClientHistory('Correo');location.href=url}
+async function copyEmail(){await navigator.clipboard.writeText(`${mailSubject.value}\n\n${mailBody.value}`);addClientHistory('Correo copiado')}
+renderClients();loadClient(0);
+
+
+const factory={plans:JSON.parse(localStorage.getItem('pp_plans')||'[]'),materials:JSON.parse(localStorage.getItem('pp_materials')||'[]'),toolStock:JSON.parse(localStorage.getItem('pp_toolstock')||'[]'),docs:JSON.parse(localStorage.getItem('pp_docs')||'[]'),lastQuote:0};
+function money(v){return new Intl.NumberFormat('es-ES',{style:'currency',currency:'EUR'}).format(v)}
+function calcQuote(){const qty=+qQty.value,mat=+qMaterial.value,min=+qMinutes.value,mach=+qMachine.value,lab=+qLabor.value,margin=+qMargin.value;const time=(mach+lab)*(min/60),base=mat+time,total=base*(1+margin/100),unit=total/Math.max(1,qty);factory.lastQuote=total;aQuote.textContent=money(total);quoteResult.innerHTML=`<div class="table-wrap"><table><tr><td>Material</td><td>${money(mat)}</td></tr><tr><td>Máquina + mano de obra</td><td>${money(time)}</td></tr><tr><td>Coste base</td><td>${money(base)}</td></tr><tr><td>Margen</td><td>${margin.toFixed(1)} %</td></tr><tr><th>Total</th><th>${money(total)}</th></tr><tr><th>Precio unitario</th><th>${money(unit)}</th></tr></table></div>`;updateAnalytics()}
+function printQuote(){window.print()}
+function addPlan(){factory.plans.push({job:plJob.value,date:plDate.value,machine:plMachine.value,priority:plPriority.value,status:'Pendiente'});localStorage.setItem('pp_plans',JSON.stringify(factory.plans));renderFactory()}
+function addMaterialStock(){factory.materials.push({material:invMat.value,thickness:invThk.value,qty:+invQty.value});localStorage.setItem('pp_materials',JSON.stringify(factory.materials));renderFactory()}
+function addToolStock(){factory.toolStock.push({code:invToolCode.value,location:invToolLoc.value,state:invToolState.value});localStorage.setItem('pp_toolstock',JSON.stringify(factory.toolStock));renderFactory()}
+function saveDocs(){const arr=[...docInput.files].map(f=>({name:f.name,size:f.size,type:f.type,date:new Date().toISOString()}));factory.docs.push(...arr);localStorage.setItem('pp_docs',JSON.stringify(factory.docs));renderFactory()}
+function exportBackup(){const data={version:'14.0',date:new Date().toISOString(),factory,clients:localStorage.getItem('pp_clients'),communications:localStorage.getItem('pp_communications')};const b=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download='PlegarPro_v14_backup.json';a.click();URL.revokeObjectURL(u)}
+function renderFactory(){planTable.innerHTML='<tr><th>Trabajo</th><th>Entrega</th><th>Máquina</th><th>Prioridad</th><th>Estado</th></tr>'+factory.plans.map(x=>`<tr><td>${x.job}</td><td>${x.date||'—'}</td><td>${x.machine}</td><td>${x.priority}</td><td class="good">${x.status}</td></tr>`).join('');matStock.innerHTML='<tr><th>Material</th><th>Espesor</th><th>Stock</th></tr>'+factory.materials.map(x=>`<tr><td>${x.material}</td><td>${x.thickness}</td><td>${x.qty}</td></tr>`).join('');toolStock.innerHTML='<tr><th>Código</th><th>Ubicación</th><th>Estado</th></tr>'+factory.toolStock.map(x=>`<tr><td>${x.code}</td><td>${x.location}</td><td>${x.state}</td></tr>`).join('');docList.innerHTML=factory.docs.length?factory.docs.map(x=>`<div class="pill">${x.name} · ${(x.size/1024).toFixed(1)} KB</div>`).join(''):'Sin documentos registrados.';updateAnalytics()}
+function updateAnalytics(){aOrders.textContent=factory.plans.length;aMaterials.textContent=factory.materials.reduce((n,x)=>n+x.qty,0);aTools.textContent=factory.toolStock.length;analyticsText.textContent=`${factory.plans.length} órdenes registradas, ${factory.materials.length} referencias de material y ${factory.toolStock.length} útiles controlados.`}
+setTimeout(renderFactory,50);
+
+
+const V_SCENARIOS=[6,12,16,22,24,32,36,40,50];
+[sV1,sV2,calV].forEach(sel=>V_SCENARIOS.forEach(v=>sel.add(new Option('V'+v,v))));
+sV1.value='16';sV2.value='12';calV.value='16';
+
+function validatePreparation(){
+  const checks=[...document.querySelectorAll('#prepChecklist input')];
+  const done=checks.filter(x=>x.checked).length;
+  prepResult.innerHTML=done===checks.length
+    ? '<b class="good">Preparación completa.</b><br>La orden está lista para validación final del operario y primera pieza.'
+    : `<b class="warntext">${done}/${checks.length} comprobaciones completadas.</b><br>No iniciar la serie hasta revisar los puntos pendientes.`;
+}
+function resetPreparation(){document.querySelectorAll('#prepChecklist input').forEach(x=>x.checked=false);prepResult.textContent='Completa la lista antes de iniciar el trabajo.'}
+
+function compareStrategies(){
+  const t=+sThickness.value,v1=+sV1.value,v2=+sV2.value,q=+sQty.value;
+  const a=bendData(v1,t,90,.33),b=bendData(v2,t,90,.33);
+  const measure=b.BD-a.BD;
+  const setupA=8+(v1<8?3:0),setupB=8+(v2<8?3:0);
+  const runA=(bends.length*11*q)/60,runB=(bends.length*11*q)/60;
+  const riskA=v1/t<6?'Alto por V estrecha':v1/t>12?'Alto por radio grande':'Medio/bajo';
+  const riskB=v2/t<6?'Alto por V estrecha':v2/t>12?'Alto por radio grande':'Medio/bajo';
+  strategyResult.innerHTML=`
+    <div class="strategy-card"><b>Geometría</b><p>V${v1}: R ${a.r.toFixed(2)} mm<br>V${v2}: R ${b.r.toFixed(2)} mm<br><span class="${measure<0?'bad':'good'}">Cambio de medida: ${measure.toFixed(2)} mm</span></p></div>
+    <div class="strategy-card"><b>Producción</b><p>Escenario A: ${(setupA+runA).toFixed(1)} min<br>Escenario B: ${(setupB+runB).toFixed(1)} min<br>Cantidad: ${q}</p></div>
+    <div class="strategy-card"><b>Riesgo</b><p>V${v1}: ${riskA}<br>V${v2}: ${riskB}<br>Validar agujeros, colisiones y tonelaje.</p></div>`;
+}
+
+const CAL_KEY='pp_calibrations_v14';
+let calibrations=JSON.parse(localStorage.getItem(CAL_KEY)||'[]');
+function saveCalibration(){
+  calibrations.unshift({machine:calMachine.value,material:calMaterial.value,thickness:+calThickness.value,v:+calV.value,error:+calError.value,angle:+calAngle.value});
+  localStorage.setItem(CAL_KEY,JSON.stringify(calibrations));
+  renderCalibrations();
+}
+function renderCalibrations(){
+  calTable.innerHTML='<tr><th>Máquina</th><th>Material</th><th>Espesor</th><th>V</th><th>Corrección</th><th>Ángulo</th></tr>'+
+  calibrations.map(c=>`<tr><td>${c.machine}</td><td>${c.material}</td><td>${c.thickness} mm</td><td>V${c.v}</td><td>${c.error>=0?'+':''}${c.error.toFixed(2)} mm</td><td>${c.angle>=0?'+':''}${c.angle.toFixed(1)}°</td></tr>`).join('');
+}
+renderCalibrations();
+
+const TRACE_KEY='pp_trace_v14';
+let traces=JSON.parse(localStorage.getItem(TRACE_KEY)||'[]');
+function addTrace(){
+  traces.unshift({date:new Date().toLocaleString('es-ES'),ref:trRef.value,client:trClient.value,revision:trRevision.value,operator:trOperator.value,machine:trMachine.value,result:trResult.value});
+  localStorage.setItem(TRACE_KEY,JSON.stringify(traces));renderTrace();
+}
+function renderTrace(){
+  traceTimeline.innerHTML=traces.length?traces.map(t=>`<div class="timeline-item"><b>${t.date}</b><span><strong>${t.ref} · ${t.revision}</strong><br>${t.client} · ${t.machine}<br>${t.operator} · ${t.result}</span></div>`).join(''):'<div class="timeline-item"><b>Inicio</b><span>Sin hitos registrados.</span></div>';
+}
+renderTrace();
+
+const RULE_KEY='pp_rules_v14';
+let rules=JSON.parse(localStorage.getItem(RULE_KEY)||'null')||[
+ {condition:'Acero S235 2 mm y V16',action:'Usar como configuración base y corregir con calibración de máquina.'},
+ {condition:'Agujero próximo a la línea de pliegue',action:'Comparar una V menor y calcular la variación de medida y desarrollo.'}
+];
+function addRule(){rules.unshift({condition:ruleCondition.value.trim(),action:ruleAction.value.trim()});localStorage.setItem(RULE_KEY,JSON.stringify(rules));renderRules()}
+function renderRules(){ruleList.innerHTML=rules.map((r,i)=>`<div class="rule-row"><div><b>SI</b><br>${r.condition}</div><div><b>ENTONCES</b><br>${r.action}</div><button class="btn danger" onclick="rules.splice(${i},1);localStorage.setItem(RULE_KEY,JSON.stringify(rules));renderRules()">Eliminar</button></div>`).join('')}
+renderRules();
 
 setTimeout(drawSim,100);
 if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
