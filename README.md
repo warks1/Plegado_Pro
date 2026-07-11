@@ -1,29 +1,11 @@
-# Plegar Pro v14.1 Corrected Industrial OS Beta
+# Plegar Pro v15.0 Visible Complete Beta
 
-Beta web acumulativa para móvil, tablet y PC.
+Versión sin caché PWA, con todos los módulos visibles desde la pantalla principal.
 
-## Módulos incluidos
-- Importación de planos y modelos.
-- Secuencia multiplegado.
-- Comparador V: desarrollo, radio y pérdida/ganancia de medida.
-- Simulación de plegadora con mesa, trancha, punzón, matriz y chapa.
-- Biblioteca Mecos/Bystronic y selección de montaje.
-- Producción, cronómetro y control de calidad.
-- Clientes, WhatsApp y correo.
-- Presupuestos, planificación, inventario, documentación e indicadores.
-- Asistente de preparación.
-- Modo “Qué pasaría si…”.
-- Calibraciones por máquina, material, espesor y V.
-- Pasaporte digital y trazabilidad.
-- Reglas y procedimientos del taller.
-- Copiloto IA local de demostración.
+## Verificación rápida
+- En el inicio aparece un banner verde con la versión 15.0.
+- El botón “Ver matrices y punzones” abre una comprobación visible con V6, V12, V16, V22, V24, V32, V36, V40 y V50, cada una en 30°, 60°, 88° y 90°.
+- El botón “Ver WhatsApp y correo” abre el CRM.
+- El botón “Ver multiplegado” abre la secuencia de varios pliegues.
 
-## Puesta en marcha
-Abra `index.html` o publique la carpeta en GitHub Pages.
-
-## Nota
-Los cálculos y verificaciones son orientativos. Antes de fabricar deben validarse con la máquina, las tablas reales del fabricante, el material, el utillaje y una primera pieza de prueba.
-
-
-## Corrección crítica
-Se corrigió un error de sintaxis JavaScript que impedía cargar la biblioteca de utillaje, CRM y módulos posteriores.
+Abra index.html. Esta versión elimina registros de service worker y cachés antiguas para evitar mostrar una beta anterior.

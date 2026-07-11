@@ -83,12 +83,12 @@ radial-gradient(circle at 50% 18%,#234968 0,#0c2338 34%,#06111c 78%);border-radi
   .tool-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
 }
 @media(max-width:760px){
-  .app{display:block;padding-bottom:74px}
-  .sidebar{position:fixed;left:0;right:0;bottom:0;top:auto;height:68px;padding:7px 8px;border-right:0;border-top:1px solid var(--line);overflow:hidden}
+  .app{display:block;padding-bottom:0}
+  .sidebar{position:relative;left:auto;right:auto;bottom:auto;top:auto;height:auto;padding:8px;border-right:0;border-bottom:1px solid var(--line);overflow:visible}
   .brand,.version{display:none}
-  .nav{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+  .nav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;overflow:visible}
   .nav::-webkit-scrollbar{display:none}
-  .nav button{flex:0 0 auto;width:auto;padding:10px 11px;font-size:12px;white-space:nowrap;text-align:center}
+  .nav button{width:100%;padding:9px 5px;font-size:11px;white-space:normal;text-align:center}
   .main{padding:10px}
   .header{margin-bottom:11px}.status{display:none}
   .grid{gap:10px}.card{padding:12px;border-radius:15px}
@@ -120,6 +120,11 @@ radial-gradient(circle at 50% 18%,#234968 0,#0c2338 34%,#06111c 78%);border-radi
 .rule-row{display:grid;grid-template-columns:1fr 1fr auto;gap:8px;align-items:end;padding:9px;background:#0a2133;border:1px solid #294b66;border-radius:12px;margin-bottom:8px}
 @media(max-width:760px){.strategy-grid{grid-template-columns:1fr}.rule-row{grid-template-columns:1fr}.timeline-item{grid-template-columns:1fr}}
 
+
+.version-banner{background:linear-gradient(90deg,#123f5d,#0d5c50);border:1px solid #3a7f8f;border-radius:15px;padding:14px;margin-bottom:14px}
+.version-banner b{font-size:18px}.module-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}.module-link{background:#0c2336;border:1px solid #31536d;color:#eef7ff;border-radius:12px;padding:12px;text-align:left;cursor:pointer}.module-link strong{display:block}.module-link small{color:#9fb6ca}.tool-proof{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.tool-proof div{background:#0a2133;border:1px solid #2b4d68;border-radius:10px;padding:9px}
+@media(max-width:900px){.module-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tool-proof{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:460px){.module-grid,.tool-proof{grid-template-columns:1fr}.nav{grid-template-columns:repeat(3,minmax(0,1fr))}}
 </style>
 </head>
 <body>
@@ -136,6 +141,7 @@ radial-gradient(circle at 50% 18%,#234968 0,#0c2338 34%,#06111c 78%);border-radi
   </div>
 
 <section class="page active" data-page="dashboard">
+<div class="version-banner"><b>VERSIÓN 15.0 · CONTENIDO VERIFICABLE</b><br><span>36 matrices Mecos, punzones solicitados, multiplegado, simulación, WhatsApp, correo, CRM, presupuestos, inventarios y más.</span><div class="actions"><button class="btn" onclick="go('tools')">Ver matrices y punzones</button><button class="btn secondary" onclick="go('clients')">Ver WhatsApp y correo</button><button class="btn secondary" onclick="go('bends')">Ver multiplegado</button></div></div>
 <div class="grid">
   <div class="card"><div class="kpis">
     <div class="kpi"><span>Dispositivo</span><b id="kDevice">—</b></div>
@@ -172,7 +178,7 @@ radial-gradient(circle at 50% 18%,#234968 0,#0c2338 34%,#06111c 78%);border-radi
       <tr><td>Bibliotecas</td><td>Materiales, máquinas, punzones, matrices, montaje y catálogos</td><td class="good">Activo</td></tr>
     </table></div>
   </div>
-</div></section>
+<div class="card"><h2>Todos los módulos</h2><div class="module-grid" id="moduleLauncher"></div></div></div></section>
 
 <section class="page" data-page="import">
 <div class="grid">
@@ -278,7 +284,7 @@ radial-gradient(circle at 50% 18%,#234968 0,#0c2338 34%,#06111c 78%);border-radi
     <h2>Biblioteca Mecos / Bystronic y multimarca</h2>
     <div class="tool-grid" id="toolGrid"></div>
   </div>
-</div></section>
+<div class="card"><h2>Comprobación visible de matrices Mecos añadidas</h2><p class="muted">Cada apertura incluye versiones de 30°, 60°, 88° y 90°.</p><div class="tool-proof"><div><b>V6</b><br>30° · 60° · 88° · 90°</div><div><b>V12</b><br>30° · 60° · 88° · 90°</div><div><b>V16</b><br>30° · 60° · 88° · 90°</div><div><b>V22</b><br>30° · 60° · 88° · 90°</div><div><b>V24</b><br>30° · 60° · 88° · 90°</div><div><b>V32</b><br>30° · 60° · 88° · 90°</div><div><b>V36</b><br>30° · 60° · 88° · 90°</div><div><b>V40</b><br>30° · 60° · 88° · 90°</div><div><b>V50</b><br>30° · 60° · 88° · 90°</div></div><h3>Punzones Mecos añadidos</h3><span class="pill">Recto 30°</span><span class="pill">Pata de cabra 90°</span><span class="pill">Recto 88°</span></div></div></section>
 
 <section class="page" data-page="production">
 <div class="grid">
@@ -522,6 +528,7 @@ const PAGE_META={
 const LABELS={dashboard:'Panel',import:'Importar',bends:'Pliegues',calc:'Comparar V',simulation:'3D',tools:'Utillaje',production:'Tiempos',quality:'Calidad',clients:'Clientes',quotes:'Presup.',planner:'Planificar',inventory:'Inventario',documents:'Docs',analytics:'Indicadores',preparation:'Preparar',strategies:'Escenarios',calibration:'Calibrar',traceability:'Trazabilidad',rules:'Reglas',ai:'IA'};
 const nav=document.getElementById('nav');
 Object.entries(LABELS).forEach(([k,v],i)=>{const b=document.createElement('button');b.textContent=v;b.dataset.page=k;b.className=i?'':'active';b.onclick=()=>go(k);nav.appendChild(b)});
+const launcher=document.getElementById('moduleLauncher');if(launcher){Object.entries(LABELS).forEach(([k,v])=>{launcher.insertAdjacentHTML('beforeend',`<button class="module-link" onclick="go('${k}')"><strong>${v}</strong><small>${PAGE_META[k]?.[1]||''}</small></button>`);});}
 function go(k){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.dataset.page===k));document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===k));pageTitle.textContent=PAGE_META[k][0];pageSub.textContent=PAGE_META[k][1];if(k==='simulation')setTimeout(drawSim,40)}
 function detectDevice(){const w=window.innerWidth;let d=w<=760?'Móvil':w<=1100?'Tablet':'PC';kDevice.textContent=d;deviceStatus.textContent='● '+d+' · interfaz adaptada';document.body.dataset.device=d.toLowerCase()}
 window.addEventListener('resize',()=>{detectDevice();if(document.querySelector('[data-page="simulation"]').classList.contains('active'))drawSim()});detectDevice();
@@ -720,8 +727,9 @@ function addRule(){rules.unshift({condition:ruleCondition.value.trim(),action:ru
 function renderRules(){ruleList.innerHTML=rules.map((r,i)=>`<div class="rule-row"><div><b>SI</b><br>${r.condition}</div><div><b>ENTONCES</b><br>${r.action}</div><button class="btn danger" onclick="rules.splice(${i},1);localStorage.setItem(RULE_KEY,JSON.stringify(rules));renderRules()">Eliminar</button></div>`).join('')}
 renderRules();
 
+if('serviceWorker' in navigator){navigator.serviceWorker.getRegistrations().then(rs=>rs.forEach(r=>r.unregister()));}if('caches' in window){caches.keys().then(keys=>keys.forEach(k=>caches.delete(k)));}
 setTimeout(drawSim,100);
-if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+
 </script>
 </body>
 </html>
