@@ -1,0 +1,7 @@
+PLEGAR PRO v18.2
+- Corregido bloqueo del JavaScript por bendList inexistente.
+- Añadido PAGE_META del módulo Desarrollo.
+- Navegación reforzada contra módulos sin metadatos.
+- Tarjeta visible de verificación en el panel principal.
+- Accesos directos a las cinco novedades solicitadas.
+- Lanzador con parámetro anti-caché.

@@ -1,0 +1,22 @@
+{
+  "version": "18.2",
+  "javascript_syntax": "passed",
+  "static_checks": {
+    "development_meta": true,
+    "obsolete_init_removed": true,
+    "defensive_render": true,
+    "verification_banner": true,
+    "2d_mode": true,
+    "3d_mode": true,
+    "multi_v": true,
+    "development": true
+  },
+  "files": [
+    "ABRIR_PLEGAR_PRO.html",
+    "CHANGELOG_v18.2.txt",
+    "README.md",
+    "index.html",
+    "manifest.webmanifest",
+    "release.json"
+  ]
+}
