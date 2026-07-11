@@ -1,4 +1,4 @@
-# Plegar Pro v14.0 Industrial OS Beta
+# Plegar Pro v14.1 Corrected Industrial OS Beta
 
 Beta web acumulativa para móvil, tablet y PC.
 
@@ -23,3 +23,7 @@ Abra `index.html` o publique la carpeta en GitHub Pages.
 
 ## Nota
 Los cálculos y verificaciones son orientativos. Antes de fabricar deben validarse con la máquina, las tablas reales del fabricante, el material, el utillaje y una primera pieza de prueba.
+
+
+## Corrección crítica
+Se corrigió un error de sintaxis JavaScript que impedía cargar la biblioteca de utillaje, CRM y módulos posteriores.

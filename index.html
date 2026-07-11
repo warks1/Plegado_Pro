@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#07111f">
-<title>Plegar Pro v14.0 Industrial OS Beta</title>
+<title>Plegar Pro v14.1 Corrected Industrial OS Beta</title>
 <link rel="manifest" href="manifest.webmanifest">
 <style>
 :root{
@@ -126,7 +126,7 @@ radial-gradient(circle at 50% 18%,#234968 0,#0c2338 34%,#06111c 78%);border-radi
 <div class="app">
 <aside class="sidebar">
   <div class="brand">PLEGAR <span>PRO</span></div>
-  <div class="version">v14.0 Industrial OS Beta</div>
+  <div class="version">v14.1 Corrected Industrial OS Beta</div>
   <nav class="nav" id="nav"></nav>
 </aside>
 <main class="main">
@@ -633,7 +633,7 @@ let clients=JSON.parse(localStorage.getItem(CLIENT_KEY)||'null')||[
  {company:'Taller Ejemplo',contact:'Juan Pérez',tax:'B12345678',phone:'34600111222',email:'compras@tallerejemplo.es',address:'Polígono Industrial',notes:'Cliente de demostración',history:[{date:new Date().toLocaleDateString('es-ES'),job:'Soporte multiplegado',status:'Preparación',channel:'Aplicación'}]}
 ];
 let activeClient=0;
-function renderClients(){const q=(clientSearch?.value||'').toLowerCase();clientList.innerHTML='';clients.forEach((c,i)=>{if(q&&!(`${c.company} ${c.contact} ${c.phone}`).toLowerCase().includes(q)))return;const d=document.createElement('div');d.className='client-row'+(i===activeClient?' active':'');d.innerHTML=`<b>${c.company||'Sin empresa'}</b><div class="muted small">${c.contact||'Sin contacto'} · ${c.phone||'Sin teléfono'}</div>`;d.onclick=()=>loadClient(i);clientList.appendChild(d)});}
+function renderClients(){const q=(clientSearch?.value||'').toLowerCase();clientList.innerHTML='';clients.forEach((c,i)=>{if(q && !(`${c.company} ${c.contact} ${c.phone}`.toLowerCase().includes(q))) return;const d=document.createElement('div');d.className='client-row'+(i===activeClient?' active':'');d.innerHTML=`<b>${c.company||'Sin empresa'}</b><div class="muted small">${c.contact||'Sin contacto'} · ${c.phone||'Sin teléfono'}</div>`;d.onclick=()=>loadClient(i);clientList.appendChild(d)});}
 function loadClient(i){activeClient=i;const c=clients[i];clCompany.value=c.company||'';clContact.value=c.contact||'';clTax.value=c.tax||'';clPhone.value=c.phone||'';clEmail.value=c.email||'';clAddress.value=c.address||'';clNotes.value=c.notes||'';clientHistory.innerHTML=(c.history||[]).map(h=>`<tr><td>${h.date}</td><td>${h.job}</td><td>${h.status}</td><td>${h.channel}</td></tr>`).join('')||'<tr><td colspan="4" class="muted">Sin historial.</td></tr>';renderClients()}
 function newClient(){clients.push({company:'Nuevo cliente',contact:'',tax:'',phone:'',email:'',address:'',notes:'',history:[]});activeClient=clients.length-1;loadClient(activeClient)}
 function saveClient(){if(activeClient==null)return;const c=clients[activeClient];Object.assign(c,{company:clCompany.value.trim(),contact:clContact.value.trim(),tax:clTax.value.trim(),phone:clPhone.value.trim(),email:clEmail.value.trim(),address:clAddress.value.trim(),notes:clNotes.value.trim()});localStorage.setItem(CLIENT_KEY,JSON.stringify(clients));renderClients();mountInfo && (mountInfo.dataset.saved='1')}
