@@ -1,19 +1,18 @@
-# Plegar Pro v4.0 AI Industrial Suite
+# Plegar Pro v6.1 Ultimate AI
 
-Demo web funcional y responsive para GitHub Pages.
+Beta acumulativa para GitHub Pages. Mantiene importación, simulación, producción, biblioteca, catálogos oficiales y copiloto IA.
 
-## Ejecutar
-- Abre `index.html` para probarla localmente.
-- Para GitHub Pages, sube todos los archivos a la raíz del repositorio y activa Pages desde la rama `main`.
+## Novedad principal
+Motor de compensación por cambio de apertura V:
+- Ganancia o pérdida de medida final manteniendo el mismo desarrollo.
+- Corrección del desarrollo para mantener las cotas.
+- Variación total y reparto orientativo por ala.
+- Cotas interiores o exteriores.
+- Radio de punzón, material, espesor, ángulo y factor K.
+- Aviso orientativo de agujeros próximos al pliegue.
+- Calibración local con correcciones reales del taller.
 
-## Incluye
-- Importación multiformato.
-- Comparador de matrices V y variación estimada del desarrollo.
-- Simulación visual de plegado.
-- Estimación de tiempos de fabricación y cambio de utillaje.
-- Cronómetro real.
-- Biblioteca editable.
-- Copiloto IA local de demostración.
-- PWA instalable.
+## Uso
+Abre `index.html` o publica el contenido en GitHub Pages.
 
-Los cálculos son orientativos y deben calibrarse con datos reales de máquina, material y utillaje.
+Los cálculos son orientativos y deben validarse con tablas oficiales, máquina, utillaje y probeta.

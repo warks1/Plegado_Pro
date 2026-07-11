@@ -1,0 +1,9 @@
+[
+  {"fabricante":"TRUMPF","tipo":"catalogo_pdf","titulo":"Catalog Bending Tools","url":"https://www.trumpf.com/filestorage/TRUMPF_Master/Products/Services/01_brochures/TRUMPF-bending-tools-catalog-EN.pdf","estado":"verificado"},
+  {"fabricante":"TRUMPF","tipo":"aplicacion_web","titulo":"BendGuide","url":"https://bendguide.trumpf.com/","estado":"verificado"},
+  {"fabricante":"AMADA","tipo":"catalogo_pdf","titulo":"Bending Tools Catalogue","url":"https://cdn.amada.eu/fileadmin/Repository/Products/Brochures/Catalog_AFH_EN_2021.pdf","estado":"verificado"},
+  {"fabricante":"AMADA","tipo":"pagina_oficial","titulo":"Press Brake Tooling","url":"https://www.amada.com/america/press-brake-tooling","estado":"verificado"},
+  {"fabricante":"BYSTRONIC","tipo":"pagina_oficial","titulo":"Press Brake Tools","url":"https://www.bystronic.com/int/en/b/press-brake-tools","estado":"verificado"},
+  {"fabricante":"BYSTRONIC","tipo":"pagina_oficial","titulo":"Press Brake Tooling","url":"https://www.bystronic.com/usa/en-us/lp/press-brakes-tooling","estado":"verificado"},
+  {"fabricante":"CORPLEC","tipo":"pendiente","titulo":"Fuente oficial pendiente de validacion","url":"","estado":"pendiente"}
+]
