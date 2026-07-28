@@ -1,0 +1,21 @@
+PRUEBAS PLEGAR PRO v59.0
+
+RESULTADOS AUTOMÁTICOS
+- IDs HTML únicos: PASS
+- 31 accesos de menú: PASS
+- 31 contenedores de módulo: PASS
+- Núcleo acumulativo prioritario: PASS
+- Build interno v59.0: PASS
+- Referencias funcionales esenciales: PASS
+- Sintaxis app.js: PASS
+- Sintaxis JavaScript embebido: PASS
+
+FUNCIONES NUEVAS COMPROBADAS ESTÁTICAMENTE
+- Cálculo de salud técnica del proyecto.
+- Renderizado del informe de estado.
+- Guardado local de puntos de recuperación.
+- Restauración y eliminación de revisiones.
+- Exportación PPROJ JSON.
+
+NOTA
+La auditoría automática valida estructura y sintaxis. Las pruebas de interacción final deben repetirse en Safari/iPhone, navegador de PC y GitHub Pages antes de considerar esta versión una base definitiva de producción.

@@ -1,0 +1,12 @@
+PRUEBAS PLEGAR PRO v58.0
+
+1. Auditoría de IDs HTML duplicados.
+2. Comparación de navegación contra Inventario Maestro.
+3. Verificación de contenedores para los 31 módulos.
+4. Verificación del núcleo acumulativo prioritario.
+5. Verificación de ausencia del banner visible de despliegue.
+6. Verificación del identificador de build v58.0.
+7. Verificación estática de navegación, persistencia, canvas 3D y módulos críticos.
+8. Comprobación de sintaxis de app.js y JavaScript embebido con Node.js.
+
+La auditoría automatizada genera AUDITORIA_v58_0.json.
