@@ -1,0 +1,11 @@
+PLEGAR PRO v57.0 · GEMELO VISUAL HD
+
+- Evolución acumulativa sobre v56.0.
+- Nuevo gemelo visual HD de punzón, matriz y chapa.
+- Perfiles de punzón: recto 30°, recto 88°, cuello de cisne 90° y radio amplio.
+- Sección 2D mejorada con radios, espesor, apoyos, contactos y cotas.
+- Vista 3D con portaherramientas, cámara de operario, macro, frontal, lateral, superior, isométrica y libre.
+- Ciclo animado de aproximación, contacto, plegado, ángulo final y retorno.
+- Modos de iluminación y calidad visual.
+- Modo Rayos X, control de progreso, separación visual y captura PNG.
+- Conservación de módulos heredados y de la Calculadora de Desarrollo independiente.

@@ -1,0 +1,9 @@
+PRUEBAS PLEGAR PRO v57.0
+
+- Sintaxis JavaScript validada con node --check.
+- Navegación y destinos revisados.
+- Identificadores HTML duplicados revisados.
+- Canvas 2D y 3D presentes.
+- Controles de reproducción, pausa, cámara, zoom y gestos táctiles presentes.
+- Cambio de calidad, iluminación, perfiles y Rayos X presente.
+- Versión acumulativa: no se han eliminado módulos.
