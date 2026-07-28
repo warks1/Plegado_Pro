@@ -1,0 +1,11 @@
+PLEGAR PRO v55.0 · CENTRO DE PROYECTO Y ESCENARIOS
+
+- Actualización acumulativa directa sobre v54.0.
+- Nuevo Centro de proyecto con puntuación de salud y comprobaciones técnicas.
+- Resumen sincronizado de referencia, material, espesor, máquina, longitudes y pliegues.
+- Comparador funcional de matrices V con radio, ala mínima, fuerza y valoración.
+- Aplicación de un escenario V a todos los pliegues mediante el historial normal.
+- Puntos de control locales guardables y restaurables.
+- Exportación del resumen técnico del proyecto.
+- Calculadora de Desarrollo preservada como módulo independiente.
+- Todos los módulos heredados conservados.

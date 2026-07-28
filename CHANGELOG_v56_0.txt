@@ -1,0 +1,12 @@
+PLEGAR PRO v56.0 - VISTAS DE UTILLAJE 2D/3D
+
+- Nuevo módulo Vistas de punzón, matriz y chapa.
+- Vista técnica 2D: frontal, lateral y sección de plegado.
+- Vista 3D orbital con ratón y control táctil.
+- Vistas isométrica, frontal, lateral, superior y libre.
+- Aislamiento independiente de punzón, matriz, chapa, cotas y contacto.
+- Separación visual/explosionado configurable.
+- Sincronización con pliegue, V, ángulo, radio, espesor y longitud.
+- Captura PNG de la vista 3D.
+- Calculadora de Desarrollo permanece independiente.
+- Todos los módulos heredados se conservan.

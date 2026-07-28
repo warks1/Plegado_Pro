@@ -1,0 +1,12 @@
+PRUEBAS PLEGAR PRO v56.0
+
+[OK] Versión visible v56.0.
+[OK] Nuevo destino de navegación toolviews.
+[OK] Canvas 2D y canvas 3D presentes.
+[OK] Selectores de vista y visibilidad presentes.
+[OK] Interacción orbital mediante pointer events.
+[OK] Zoom mediante rueda.
+[OK] Captura PNG implementada.
+[OK] Sincronización de datos sin alterar Calculadora de Desarrollo.
+[OK] Sintaxis JavaScript validada con node --check.
+[OK] Navegación y IDs auditados.

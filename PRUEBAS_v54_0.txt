@@ -1,0 +1,9 @@
+PRUEBAS ESTÁTICAS v54.0
+
+[OK] Sintaxis JavaScript.
+[OK] Todos los destinos data-page existen.
+[OK] No hay IDs duplicados.
+[OK] Centro de validación añadido al menú.
+[OK] Calculadora independiente preservada.
+[OK] Splash 4 s preservado.
+[NOTA] La validación física de plegado, tonelaje, colisiones y precisión dimensional debe confirmarse con la máquina, utillaje y primera pieza reales.

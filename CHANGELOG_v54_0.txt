@@ -1,0 +1,9 @@
+PLEGAR PRO v54.0 · VALIDACIÓN INDUSTRIAL ACUMULATIVA
+
+- Conserva íntegramente v53.1 y todos los módulos heredados.
+- Añade Centro de validación industrial con auditoría ejecutable.
+- Comprueba navegación, IDs, importación, programación, simulaciones, cámaras, gemelo digital, bibliotecas, calculadora independiente, persistencia y offline.
+- Exporta informe técnico de validación.
+- Añade diagnóstico previo por tipo de archivo en Importar planos.
+- Mantiene Calculadora de Desarrollo completamente independiente.
+- Mantiene splash sincronizado de 4 segundos.

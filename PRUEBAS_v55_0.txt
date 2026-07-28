@@ -1,0 +1,15 @@
+PRUEBAS PLEGAR PRO v55.0
+
+[OK] Actualización acumulativa desde v54.0.
+[OK] Navegación hacia Centro de proyecto.
+[OK] Identificadores HTML sin duplicados.
+[OK] Sintaxis JavaScript comprobada con node --check.
+[OK] Cálculo de salud del proyecto.
+[OK] Comparador de escenarios V.
+[OK] Aplicación de V mediante commit/historial.
+[OK] Guardado y restauración de puntos de control en localStorage.
+[OK] Exportación de resumen TXT.
+[OK] Calculadora de Desarrollo no modificada.
+[OK] Splash de 4 segundos conservado.
+
+Nota: los cálculos de fuerza y selección V son orientativos; requieren validación con fabricante, CNC, utillaje y prueba física.

@@ -1,26 +1,48 @@
-PLEGAR PRO v42.0 · CONSOLIDACIÓN INTEGRADA
+PLEGAR PRO v44.0 — RECONSTRUCCIÓN ACUMULATIVA DESDE v43
+=========================================================
 
-NOVEDADES PRINCIPALES
-- Pantalla de inicio con identidad Plegar Pro y barra de carga funcional.
-- Botones globales Volver, Deshacer y Rehacer.
-- Modelo central sincronizado entre Programar, Programación 2D, Programación 3D,
-  Simulación 2D, Simulación 3D, Desarrollo, Curva Perfecta, IA, Producción y Calidad.
-- Nuevo módulo Programar editable.
-- Programación 2D y 3D con datos de pliegue y cotas.
-- IA local capaz de interpretar datos de plegado y enviarlos a Programar.
-- IA capaz de preparar y enviar Curva Perfecta.
-- Curva Perfecta recalcula al modificar datos y puede generar un programa por golpes.
-- Bloc de notas general y notas específicas de programa.
-- Historial de cambios.
-- Producción y Calidad funcionales.
-- Ajustes de tema claro/oscuro y visualización de cotas.
-- Auditoría automática básica de botones huérfanos e IDs duplicados.
+Base utilizada
+--------------
+Plegar_Pro_v43_Desarrollo_ComparadorV.zip
 
-USO
-1. Descomprime el ZIP.
-2. Abre index.html con Chrome, Edge, Safari o Firefox.
-3. También puede publicarse como archivo estático en GitHub Pages.
+Cambios integrados
+------------------
+- Programar incorpora accesos directos a Vista 2D, Vista 3D, Simular 2D y Simular 3D.
+- Programación 2D centra automáticamente la pieza y mejora cotas y contraste.
+- Programación 3D permite editar longitud, ángulo, radio, V y tope X.
+- Cámara 3D con rotación, zoom, desplazamiento con Mayús y vistas predefinidas.
+- Simulación 2D con cámara completa, activa o fija.
+- Simulación 3D con máquina visible/oculta, cotas visibles/ocultas y vistas adicionales.
+- Plegadora 3D más diferenciada: bastidor, bancada, trancha, punzón, matriz y tope.
+- Sincronización central de material, espesor, factor K, alas, ángulos y radios.
+- Desarrollo deja de estar aislado y toma los pliegues del proyecto principal.
+- Curva Perfecta ampliada con estrategia uniforme, suave o adaptativa.
+- Tabla de golpes con posición X, distancia, ángulo, acumulado y corrección.
+- Conversión de Curva Perfecta a operaciones reales dentro de Programar.
+- Ajustes ampliados: cotas, velocidad, color de chapa, máquina y datos del propietario.
+- Acerca de muestra versión, base, compatibilidad y datos configurados.
+- Compatibilidad mantenida con almacenamiento y proyectos v43.
+- Versión interna corregida: ya no muestra v42.
 
-AVISO INDUSTRIAL
-Esta versión es una beta funcional. Los cálculos son orientativos y deben
-contrastarse con documentación oficial, máquina, herramientas y pruebas reales.
+Controles 3D
+------------
+- Arrastrar: rotar.
+- Mayús + arrastrar: desplazar.
+- Rueda del ratón: zoom.
+- En pantallas táctiles: arrastrar para rotar.
+
+Ejecución
+---------
+Abrir index.html en un navegador moderno o publicar todo el contenido en GitHub Pages.
+
+Limitación honesta
+------------------
+Esta beta continúa siendo un prototipo web en un único archivo. La lectura industrial completa de STEP/DWG/DXF, una réplica CAD exacta de una máquina concreta y cálculos certificados requieren bibliotecas CAD, datos oficiales del fabricante y validación de taller.
+
+
+ACTUALIZACIÓN v50.0
+Primera evolución acumulativa basada en v49.6. Desarrollo sincroniza únicamente con Comparador V.
+
+
+ACTUALIZACIÓN v50.3
+Asistente de secuencia inteligente integrado en Programar, con informe, optimización y exportación.
