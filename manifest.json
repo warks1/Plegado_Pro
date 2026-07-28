@@ -1,1 +1,9 @@
-{"name":"Plegado Pro","short_name":"PlegadoPro","start_url":"./index.html","display":"standalone","background_color":"#0f172a","theme_color":"#101827","icons":[]}
+{
+  "name": "Plegar Pro v60.0",
+  "short_name": "Plegar Pro",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0f172a",
+  "theme_color": "#101827",
+  "icons": []
+}

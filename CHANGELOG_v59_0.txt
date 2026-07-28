@@ -1,0 +1,18 @@
+PLEGAR PRO v59.0 · INTEGRACIÓN FUNCIONAL
+
+Actualización acumulativa creada sobre Plegar Pro v58.0.
+
+CAMBIOS REALIZADOS
+- Conservación completa de los 31 módulos inventariados.
+- Nueva tarjeta «Salud técnica del proyecto» en el panel principal.
+- Validación inmediata de cuatro áreas: datos, geometría, utillaje y producción.
+- Informe de problemas pendiente con accesos directos a Programar y Validación.
+- Puntos de recuperación manuales con nombre, fecha y referencia.
+- Restauración y eliminación de puntos guardados desde el panel principal.
+- Exportación del proyecto en formato PPROJ JSON con versión 59.0.
+- Actualización de identificación visible e interna a v59.0.
+- Calculadora de Desarrollo Industrial conservada independiente.
+- Persistencia local mantenida y reutilizada por la nueva integración.
+
+BUILD
+PP-590-INTEGRACION-FUNCIONAL

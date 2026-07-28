@@ -1,0 +1,21 @@
+PLEGAR PRO v60.0 · LIBERACIÓN INDUSTRIAL Y TRAZABILIDAD
+
+Base acumulativa: v59.0.
+
+NOVEDADES
+- Evaluación de preparación para revisión, prototipo o producción.
+- Seis puertas de integridad sobre proyecto, material, geometría, máquina, longitudes y persistencia.
+- Registro local de hasta 50 liberaciones con responsable, fecha, nivel y observaciones.
+- Certificado de liberación exportable en TXT.
+- Última liberación vinculada al estado común del proyecto.
+- Nueva API local window.PlegarProRelease.
+
+CONSERVADO
+- Todos los módulos heredados.
+- Simulación 2D y 3D separadas.
+- Gemelo visual y cámaras.
+- Calculadora de Desarrollo independiente.
+- Salud del proyecto, escenarios V, revisiones y exportación PPROJ.
+
+AVISO
+La liberación digital no sustituye la validación física de máquina, utillaje, seguridad ni primera pieza.

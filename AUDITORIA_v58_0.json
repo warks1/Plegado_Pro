@@ -1,0 +1,20 @@
+{
+  "version": "58.0",
+  "passed": [
+    "Accesos de menú presentes: 31",
+    "Contenedores de página presentes: 31",
+    "Núcleo acumulativo prioritario conservado",
+    "Interfaz sin banner visible de despliegue",
+    "Referencia funcional localizada: openPage",
+    "Referencia funcional localizada: localStorage",
+    "Referencia funcional localizada: tvCanvas3D",
+    "Referencia funcional localizada: devcalculator",
+    "Referencia funcional localizada: sim3d"
+  ],
+  "warnings": [],
+  "errors": [
+    "IDs HTML duplicados: revisionName",
+    "Build interno no actualizado a 58.0"
+  ],
+  "result": "FAIL"
+}

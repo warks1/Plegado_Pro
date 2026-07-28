@@ -237,7 +237,7 @@ canvas{touch-action:none;-webkit-user-select:none;user-select:none;max-width:100
 <input type="checkbox" id="menuToggle" class="menuToggle" aria-hidden="true">
 <aside class="side" id="mainSidebar">
   <div class="brand">PLEGAR <span>PRO</span></div>
-  <div class="version">v57.0</div>
+  <div class="version">v60.0</div>
   <nav class="nav">
     <h4>PRINCIPAL</h4>
     <button class="active" data-page="dashboard">Panel de control</button>
@@ -307,6 +307,22 @@ canvas{touch-action:none;-webkit-user-select:none;user-select:none;max-width:100
     <div class="kpi"><span>Espesor</span><b id="dashThk"></b></div>
     <div class="kpi"><span>Pliegues</span><b id="dashBends"></b></div>
   </div><div class="note">Cualquier cambio realizado en Programar, 2D, 3D, IA o Curva Perfecta actualiza el mismo proyecto.</div></div>
+
+  <div class="card c7"><h2>Salud técnica del proyecto</h2>
+    <div class="kpis" id="projectHealthKpis" style="grid-template-columns:repeat(4,minmax(0,1fr))">
+      <div class="kpi"><span>Datos</span><b id="healthData">—</b></div>
+      <div class="kpi"><span>Geometría</span><b id="healthGeometry">—</b></div>
+      <div class="kpi"><span>Utillaje</span><b id="healthTooling">—</b></div>
+      <div class="kpi"><span>Producción</span><b id="healthProduction">—</b></div>
+    </div>
+    <div id="projectHealthReport" class="note">Comprobando el proyecto…</div>
+    <div class="actions"><button class="btn" id="healthReview">Revisión completa</button><button class="btn secondary" data-go="validation">Abrir validación</button><button class="btn secondary" data-go="program">Corregir en Programar</button></div>
+  </div>
+  <div class="card c5"><h2>Puntos de recuperación</h2>
+    <div class="fields"><div><label>Nombre de revisión</label><input id="revisionName59" placeholder="Ej.: Antes de cambiar matriz"></div></div>
+    <div class="actions"><button class="btn" id="saveRevision59">Guardar punto</button><button class="btn secondary" id="exportRevision59">Exportar proyecto</button></div>
+    <div id="revisionList59" class="note">Todavía no hay puntos de recuperación.</div>
+  </div>
 
 </div>
 </section>
@@ -624,7 +640,7 @@ canvas{touch-action:none;-webkit-user-select:none;user-select:none;max-width:100
 <div class="card c8"><h2>Comparación multiplegado por V</h2><div class="fields"><div><label>V candidatas</label><input id="pp527Vs" value="6,8,10,12,16,22,24,32,36,40,50"></div><div><label>Prioridad</label><select id="pp527Priority"><option value="balanced">Equilibrada</option><option value="precision">Precisión</option><option value="force">Menor fuerza</option><option value="radius">Menor radio</option><option value="marks">Menor marcado</option></select></div><div><label>Tolerancia acumulada (mm)</label><input id="pp527Tolerance" type="number" step="0.01" value="0.50"></div><div><label>Fuerza máxima (t)</label><input id="pp527MaxForce" type="number" step="0.1" value="999"></div></div><div class="tableWrap"><table class="table"><thead><tr><th>V</th><th>Desarrollo total</th><th>Δ acumulada</th><th>Radio</th><th>Fuerza</th><th>Ala mín.</th><th>Riesgo</th><th>Puntuación</th><th>Resultado</th></tr></thead><tbody id="pp527Rows"></tbody></table></div><div id="pp527Recommendation" class="note">Pulsa “Analizar V multiplegado”.</div></div>
 <div class="card c12"><h2>Historial de versiones</h2><div class="fields"><div><label>Versión A</label><select id="pp527A"></select></div><div><label>Versión B</label><select id="pp527B"></select></div><div class="actions"><button class="btn secondary" id="pp527Compare">Comparar seleccionadas</button></div></div><div id="pp527Diff" class="note">Guarda al menos dos versiones para comparar.</div><div class="tableWrap"><table class="table"><thead><tr><th>Fecha</th><th>Nombre</th><th>Material</th><th>Espesor</th><th>V ref.</th><th>Pliegues</th><th>Desarrollo</th><th>Acciones</th></tr></thead><tbody id="pp527History"></tbody></table></div></div>
 </div></section>
-<section class="page" id="about"><div class="grid"><div class="card c8"><h2>Información del propietario</h2><div id="aboutOwner" class="note"></div><div class="actions"><button class="btn secondary" data-go="settings">Editar datos del propietario</button></div><p class="muted">Los datos se guardan localmente en este dispositivo y se muestran aquí automáticamente.</p></div><div class="card c4"><h2>Versión instalada</h2><div class="note"><b>Plegar Pro v53.0</b><br>Código: PP-530-IA-IMPORTACION-PLIEGUES-GEMELO-MATERIALES<br>Base acumulativa limpia y profesional.<br>Base acumulativa modificada desde el proyecto real.<br><br>Incluye Programar con accesos 2D/3D, simulación, dimensiones sincronizadas, centrado de vistas y Curva Perfecta.</div></div></div></section>
+<section class="page" id="about"><div class="grid"><div class="card c8"><h2>Información del propietario</h2><div id="aboutOwner" class="note"></div><div class="actions"><button class="btn secondary" data-go="settings">Editar datos del propietario</button></div><p class="muted">Los datos se guardan localmente en este dispositivo y se muestran aquí automáticamente.</p></div><div class="card c4"><h2>Versión instalada</h2><div class="note"><b>Plegar Pro v60.0</b><br>Código: PP-600-LIBERACION-TRAZABILIDAD<br>Base acumulativa limpia y profesional.<br>Base acumulativa modificada desde el proyecto real.<br><br>Incluye Programar con accesos 2D/3D, simulación, dimensiones sincronizadas, centrado de vistas y Curva Perfecta.</div></div></div></section>
 
 <footer class="legalFooter" id="legalFooter"></footer>
 <section class="page" id="validation">
@@ -646,6 +662,13 @@ canvas{touch-action:none;-webkit-user-select:none;user-select:none;max-width:100
     <div class="card c8"><h3>Resumen técnico sincronizado</h3><div class="kpis" style="grid-template-columns:repeat(4,minmax(0,1fr))"><div class="kpi"><span>Referencia</span><b id="v550Ref">—</b></div><div class="kpi"><span>Material</span><b id="v550Mat">—</b></div><div class="kpi"><span>Espesor</span><b id="v550Thk">—</b></div><div class="kpi"><span>Pliegues</span><b id="v550Bends">—</b></div><div class="kpi"><span>Longitud chapa</span><b id="v550Sheet">—</b></div><div class="kpi"><span>Longitud plegado</span><b id="v550BendLen">—</b></div><div class="kpi"><span>Máquina</span><b id="v550Machine">—</b></div><div class="kpi"><span>Cambios herramienta</span><b id="v550Changes">—</b></div></div><div id="v550Advice" class="note"></div></div>
     <div class="card c12"><h3>Comparador de escenarios de matriz V</h3><div class="fields"><div><label>V candidatas (mm)</label><input id="v550Vs" value="6,8,10,12,16,22,24,32,36,40,50"></div><div><label>Prioridad</label><select id="v550Priority"><option value="balanced">Equilibrada</option><option value="precision">Precisión dimensional</option><option value="force">Menor fuerza</option><option value="radius">Menor radio interior</option><option value="marks">Menor marcado</option></select></div><div><label>Resistencia material (N/mm²)</label><input id="v550Rm" inputmode="decimal" value="450"></div><div><label>Fuerza máxima disponible (t)</label><input id="v550MaxForce" inputmode="decimal" value="100"></div></div><div class="actions"><button class="btn" id="v550Compare">Calcular escenarios</button></div><div class="tableWrap"><table class="table"><thead><tr><th>Opción</th><th>V</th><th>Radio previsto</th><th>Ala mínima</th><th>Fuerza estimada</th><th>Valoración</th><th>Acción</th></tr></thead><tbody id="v550ScenarioRows"></tbody></table></div><div class="muted">Resultados orientativos. Confirmar siempre con tablas del fabricante, utillaje real, control CNC y primera pieza.</div></div>
     <div class="card c7"><h3>Puntos de control guardados</h3><div id="v550Checkpoints" class="v550-checkpoints"></div></div>
+
+    <div class="card c12" id="v600ReleaseCard"><h3>Liberación industrial y trazabilidad</h3><p class="muted">Cierra una revisión preparada para taller, registra quién la valida y genera un certificado local. La liberación no sustituye la verificación física de máquina, utillaje ni primera pieza.</p>
+      <div class="fields"><div><label>Responsable de validación</label><input id="v600Approver" placeholder="Nombre del responsable"></div><div><label>Observación de liberación</label><input id="v600ReleaseNote" placeholder="Ej.: Primera serie autorizada"></div><div><label>Estado objetivo</label><select id="v600ReleaseLevel"><option value="revision">Preparado para revisión</option><option value="prototype">Autorizado para prototipo</option><option value="production">Autorizado para producción</option></select></div></div>
+      <div class="actions"><button class="btn" id="v600Evaluate">Evaluar liberación</button><button class="btn secondary" id="v600Release">Registrar liberación</button><button class="btn secondary" id="v600ExportCertificate">Exportar certificado</button></div>
+      <div class="kpis" style="grid-template-columns:repeat(4,minmax(0,1fr))"><div class="kpi"><span>Estado</span><b id="v600ReleaseState">Sin evaluar</b></div><div class="kpi"><span>Integridad</span><b id="v600Integrity">—</b></div><div class="kpi"><span>Última liberación</span><b id="v600LastRelease">—</b></div><div class="kpi"><span>Registros</span><b id="v600ReleaseCount">0</b></div></div>
+      <div id="v600ReleaseChecks" class="v550-checks"></div><div id="v600ReleaseHistory" class="v550-checkpoints"></div>
+    </div>
     <div class="card c5"><h3>Directrices protegidas</h3><div class="note">✓ Evolución acumulativa<br>✓ Sin eliminar módulos heredados<br>✓ Proyecto común sincronizado<br>✓ Calculadora de Desarrollo independiente<br>✓ Simulación 2D y 3D separadas<br>✓ Splash fijo y sincronizado de 4 segundos</div></div>
   </div>
 </section>
@@ -1265,9 +1288,38 @@ function refreshPage(page){
  if(page==='notes'){ $('generalNotes').value=state.generalNotes;$('noteMeta').innerHTML=`Proyecto ${state.project.ref}<br>${state.programNotes?state.programNotes.replace(/\n/g,'<br>'):'Sin notas de programa.'}`;}
  if(page==='history')renderHistory();drawAll();
 }
+const REVISION59_KEY='plegarPro.v59.revisions';
+function projectHealth59(){
+ const p=state.project||{},b=Array.isArray(state.bends)?state.bends:[],pm=state.programMeta||{};
+ const dataOk=!!(String(p.ref||'').trim()&&p.material&&parseLocaleNumber(p.thickness)>0&&parseLocaleNumber(pm.bendLength)>0);
+ const geometryOk=b.length>0&&b.every(x=>parseLocaleNumber(x.leg)>0&&parseLocaleNumber(x.angle)>0&&parseLocaleNumber(x.angle)<180&&parseLocaleNumber(x.radius)>=0);
+ const toolingOk=b.length>0&&b.every(x=>parseLocaleNumber(x.v)>0&&String(x.punch||'').trim());
+ const productionOk=!!(parseLocaleNumber(p.qty)>0&&p.machine&&pm.bendLength);
+ const score=[dataOk,geometryOk,toolingOk,productionOk].filter(Boolean).length;
+ const issues=[];
+ if(!dataOk)issues.push('Completa referencia, material, espesor y longitud de plegado.');
+ if(!geometryOk)issues.push('Revisa alas, ángulos y radios de todos los pliegues.');
+ if(!toolingOk)issues.push('Hay pliegues sin matriz V o punzón válido.');
+ if(!productionOk)issues.push('Falta cantidad, máquina o información de fabricación.');
+ return{dataOk,geometryOk,toolingOk,productionOk,score,issues};
+}
+function renderProjectHealth59(){
+ if(!$('projectHealthReport'))return;const h=projectHealth59(),label=x=>x?'Correcto':'Revisar';
+ $('healthData').textContent=label(h.dataOk);$('healthGeometry').textContent=label(h.geometryOk);$('healthTooling').textContent=label(h.toolingOk);$('healthProduction').textContent=label(h.productionOk);
+ const ready=h.score===4;$('projectHealthReport').innerHTML=`<b>${ready?'PROYECTO PREPARADO':'REVISIÓN NECESARIA'} · ${h.score}/4 áreas correctas</b><br>${ready?'Los datos esenciales son coherentes. Ejecuta la validación y la simulación antes de fabricar.':h.issues.join('<br>')}`;
+}
+function getRevisions59(){try{return JSON.parse(storageGet(REVISION59_KEY)||'[]')}catch(e){return[]}}
+function renderRevisions59(){
+ if(!$('revisionList59'))return;const list=getRevisions59();
+ $('revisionList59').innerHTML=list.length?list.map((r,i)=>`<div class="listItem" style="display:flex;justify-content:space-between;gap:8px;align-items:center"><span><b>${r.name}</b><small>${r.date} · ${r.ref||'Sin referencia'}</small></span><span><button class="btn secondary" data-r59-restore="${i}">Restaurar</button> <button class="btn secondary" data-r59-delete="${i}">Borrar</button></span></div>`).join(''):'Todavía no hay puntos de recuperación.';
+ $('revisionList59').querySelectorAll('[data-r59-restore]').forEach(btn=>btn.onclick=()=>{const r=getRevisions59()[+btn.dataset.r59Restore];if(!r)return;if(confirm('¿Restaurar este punto de recuperación?')){state=migrateState(deep(r.state));undoStack=[];redoStack=[];syncAll();autoSave();toast('Punto restaurado')}});
+ $('revisionList59').querySelectorAll('[data-r59-delete]').forEach(btn=>btn.onclick=()=>{const list=getRevisions59();list.splice(+btn.dataset.r59Delete,1);storageSet(REVISION59_KEY,JSON.stringify(list));renderRevisions59();toast('Punto eliminado')});
+}
+function saveRevision59(){const list=getRevisions59(),name=String($('revisionName59')?.value||'').trim()||`Revisión ${list.length+1}`;list.unshift({name,date:new Date().toLocaleString('es-ES'),ref:state.project?.ref||'',state:deep(state)});storageSet(REVISION59_KEY,JSON.stringify(list.slice(0,15)));if($('revisionName59'))$('revisionName59').value='';renderRevisions59();toast('Punto de recuperación guardado')}
+function exportProject59(){download(`Plegar_Pro_${(state.project?.ref||'proyecto').replace(/[^a-z0-9_-]+/gi,'_')}_v60.json`,JSON.stringify({format:'PPROJ',version:'60.0',exportedAt:new Date().toISOString(),state},null,2))}
 function syncAll(){
  state=migrateState(state);ensureDevelopment();
- renderProjectInputs();$('dashRef').textContent=state.project.ref;$('dashMat').textContent=state.project.material;$('dashThk').textContent=state.project.thickness+' mm';$('dashBends').textContent=state.bends.length;
+ renderProjectInputs();$('dashRef').textContent=state.project.ref;$('dashMat').textContent=state.project.material;$('dashThk').textContent=state.project.thickness+' mm';$('dashBends').textContent=state.bends.length;renderProjectHealth59();renderRevisions59();
  renderProgram();render2DEditor();populateP3();renderDevelopment();renderCurve();renderVCompare();renderTools();renderWorkOrder();renderQuality();renderHistory();renderAbout();drawAll();
  $('syncBadge').textContent='● Módulos actualizados';setTimeout(()=>$('syncBadge').textContent='● Proyecto al día',900);
 }
@@ -1807,7 +1859,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   window.addEventListener('error',function(e){window.PlegarProDiagnostics.errors.push(String(e.message||e.error||'Error'));});
   window.addEventListener('unhandledrejection',function(e){window.PlegarProDiagnostics.unhandled.push(String(e.reason||'Promesa rechazada'));});
   if('serviceWorker' in navigator && location.protocol.indexOf('http')===0){
-    window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js').catch(function(){});});
+    window.addEventListener('load',function(){navigator.serviceWorker.register('./sw.js?v=580',{updateViaCache:'none'}).then(function(r){r.update().catch(function(){});}).catch(function(){});});
   }
   document.addEventListener('visibilitychange',function(){
     if(!document.hidden && typeof window.syncAll==='function'){
@@ -2359,9 +2411,49 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
  function info(d){const L=Math.max(0,n(state?.programMeta?.bendLength));const prof={straight30:'Punzón recto 30°',straight88:'Punzón recto 88°',gooseneck:'Punzón cuello de cisne 90°',radius:'Punzón radio amplio'}[E('tvPunchProfile').value];E('tvPunchName').textContent=prof;E('tvDieName').textContent='Matriz V'+d.V.toFixed(0);E('tvThickness').textContent=d.th.toFixed(2)+' mm';E('tvAngle').textContent=d.instant.toFixed(1)+'°';E('tvRadius').textContent=d.rad.toFixed(2)+' mm';E('tvLength').textContent=L.toFixed(0)+' mm';E('tvPhase').textContent=phase(d.p);E('tvProgressKpi').textContent=d.p.toFixed(0)+' %';E('tv2DInfo').innerHTML='<b>Sección sincronizada:</b> '+prof+' · V'+d.V.toFixed(0)+' · chapa '+d.th.toFixed(2)+' mm · '+phase(d.p)+'.';E('tv3DInfo').innerHTML='<b>Gemelo visual:</b> cámara '+E('tv3DView').selectedOptions[0].text+' · calidad '+E('tvQuality').selectedOptions[0].text+' · zoom '+orbit.zoom.toFixed(2)+'×.';const ratio=d.V/d.th;E('tvWarnings').innerHTML=ratio<6?'<b>Advertencia:</b> relación V/espesor '+ratio.toFixed(1)+'. Revisa radio, fuerza, marcado y límites reales de la máquina.':'<b>Representación orientativa preparada.</b> Relación V/espesor '+ratio.toFixed(1)+'. Las formas son propias de Plegar Pro y deben contrastarse con el utillaje físico.'}
  function draw(){fillBends();draw2D();draw3D()}
  function animate(){if(!playing)return;let p=n(E('tvProgress').value)+dir*.55;if(p>=100){p=100;dir=-1}else if(p<=0){p=0;dir=1}E('tvProgress').value=p;draw();raf=requestAnimationFrame(animate)}
- function init(){if(!E('toolviews'))return;try{if(typeof titles==='object')titles.toolviews=['Gemelo visual HD','Punzón, matriz y chapa 2D/3D realistas']}catch(e){}['tvBend','tvPunchProfile','tv2DView','tv3DView','tvQuality','tvLighting','tvExplode','tvProgress','tvPunch','tvDie','tvSheet','tvDims','tvContact','tvMachine','tvXray'].forEach(id=>E(id)?.addEventListener('input',draw));E('tvPlay').onclick=()=>{if(!playing){playing=true;animate()}};E('tvPause').onclick=()=>{playing=false;cancelAnimationFrame(raf)};E('tvFit').onclick=()=>{orbit.zoom=1;draw()};E('tvResetOrbit').onclick=()=>{orbit={yaw:-.78,pitch:.36,zoom:1,drag:false,x:0,y:0};E('tv3DView').value='iso';draw()};E('tvCapture').onclick=()=>{const a=document.createElement('a');a.download='Plegar_Pro_v57_Gemelo_Visual_HD.png';a.href=E('tvCanvas3D').toDataURL('image/png');a.click()};const c=E('tvCanvas3D');c.addEventListener('pointerdown',e=>{orbit.drag=true;orbit.x=e.clientX;orbit.y=e.clientY;c.setPointerCapture(e.pointerId);E('tv3DView').value='free'});c.addEventListener('pointermove',e=>{if(!orbit.drag)return;orbit.yaw+=(e.clientX-orbit.x)*.011;orbit.pitch=Math.max(-1.45,Math.min(1.45,orbit.pitch+(e.clientY-orbit.y)*.009));orbit.x=e.clientX;orbit.y=e.clientY;draw3D()});c.addEventListener('pointerup',()=>orbit.drag=false);c.addEventListener('pointercancel',()=>orbit.drag=false);c.addEventListener('wheel',e=>{e.preventDefault();orbit.zoom=Math.max(.42,Math.min(3.4,orbit.zoom*(e.deltaY>0?.9:1.1)));draw3D()},{passive:false});document.querySelector('[data-page="toolviews"]')?.addEventListener('click',()=>setTimeout(draw,30));window.addEventListener('resize',()=>{if(E('toolviews')?.classList.contains('active'))draw()});setTimeout(draw,500);document.documentElement.dataset.ppVersion='57.0';window.PLEGAR_PRO_BUILD={version:'57.0',code:'PP-570-HD-DIGITAL-TWIN',source:'Plegar_Pro_v56_0'}}
+ (function installV59Integration(){
+ function init59(){
+  $('saveRevision59')?.addEventListener('click',saveRevision59);
+  $('exportRevision59')?.addEventListener('click',exportProject59);
+  $('healthReview')?.addEventListener('click',()=>{renderProjectHealth59();const h=projectHealth59();toast(h.score===4?'Revisión completada: proyecto preparado':'Revisión completada: hay datos pendientes')});
+  renderProjectHealth59();renderRevisions59();
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init59,{once:true});else init59();
+})();
+
+function init(){if(!E('toolviews'))return;try{if(typeof titles==='object')titles.toolviews=['Gemelo visual HD','Punzón, matriz y chapa 2D/3D realistas']}catch(e){}['tvBend','tvPunchProfile','tv2DView','tv3DView','tvQuality','tvLighting','tvExplode','tvProgress','tvPunch','tvDie','tvSheet','tvDims','tvContact','tvMachine','tvXray'].forEach(id=>E(id)?.addEventListener('input',draw));E('tvPlay').onclick=()=>{if(!playing){playing=true;animate()}};E('tvPause').onclick=()=>{playing=false;cancelAnimationFrame(raf)};E('tvFit').onclick=()=>{orbit.zoom=1;draw()};E('tvResetOrbit').onclick=()=>{orbit={yaw:-.78,pitch:.36,zoom:1,drag:false,x:0,y:0};E('tv3DView').value='iso';draw()};E('tvCapture').onclick=()=>{const a=document.createElement('a');a.download='Plegar_Pro_v60_Gemelo_Visual_HD.png';a.href=E('tvCanvas3D').toDataURL('image/png');a.click()};const c=E('tvCanvas3D');c.addEventListener('pointerdown',e=>{orbit.drag=true;orbit.x=e.clientX;orbit.y=e.clientY;c.setPointerCapture(e.pointerId);E('tv3DView').value='free'});c.addEventListener('pointermove',e=>{if(!orbit.drag)return;orbit.yaw+=(e.clientX-orbit.x)*.011;orbit.pitch=Math.max(-1.45,Math.min(1.45,orbit.pitch+(e.clientY-orbit.y)*.009));orbit.x=e.clientX;orbit.y=e.clientY;draw3D()});c.addEventListener('pointerup',()=>orbit.drag=false);c.addEventListener('pointercancel',()=>orbit.drag=false);c.addEventListener('wheel',e=>{e.preventDefault();orbit.zoom=Math.max(.42,Math.min(3.4,orbit.zoom*(e.deltaY>0?.9:1.1)));draw3D()},{passive:false});document.querySelector('[data-page="toolviews"]')?.addEventListener('click',()=>setTimeout(draw,30));window.addEventListener('resize',()=>{if(E('toolviews')?.classList.contains('active'))draw()});setTimeout(draw,500);document.documentElement.dataset.ppVersion='60.0';window.PLEGAR_PRO_BUILD={version:'60.0',code:'PP-600-LIBERACION-TRAZABILIDAD',source:'Plegar_Pro_v59_0'}}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
-</script>
 
+
+/* Plegar Pro v60.0 · Liberación industrial y trazabilidad */
+(function(){
+ const KEY='plegarPro.v60.releases';
+ const E=id=>document.getElementById(id);
+ const safe=v=>String(v??'').replace(/[<>]/g,'');
+ const get=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){return[]}};
+ const put=x=>{try{localStorage.setItem(KEY,JSON.stringify(x));return true}catch(e){return false}};
+ function health(){
+  const bends=Array.isArray(state?.bends)?state.bends:[];
+  const p=state?.project||{},m=state?.programMeta||{};
+  const checks=[
+   {label:'Referencia de proyecto',ok:!!String(p.ref||'').trim(),detail:p.ref||'No definida'},
+   {label:'Material y espesor',ok:!!p.material&&Number(p.thickness)>0,detail:(p.material||'—')+' · '+(Number(p.thickness)||0).toFixed(2)+' mm'},
+   {label:'Geometría de plegado',ok:bends.length>0&&bends.every(b=>Number(b.angle)>0&&Number(b.length||m.bendLength)>0),detail:bends.length+' pliegue(s)'},
+   {label:'Máquina',ok:!!String(p.machine||'').trim(),detail:p.machine||'No definida'},
+   {label:'Longitudes',ok:Number(m.sheetLength)>0&&Number(m.bendLength)>0,detail:'Chapa '+(Number(m.sheetLength)||0).toFixed(1)+' · plegado '+(Number(m.bendLength)||0).toFixed(1)+' mm'},
+   {label:'Persistencia local',ok:(()=>{try{localStorage.setItem('pp.v60.test','1');localStorage.removeItem('pp.v60.test');return true}catch(e){return false}})(),detail:'Almacenamiento del navegador'}
+  ];
+  const valid=checks.filter(x=>x.ok).length,score=Math.round(valid/checks.length*100);
+  return {checks,score,readyReview:score>=67,readyPrototype:score>=84,readyProduction:score===100};
+ }
+ function requestedReady(h){const level=E('v600ReleaseLevel')?.value||'revision';return level==='production'?h.readyProduction:level==='prototype'?h.readyPrototype:h.readyReview}
+ function render(){if(!E('v600ReleaseCard'))return;const h=health(),records=get(),level=E('v600ReleaseLevel')?.value||'revision',ready=requestedReady(h);E('v600Integrity').textContent=h.score+' %';E('v600ReleaseState').textContent=ready?'Preparado':'Pendiente';E('v600ReleaseState').className=ready?'status-ok':'status-warn';E('v600ReleaseCount').textContent=records.length;E('v600LastRelease').textContent=records[0]?new Date(records[0].created).toLocaleString('es-ES'):'—';E('v600ReleaseChecks').innerHTML=h.checks.map(x=>`<div class="${x.ok?'ok':'warn'}"><b>${x.ok?'✓':'!'} ${safe(x.label)}</b><span>${safe(x.detail)}</span></div>`).join('');E('v600ReleaseHistory').innerHTML=records.length?records.slice(0,8).map(r=>`<div class="revisionItem"><b>${safe(r.levelLabel)} · ${safe(r.ref||'Sin referencia')}</b><small>${new Date(r.created).toLocaleString('es-ES')} · ${safe(r.approver)} · Integridad ${r.score}%</small><div>${safe(r.note||'Sin observaciones')}</div></div>`).join(''):'<div class="note">Todavía no hay liberaciones registradas.</div>';return {h,ready,level};}
+ function register(){const r=render();if(!r||!r.ready){typeof toast==='function'&&toast('No cumple los requisitos del nivel seleccionado');return}const approver=String(E('v600Approver')?.value||'').trim();if(!approver){typeof toast==='function'&&toast('Indica el responsable de validación');E('v600Approver')?.focus();return}const labels={revision:'Preparado para revisión',prototype:'Autorizado para prototipo',production:'Autorizado para producción'};const records=get();const rec={id:Date.now(),created:new Date().toISOString(),version:'60.0',build:'PP-600-LIBERACION-TRAZABILIDAD',ref:state?.project?.ref||'',material:state?.project?.material||'',thickness:Number(state?.project?.thickness)||0,bends:Array.isArray(state?.bends)?state.bends.length:0,level:r.level,levelLabel:labels[r.level],approver,note:String(E('v600ReleaseNote')?.value||'').trim(),score:r.h.score,checks:r.h.checks};records.unshift(rec);put(records.slice(0,50));try{state.release=rec;autoSave()}catch(e){}render();typeof toast==='function'&&toast('Liberación registrada')}
+ function certificate(){const r=get()[0];if(!r){typeof toast==='function'&&toast('No hay liberaciones registradas');return}const lines=['PLEGAR PRO v60.0 · CERTIFICADO DE LIBERACIÓN','Código de build: '+r.build,'','Referencia: '+(r.ref||'—'),'Nivel: '+r.levelLabel,'Responsable: '+r.approver,'Fecha: '+new Date(r.created).toLocaleString('es-ES'),'Integridad: '+r.score+' %','Material: '+(r.material||'—'),'Espesor: '+r.thickness.toFixed(2)+' mm','Pliegues: '+r.bends,'Observaciones: '+(r.note||'Sin observaciones'),'','COMPROBACIONES',...r.checks.map(x=>'['+(x.ok?'OK':'PENDIENTE')+'] '+x.label+': '+x.detail),'','Aviso: documento generado localmente. Confirmar máquina, utillaje, seguridad y primera pieza antes de fabricar.'];const blob=new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Plegar_Pro_v60_Certificado_'+String(r.ref||'proyecto').replace(/[^a-z0-9_-]/gi,'_')+'.txt';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),800)}
+ function init(){if(!E('v600ReleaseCard'))return;E('v600Evaluate')?.addEventListener('click',()=>{render();typeof toast==='function'&&toast('Evaluación actualizada')});E('v600Release')?.addEventListener('click',register);E('v600ExportCertificate')?.addEventListener('click',certificate);E('v600ReleaseLevel')?.addEventListener('change',render);document.querySelector('[data-page="projectcenter"]')?.addEventListener('click',()=>setTimeout(render,20));render();window.PlegarProRelease={evaluate:health,list:get,register};}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+})();
+
+</script>
 </body></html>

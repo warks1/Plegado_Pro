@@ -1,0 +1,7 @@
+PLEGAR PRO v57.1 · GITHUB PAGES FIX
+- Conserva toda la v57.0.
+- Actualiza el Service Worker y elimina cachés anteriores.
+- Fuerza comprobación de actualización sin caché.
+- Actualiza release.json.
+- Añade distintivo visible de compilación v57.1.
+- Paquete preparado con index.html en la raíz del ZIP.

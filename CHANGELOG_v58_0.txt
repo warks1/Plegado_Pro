@@ -1,0 +1,10 @@
+PLEGAR PRO v58.0 — BASE CONSOLIDADA AUDITADA
+
+- Se conserva íntegramente la base acumulativa v57.1.
+- Se crea inventario_maestro.json con los 31 módulos activos y sus reglas de continuidad.
+- Se añade auditoría automática estructural y funcional ligera mediante auditar_proyecto.py.
+- Se verifica especialmente la presencia de Calculadora de Desarrollo Industrial, Gemelo Digital, Vistas 2D/3D de utillaje, Programación y Simulación 2D/3D, Centro de Proyecto y Centro de Validación.
+- Se elimina el distintivo visible “GITHUB FIX” para mantener una interfaz limpia y profesional.
+- Se actualiza la identificación interna y visible a v58.0.
+- Se mantiene la Calculadora de Desarrollo como módulo independiente y no sincronizado.
+- No se elimina ningún módulo heredado.
