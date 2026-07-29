@@ -1,9 +1,10 @@
 {
-  "name": "Plegar Pro",
-  "version": "63.0",
+  "name": "Controles y módulos reparados",
+  "version": "63.1",
   "code": "PP-620-CONSOLIDACION-PROGRAMACION-GEMELO",
   "base": "59.0",
   "date": "2026-07-28",
   "type": "actualizacion acumulativa",
-  "summary": "Liberación industrial, trazabilidad, certificados locales y control de preparación sin eliminar módulos heredados."
+  "summary": "Liberación industrial, trazabilidad, certificados locales y control de preparación sin eliminar módulos heredados.",
+  "build": "PP-631-CONTROLES-REPARADOS"
 }
