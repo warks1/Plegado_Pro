@@ -48,8 +48,8 @@ if not errors:
         fail("Sigue presente el banner visible de despliegue")
     else: ok("Interfaz sin banner visible de despliegue")
 
-    if re.search(r"PLEGAR_PRO_BUILD=\{version:'60\.0'", html): ok("Build interno actualizado a 60.0")
-    else: fail("Build interno no actualizado a 60.0")
+    if re.search(r"PLEGAR_PRO_BUILD=\{version:'61\.0'", html): ok("Build interno actualizado a 61.0")
+    else: fail("Build interno no actualizado a 61.0")
 
     # Lightweight wiring checks
     for token in ["openPage", "localStorage", "tvCanvas3D", "devcalculator", "sim3d", "v600ReleaseCard", "PlegarProRelease"]:
@@ -57,7 +57,7 @@ if not errors:
             fail(f"Referencia funcional esencial ausente: {token}")
         else: ok(f"Referencia funcional localizada: {token}")
 
-report={"version":"60.0","passed":passed,"warnings":warnings,"errors":errors,"result":"PASS" if not errors else "FAIL"}
+report={"version":"61.0","passed":passed,"warnings":warnings,"errors":errors,"result":"PASS" if not errors else "FAIL"}
 (ROOT/"AUDITORIA_v60_0.json").write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding="utf-8")
 print(json.dumps(report,ensure_ascii=False,indent=2))
 sys.exit(1 if errors else 0)

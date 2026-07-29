@@ -221,6 +221,26 @@ canvas{touch-action:none;-webkit-user-select:none;user-select:none;max-width:100
 @keyframes pp531LogoIn{from{opacity:0;transform:rotate(45deg) scale(.78)}to{opacity:1;transform:rotate(45deg) scale(1)}}
 @keyframes pp531TextIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 </style>
+
+<style id="pp61Styles">
+/* v61 · consolidación visual y programación real */
+#devcalculator .grid{grid-template-columns:repeat(12,minmax(0,1fr));align-items:start}
+#devcalculator .card{margin-bottom:0}
+#devcalculator .c5{grid-column:span 4}#devcalculator .c7{grid-column:span 8}
+#devcalculator .fields{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+#devcalculator label{font-size:.82rem;color:#9fb3c3;font-weight:700}
+#devcalculator input,#devcalculator select{min-height:44px;padding:10px 12px}
+#devcalculator .actions{position:sticky;top:8px;z-index:3;background:rgba(8,22,31,.94);padding:10px;border-radius:12px;backdrop-filter:blur(10px)}
+#devcalculator .kpis{gap:10px!important}
+.pp61-bend-editor{margin-top:14px;border:1px solid #294657;border-radius:14px;overflow:hidden;background:#091721}
+.pp61-editor-head{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 14px;background:#102430;border-bottom:1px solid #294657}
+.pp61-editor-head h3{margin:0;font-size:1rem}.pp61-editor-actions{display:flex;gap:8px;flex-wrap:wrap}
+.pp61-table{width:100%;border-collapse:collapse;min-width:760px}.pp61-table th,.pp61-table td{padding:8px;border-bottom:1px solid #203b4a;text-align:left;vertical-align:middle}.pp61-table th{font-size:.72rem;text-transform:uppercase;color:#8fa9ba;background:#0d1e29}.pp61-table input,.pp61-table select{min-width:76px;padding:8px;min-height:38px}.pp61-row-actions{display:flex;gap:5px}.pp61-row-actions button{padding:7px 9px;min-width:34px}
+.pp61-scroll{overflow:auto;-webkit-overflow-scrolling:touch}.pp61-empty{padding:18px;color:#9fb3c3}
+#legalFooter{overflow:hidden}body>text{display:none!important}
+@media(max-width:800px){#devcalculator .c5,#devcalculator .c7{grid-column:span 12}#devcalculator .fields{grid-template-columns:1fr 1fr}#devcalculator .actions{position:static}#devcalculator .kpis{grid-template-columns:repeat(2,minmax(0,1fr))!important}.pp61-editor-head{align-items:flex-start;flex-direction:column}}
+@media(max-width:520px){#devcalculator .fields{grid-template-columns:1fr}#devcalculator .card{padding:14px}#devcalculator h2{font-size:1.05rem}}
+</style>
 </head>
 <body>
 <div id="loader">
@@ -355,7 +375,7 @@ canvas{touch-action:none;-webkit-user-select:none;user-select:none;max-width:100
 <div><label>Material</label><select id="material"><option>S235</option><option>S275</option><option>S355</option><option>Inoxidable 304</option><option>Aluminio</option><option>Zincor</option><option>Galvanizado</option></select></div>
 <div><label>Espesor (mm)</label><input id="thickness" type="text" inputmode="decimal" min=".1" step=".1"></div>
 <div><label>Factor K</label><input id="kfactor" type="text" inputmode="decimal" min=".1" max=".6" step=".01"></div>
-<div><label>Máquina</label><select id="machine"><option>Bystronic Xpert 3100 × 100 T</option><option>Bystronic Xpert 3200 × 150 T</option><option>Personalizada</option></select></div>
+<div><label>Máquina</label><select id="machine"><option>Bystronic Vistronic 100 T · 2006</option><option>Bystronic Xpert 3100 × 100 T</option><option>Bystronic Xpert 3200 × 150 T</option><option>Personalizada</option></select></div>
 </div></div>
 </div></section>
 
@@ -393,7 +413,7 @@ canvas{touch-action:none;-webkit-user-select:none;user-select:none;max-width:100
 </div></section>
 
 <section class="page" id="program2d"><div class="split">
-<div class="card"><h2>Edición 2D</h2><div class="fields"><div><label>Material</label><select id="p2Material"><option>S235</option><option>S275</option><option>S355</option><option>Inoxidable 304</option><option>Aluminio</option><option>Zincor</option><option>Galvanizado</option></select></div><div><label>Espesor (mm)</label><input id="p2Thickness" type="text" inputmode="decimal" min="0.1" step="0.1"></div><div><label>Longitud de la chapa (mm)</label><input id="p2SheetLength" type="text" inputmode="decimal" min="1" step="1"></div><div><label>Longitud de plegado (mm)</label><input id="p2BendLength" type="text" inputmode="decimal" min="1" step="1"></div><div><label><input id="p2SpecialGeometry" type="checkbox"> Geometría especial</label></div><div id="p2SheetWidthWrap" style="display:none"><label>Anchura total opcional (mm)</label><input id="p2SheetWidth" type="text" inputmode="decimal" min="1" step="1"></div></div><div id="p2DataStatus" class="note">Espesor sincronizado con el proyecto activo.</div><div id="editor2d"></div><div class="actions"><button class="btn" id="p2Add">Añadir pliegue</button><button class="btn secondary" id="p2Fit">Centrar pieza</button><button class="btn secondary" data-go="sim2d">Simular 2D</button><button class="btn secondary" data-go="program3d">Vista 3D</button></div></div>
+<div class="card"><h2>Edición 2D</h2><div class="fields"><div><label>Material</label><select id="p2Material"><option>S235</option><option>S275</option><option>S355</option><option>Inoxidable 304</option><option>Aluminio</option><option>Zincor</option><option>Galvanizado</option></select></div><div><label>Espesor (mm)</label><input id="p2Thickness" type="text" inputmode="decimal" min="0.1" step="0.1"></div><div><label>Longitud de la chapa (mm)</label><input id="p2SheetLength" type="text" inputmode="decimal" min="1" step="1"></div><div><label>Longitud de plegado (mm)</label><input id="p2BendLength" type="text" inputmode="decimal" min="1" step="1"></div><div><label><input id="p2SpecialGeometry" type="checkbox"> Geometría especial</label></div><div id="p2SheetWidthWrap" style="display:none"><label>Anchura total opcional (mm)</label><input id="p2SheetWidth" type="text" inputmode="decimal" min="1" step="1"></div></div><div id="p2DataStatus" class="note">Espesor sincronizado con el proyecto activo.</div><div id="pp61P2Editor" class="pp61-bend-editor"></div><div id="editor2d" style="display:none"></div><div class="actions"><button class="btn" id="p2Add">Añadir pliegue</button><button class="btn secondary" id="p2Fit">Centrar pieza</button><button class="btn secondary" data-go="sim2d">Simular 2D</button><button class="btn secondary" data-go="program3d">Vista 3D</button></div></div>
 <div><div class="stage"><canvas id="canvasP2" width="1100" height="650"></canvas><div class="overlay" id="overlayP2"></div></div></div>
 </div></section>
 
@@ -412,7 +432,7 @@ canvas{touch-action:none;-webkit-user-select:none;user-select:none;max-width:100
 <div><label>V</label><input id="p3V" type="text" inputmode="decimal"></div>
 <div><label>Tope X</label><input id="p3Gauge" type="text" inputmode="decimal"></div>
 </div><div class="actions"><button class="btn" id="p3Apply">Aplicar al pliegue</button><button class="btn secondary" id="p3Prev">Pliegue anterior</button><button class="btn secondary" id="p3Next">Siguiente</button><button class="btn secondary" id="p3Fit">Centrar</button><button class="btn secondary" data-go="sim3d">Simular 3D</button></div>
-<div class="note">Arrastra sobre la vista para rotar. La programación 3D edita; la simulación 3D reproduce.</div></div>
+<div id="pp61P3Editor" class="pp61-bend-editor"></div><div class="note">Arrastra sobre la vista para rotar. La programación 3D edita; la simulación 3D reproduce.</div></div>
 <div><div class="stage"><canvas id="canvasP3" width="1100" height="650"></canvas><div class="overlay" id="overlayP3"></div></div></div>
 </div></section>
 
@@ -438,7 +458,7 @@ canvas{touch-action:none;-webkit-user-select:none;user-select:none;max-width:100
 <div><label>Tolerancia admisible ± mm</label><input id="devTolerance" type="text" inputmode="decimal" min="0" step="0.05"></div>
 <div><label>Tipo de cotas</label><select id="devDimensionType"><option value="exterior">Exteriores</option><option value="interior">Interiores</option><option value="mixed">Mixtas</option></select></div>
 </div><div class="actions"><button class="btn" id="devCalculate">Calcular</button><button class="btn secondary" id="devToCompare">Comparar matrices V</button><button class="btn secondary" id="devSaveCalc">Guardar cálculo</button><button class="btn secondary" id="devExport">Exportar cálculo</button><button class="btn secondary" id="devReset">Restablecer calculadora</button></div>
-<div class="note"><b>Sincronización general:</b> los cambios de material, espesor, radio, ángulo y V actualizan el proyecto activo, Programar, vistas 2D/3D, simulaciones, Desarrollo y Comparador de V.</div></div>
+<div class="note"><b>Desarrollo del proyecto:</b> esta pantalla refleja automáticamente la pieza activa de Programar. Para cálculos aislados utiliza “Calculadora de desarrollo”.</div></div>
 <div class="card c8"><h2>Pliegues de la calculadora</h2><div class="tableWrap"><table class="table"><thead><tr><th>#</th><th>Longitud / ala (mm)</th><th>Ángulo final</th><th>Radio solicitado</th><th>BA</th><th>BD</th><th></th></tr></thead><tbody id="devRows"></tbody></table></div><div class="actions"><button class="btn" id="devAddBend">Añadir pliegue</button></div></div>
 <div class="card c12"><h2>Resultado del desarrollo</h2><div class="kpis"><div class="kpi"><span>Suma de cotas</span><b id="sumLegs"></b></div><div class="kpi"><span>Desarrollo total</span><b id="flatLength"></b></div><div class="kpi"><span>BA total</span><b id="devBATotal"></b></div><div class="kpi"><span>BD total</span><b id="devBDTotal"></b></div><div class="kpi"><span>Radio estimado con V ref.</span><b id="devActualRadius"></b></div><div class="kpi"><span>Fuerza estimada</span><b id="forceEstimate"></b></div><div class="kpi"><span>Ala mínima</span><b id="devMinFlange"></b></div><div class="kpi"><span>Estado</span><b id="devStatus"></b></div></div><div id="devWarnings" class="note"></div></div>
 <div class="card c12"><h2>Cálculos guardados</h2><div id="devSavedList" class="list"></div></div>
@@ -459,7 +479,7 @@ canvas{touch-action:none;-webkit-user-select:none;user-select:none;max-width:100
 <div><label>Flecha (mm)</label><input id="curveSagitta" type="text" inputmode="decimal" placeholder="Opcional"></div>
 <div><label>Ángulo máximo por golpe (°)</label><input id="curveMaxHitAngle" type="text" inputmode="decimal" value="5"></div>
 <div><label>Error máximo de cuerda (mm)</label><input id="curveTolerance" type="text" inputmode="decimal" value="0.5"></div>
-</div><div class="actions"><button class="btn" id="curveCalculate">Calcular</button><button class="btn secondary" id="curveAutoOptimize">Optimizar golpes</button><button class="btn secondary" id="curveToProgram">Enviar a Programar</button><button class="btn secondary" id="curveExportCsv">Exportar CSV</button></div><div id="curveResult" class="note"></div><div class="kpis"><div class="kpi"><span>Desviación geométrica</span><b id="curveDeviation">—</b></div><div class="kpi"><span>Cuerda calculada</span><b id="curveChordOut">—</b></div><div class="kpi"><span>Flecha calculada</span><b id="curveSagittaOut">—</b></div><div class="kpi"><span>Calidad estimada</span><b id="curveQuality">—</b></div></div></div>
+</div><div class="actions"><button class="btn" id="curveCalculate">Calcular</button><button class="btn secondary" id="curveAutoOptimize">Optimizar golpes</button><button class="btn secondary" id="curveExportCsv">Exportar CSV</button></div><div id="curveResult" class="note"></div><div class="kpis"><div class="kpi"><span>Desviación geométrica</span><b id="curveDeviation">—</b></div><div class="kpi"><span>Cuerda calculada</span><b id="curveChordOut">—</b></div><div class="kpi"><span>Flecha calculada</span><b id="curveSagittaOut">—</b></div><div class="kpi"><span>Calidad estimada</span><b id="curveQuality">—</b></div></div></div>
 <div class="card c7"><h2>Vista avanzada de la curva</h2><div class="visualToolbar"><button class="btn secondary" id="curveFit">Centrar</button><button class="btn secondary" id="curveZoomIn">＋</button><button class="btn secondary" id="curveZoomOut">－</button><button class="btn secondary" id="curveRotateLeft">↶ Rotar</button><button class="btn secondary" id="curveRotateRight">Rotar ↷</button></div><div class="stage"><canvas id="canvasCurve" width="1000" height="600"></canvas><div class="overlay" id="overlayCurve"></div></div></div><div class="card c12"><h2>Tabla de golpes</h2><div class="tableWrap"><table class="table"><thead><tr><th>Golpe</th><th>Posición X</th><th>Distancia</th><th>Ángulo golpe</th><th>Ángulo acumulado</th><th>Corrección</th></tr></thead><tbody id="curveRows"></tbody></table></div><div id="curveWarnings" class="note"></div></div>
 </div></section>
 
@@ -640,7 +660,7 @@ canvas{touch-action:none;-webkit-user-select:none;user-select:none;max-width:100
 <div class="card c8"><h2>Comparación multiplegado por V</h2><div class="fields"><div><label>V candidatas</label><input id="pp527Vs" value="6,8,10,12,16,22,24,32,36,40,50"></div><div><label>Prioridad</label><select id="pp527Priority"><option value="balanced">Equilibrada</option><option value="precision">Precisión</option><option value="force">Menor fuerza</option><option value="radius">Menor radio</option><option value="marks">Menor marcado</option></select></div><div><label>Tolerancia acumulada (mm)</label><input id="pp527Tolerance" type="number" step="0.01" value="0.50"></div><div><label>Fuerza máxima (t)</label><input id="pp527MaxForce" type="number" step="0.1" value="999"></div></div><div class="tableWrap"><table class="table"><thead><tr><th>V</th><th>Desarrollo total</th><th>Δ acumulada</th><th>Radio</th><th>Fuerza</th><th>Ala mín.</th><th>Riesgo</th><th>Puntuación</th><th>Resultado</th></tr></thead><tbody id="pp527Rows"></tbody></table></div><div id="pp527Recommendation" class="note">Pulsa “Analizar V multiplegado”.</div></div>
 <div class="card c12"><h2>Historial de versiones</h2><div class="fields"><div><label>Versión A</label><select id="pp527A"></select></div><div><label>Versión B</label><select id="pp527B"></select></div><div class="actions"><button class="btn secondary" id="pp527Compare">Comparar seleccionadas</button></div></div><div id="pp527Diff" class="note">Guarda al menos dos versiones para comparar.</div><div class="tableWrap"><table class="table"><thead><tr><th>Fecha</th><th>Nombre</th><th>Material</th><th>Espesor</th><th>V ref.</th><th>Pliegues</th><th>Desarrollo</th><th>Acciones</th></tr></thead><tbody id="pp527History"></tbody></table></div></div>
 </div></section>
-<section class="page" id="about"><div class="grid"><div class="card c8"><h2>Información del propietario</h2><div id="aboutOwner" class="note"></div><div class="actions"><button class="btn secondary" data-go="settings">Editar datos del propietario</button></div><p class="muted">Los datos se guardan localmente en este dispositivo y se muestran aquí automáticamente.</p></div><div class="card c4"><h2>Versión instalada</h2><div class="note"><b>Plegar Pro v60.0</b><br>Código: PP-600-LIBERACION-TRAZABILIDAD<br>Base acumulativa limpia y profesional.<br>Base acumulativa modificada desde el proyecto real.<br><br>Incluye Programar con accesos 2D/3D, simulación, dimensiones sincronizadas, centrado de vistas y Curva Perfecta.</div></div></div></section>
+<section class="page" id="about"><div class="grid"><div class="card c8"><h2>Información del propietario</h2><div id="aboutOwner" class="note"></div><div class="actions"><button class="btn secondary" data-go="settings">Editar datos del propietario</button></div><p class="muted">Los datos se guardan localmente en este dispositivo y se muestran aquí automáticamente.</p></div><div class="card c4"><h2>Versión instalada</h2><div class="note"><b>Plegar Pro v63.0</b><br>Código: PP-630-NUCLEO-SINCRONIZADO<br>Base acumulativa limpia y profesional.<br>Base acumulativa modificada desde el proyecto real.<br><br>Incluye Programar con accesos 2D/3D, simulación, dimensiones sincronizadas, centrado de vistas y Curva Perfecta.</div></div></div></section>
 
 <footer class="legalFooter" id="legalFooter"></footer>
 <section class="page" id="validation">
@@ -723,7 +743,7 @@ const formatLocaleNumber=(value,decimals=2)=>Number(value||0).toLocaleString('es
 const isTerminalSegment=i=>i===state.bends.length-1;
 const STORAGE='plegarProV43';
 let state={
- project:{ref:'PP-001',client:'Cliente demo',qty:10,rev:'A',material:'S235',thickness:2,kfactor:.42,machine:'Bystronic Xpert 3100 × 100 T'},
+ project:{ref:'PP-001',client:'Cliente demo',qty:10,rev:'A',material:'S235',thickness:2,kfactor:.42,machine:'Bystronic Vistronic 100 T · 2006'},
  bends:[
   {leg:120,angle:90,radius:2,v:16,punch:'Recto 88°',gauge:120,direction:1},
   {leg:85,angle:90,radius:2,v:16,punch:'Pata de cabra 90°',gauge:85,direction:-1},
@@ -738,7 +758,7 @@ let state={
 let undoStack=[],redoStack=[],pageHistory=['dashboard'],currentPage='dashboard';
 let sim={rotXP3:-.35,rotYP3:.5,rotXS3:-.35,rotYS3:.5,s2Step:0,s3Step:0,s2Timer:null,s3Timer:null,operatorStep:0,p3Active:0,rotX:-.35,rotY:.5,drag:false,lastX:0,lastY:0,zoomP3:1,zoomS3:1,panP3X:0,panP3Y:0,panS3X:0,panS3Y:0,dragTarget:'',panMode:false,zoomS2:1,rotS2:0,panS2X:0,panS2Y:0,zoomCurve:1,rotCurve:0,panCurveX:0,panCurveY:0,zoomProgram:1,rotProgram:0,panProgramX:0,panProgramY:0};
 let aiProposal=null,importDraft=null,importedFiles=[];
-window.PLEGAR_PRO_BUILD={version:'52.1',code:'PP-522-MODULOS-RESTAURADOS',source:'Plegar_Pro_v52_0'};
+window.PLEGAR_PRO_BUILD={version:'63.0',code:'PP-630-NUCLEO-SINCRONIZADO',source:'Plegar_Pro_v52_0'};
 (function verifyDeployment(){
  const expected='PP-514-PHOTO-TO-PROGRAM';
  document.documentElement.dataset.build=expected;
@@ -1048,14 +1068,22 @@ function readDevelopmentInputs(){
  ensureDevelopment();let d=state.development;
  d.material=$('devMaterial').value;d.thickness=+$('devThickness').value||1;d.kfactor=+$('devK').value||.42;d.referenceV=+$('devReferenceV').value||16;d.punchRadius=+$('devPunchRadius').value||0;d.punchAngle=+$('devPunchAngle').value||88;d.bendLength=+$('devBendLength').value||1000;d.tolerance=Math.max(0,+$('devTolerance').value||0);d.dimensionType=$('devDimensionType').value;
 }
+function syncProjectDevelopment(){
+ ensureProgramMeta();
+ state.development=state.development||{};
+ state.development.material=state.project.material;
+ state.development.thickness=+state.project.thickness||1;
+ state.development.kfactor=+state.project.kfactor||.42;
+ state.development.bendLength=+state.programMeta.bendLength||1000;
+ state.development.bends=deep(state.bends.map(b=>({leg:+b.leg||0,angle:+b.angle||90,radius:+b.radius||0,v:+b.v||16,punch:b.punch||''})));
+ if(state.bends[0]) state.development.referenceV=+state.bends[0].v||state.development.referenceV||16;
+}
 function renderDevelopment(){
- ensureDevelopment();let d=state.development;
+ syncProjectDevelopment();let d=state.development;
  $('devMaterial').value=d.material;$('devThickness').value=d.thickness;$('devK').value=d.kfactor;$('devPunchRadius').value=d.punchRadius;$('devPunchAngle').value=d.punchAngle;$('devBendLength').value=d.bendLength;$('devTolerance').value=d.tolerance;$('devDimensionType').value=d.dimensionType;
  $('devReferenceV').innerHTML=STANDARD_VS.map(v=>`<option value="${v}" ${v==d.referenceV?'selected':''}>V${v}</option>`).join('');
  let r=calcDevelopment();
- $('devRows').innerHTML=d.bends.map((b,i)=>`<tr><td>${i+1}</td><td><input class="devBendInput" data-i="${i}" data-k="leg" type="text" inputmode="decimal" step="0.1" value="${b.leg}"></td><td><input class="devBendInput" data-i="${i}" data-k="angle" type="text" inputmode="decimal" min="1" max="179" value="${b.angle}"></td><td><input class="devBendInput" data-i="${i}" data-k="radius" type="text" inputmode="decimal" min="0" step="0.1" value="${b.radius}"></td><td>${r.rows[i].allowance.toFixed(3)}</td><td>${r.rows[i].deduction.toFixed(3)}</td><td><button class="btn danger devDelete" data-i="${i}">×</button></td></tr>`).join('');
- document.querySelectorAll('.devBendInput').forEach(el=>el.onchange=()=>commit('Modificado cálculo de desarrollo',()=>{state.development.bends[+el.dataset.i][el.dataset.k]=+el.value}));
- document.querySelectorAll('.devDelete').forEach(el=>el.onclick=()=>commit('Eliminado pliegue de la calculadora',()=>state.development.bends.splice(+el.dataset.i,1)));
+ $('devRows').innerHTML=d.bends.map((b,i)=>`<tr><td>${i+1}</td><td>${formatLocaleNumber(b.leg,2)}</td><td>${formatLocaleNumber(b.angle,2)}°</td><td>R${formatLocaleNumber(b.radius,2)}</td><td>${r.rows[i].allowance.toFixed(3)}</td><td>${r.rows[i].deduction.toFixed(3)}</td><td><button class="btn secondary" data-go="program">Editar en Programar</button></td></tr>`).join('');
  $('sumLegs').textContent=r.sum.toFixed(2)+' mm';$('flatLength').textContent=r.flat.toFixed(3)+' mm';$('devBATotal').textContent=r.ba.toFixed(3)+' mm';$('devBDTotal').textContent=r.bd.toFixed(3)+' mm';$('devActualRadius').textContent='R'+r.actualRadius.toFixed(2);$('forceEstimate').textContent=r.force.toFixed(1)+' t';$('devMinFlange').textContent=r.minFlange.toFixed(1)+' mm';
  let short=d.bends.some(b=>(+b.leg||0)<r.minFlange);$('devStatus').textContent=short?'Revisar':'Calculado';$('devStatus').className=short?'error':'ok';
  let warnings=[];if(short)warnings.push('Una o más alas son menores que la longitud mínima orientativa para V'+d.referenceV+'.');if(r.actualRadius>Math.max(...d.bends.map(b=>+b.radius||0),0)+d.tolerance)warnings.push('El radio generado por la V de referencia supera el radio solicitado.');
@@ -1316,9 +1344,9 @@ function renderRevisions59(){
  $('revisionList59').querySelectorAll('[data-r59-delete]').forEach(btn=>btn.onclick=()=>{const list=getRevisions59();list.splice(+btn.dataset.r59Delete,1);storageSet(REVISION59_KEY,JSON.stringify(list));renderRevisions59();toast('Punto eliminado')});
 }
 function saveRevision59(){const list=getRevisions59(),name=String($('revisionName59')?.value||'').trim()||`Revisión ${list.length+1}`;list.unshift({name,date:new Date().toLocaleString('es-ES'),ref:state.project?.ref||'',state:deep(state)});storageSet(REVISION59_KEY,JSON.stringify(list.slice(0,15)));if($('revisionName59'))$('revisionName59').value='';renderRevisions59();toast('Punto de recuperación guardado')}
-function exportProject59(){download(`Plegar_Pro_${(state.project?.ref||'proyecto').replace(/[^a-z0-9_-]+/gi,'_')}_v60.json`,JSON.stringify({format:'PPROJ',version:'60.0',exportedAt:new Date().toISOString(),state},null,2))}
+function exportProject59(){download(`Plegar_Pro_${(state.project?.ref||'proyecto').replace(/[^a-z0-9_-]+/gi,'_')}_v60.json`,JSON.stringify({format:'PPROJ',version:'61.0',exportedAt:new Date().toISOString(),state},null,2))}
 function syncAll(){
- state=migrateState(state);ensureDevelopment();
+ state=migrateState(state);ensureDevelopment();syncProjectDevelopment();
  renderProjectInputs();$('dashRef').textContent=state.project.ref;$('dashMat').textContent=state.project.material;$('dashThk').textContent=state.project.thickness+' mm';$('dashBends').textContent=state.bends.length;renderProjectHealth59();renderRevisions59();
  renderProgram();render2DEditor();populateP3();renderDevelopment();renderCurve();renderVCompare();renderTools();renderWorkOrder();renderQuality();renderHistory();renderAbout();drawAll();
  $('syncBadge').textContent='● Módulos actualizados';setTimeout(()=>$('syncBadge').textContent='● Proyecto al día',900);
@@ -2229,7 +2257,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
  }
  function exportCsv(){const r=calculate(false);if(!r)return;let lines=['PLEGAR PRO v52.9 - CALCULADORA DE DESARROLLO INDEPENDIENTE',`Material;${r.material}`,`Espesor;${r.t.toFixed(3)}`,`Factor K;${r.k.toFixed(4)}`,`V;${r.v.toFixed(3)}`,`Radio;${r.r0.toFixed(3)}`,`Desarrollo;${r.flat.toFixed(3)}`,'','Pliegue;Angulo interior;Angulo doblado;Radio;BA;OSSB;BD',...r.rows.map(x=>`${x.i+1};${x.inside.toFixed(3)};${x.bend.toFixed(3)};${x.r.toFixed(3)};${x.ba.toFixed(4)};${x.ossb.toFixed(4)};${x.bd.toFixed(4)}`)];download('PlegarPro_calculadora_desarrollo.csv',lines.join('\n'),'text/csv')}
  function reset(){ $('dcMaterial').value='S235';$('dcThickness').value='2';$('dcK').value='.42';$('dcV').value='16';$('dcRadius').value='2.1';$('dcBendLength').value='1000';$('dcDimType').value='outside';$('dcRadiusMode').value='manual';$('dcCalibration').value='0';$('dcTolerance').value='.20';$('dcLegs').value='100,100,100';$('dcAngles').value='90,90';$('dcRadii').value='';calculate(false)}
- function init(){if(!$('devcalculator'))return;$('dcCalc').onclick=()=>calculate();$('dcExport').onclick=exportCsv;$('dcReset').onclick=reset;['dcMaterial','dcThickness','dcK','dcV','dcRadius','dcBendLength','dcDimType','dcRadiusMode','dcCalibration','dcTolerance','dcLegs','dcAngles','dcRadii'].forEach(id=>$(id).addEventListener('change',()=>calculate(false)));calculate(false);window.PLEGAR_PRO_V529_AUDIT={calculator:true,independent:true,projectReads:0,projectWrites:0,formula:'BA/OSSB/BD',multiBend:true,calibration:true,pages:document.querySelectorAll('section.page').length,navigation:document.querySelectorAll('[data-page]').length,missing:[...document.querySelectorAll('[data-page]')].map(x=>x.dataset.page).filter(id=>!document.getElementById(id))};document.documentElement.dataset.ppVersion='52.9'}
+ function init(){if(!$('devcalculator'))return;$('dcCalc').onclick=()=>calculate();$('dcExport').onclick=exportCsv;$('dcReset').onclick=reset;['dcMaterial','dcThickness','dcK','dcV','dcRadius','dcBendLength','dcDimType','dcRadiusMode','dcCalibration','dcTolerance','dcLegs','dcAngles','dcRadii'].forEach(id=>$(id).addEventListener('change',()=>calculate(false)));calculate(false);window.PLEGAR_PRO_V529_AUDIT={calculator:true,independent:true,projectReads:0,projectWrites:0,formula:'BA/OSSB/BD',multiBend:true,calibration:true,pages:document.querySelectorAll('section.page').length,navigation:document.querySelectorAll('[data-page]').length,missing:[...document.querySelectorAll('[data-page]')].map(x=>x.dataset.page).filter(id=>!document.getElementById(id))};document.documentElement.dataset.ppVersion='63.0'}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(init,700));else setTimeout(init,700);
 })();
 </script>
@@ -2421,12 +2449,12 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init59,{once:true});else init59();
 })();
 
-function init(){if(!E('toolviews'))return;try{if(typeof titles==='object')titles.toolviews=['Gemelo visual HD','Punzón, matriz y chapa 2D/3D realistas']}catch(e){}['tvBend','tvPunchProfile','tv2DView','tv3DView','tvQuality','tvLighting','tvExplode','tvProgress','tvPunch','tvDie','tvSheet','tvDims','tvContact','tvMachine','tvXray'].forEach(id=>E(id)?.addEventListener('input',draw));E('tvPlay').onclick=()=>{if(!playing){playing=true;animate()}};E('tvPause').onclick=()=>{playing=false;cancelAnimationFrame(raf)};E('tvFit').onclick=()=>{orbit.zoom=1;draw()};E('tvResetOrbit').onclick=()=>{orbit={yaw:-.78,pitch:.36,zoom:1,drag:false,x:0,y:0};E('tv3DView').value='iso';draw()};E('tvCapture').onclick=()=>{const a=document.createElement('a');a.download='Plegar_Pro_v60_Gemelo_Visual_HD.png';a.href=E('tvCanvas3D').toDataURL('image/png');a.click()};const c=E('tvCanvas3D');c.addEventListener('pointerdown',e=>{orbit.drag=true;orbit.x=e.clientX;orbit.y=e.clientY;c.setPointerCapture(e.pointerId);E('tv3DView').value='free'});c.addEventListener('pointermove',e=>{if(!orbit.drag)return;orbit.yaw+=(e.clientX-orbit.x)*.011;orbit.pitch=Math.max(-1.45,Math.min(1.45,orbit.pitch+(e.clientY-orbit.y)*.009));orbit.x=e.clientX;orbit.y=e.clientY;draw3D()});c.addEventListener('pointerup',()=>orbit.drag=false);c.addEventListener('pointercancel',()=>orbit.drag=false);c.addEventListener('wheel',e=>{e.preventDefault();orbit.zoom=Math.max(.42,Math.min(3.4,orbit.zoom*(e.deltaY>0?.9:1.1)));draw3D()},{passive:false});document.querySelector('[data-page="toolviews"]')?.addEventListener('click',()=>setTimeout(draw,30));window.addEventListener('resize',()=>{if(E('toolviews')?.classList.contains('active'))draw()});setTimeout(draw,500);document.documentElement.dataset.ppVersion='60.0';window.PLEGAR_PRO_BUILD={version:'60.0',code:'PP-600-LIBERACION-TRAZABILIDAD',source:'Plegar_Pro_v59_0'}}
+function init(){if(!E('toolviews'))return;try{if(typeof titles==='object')titles.toolviews=['Gemelo visual HD','Punzón, matriz y chapa 2D/3D realistas']}catch(e){}['tvBend','tvPunchProfile','tv2DView','tv3DView','tvQuality','tvLighting','tvExplode','tvProgress','tvPunch','tvDie','tvSheet','tvDims','tvContact','tvMachine','tvXray'].forEach(id=>E(id)?.addEventListener('input',draw));E('tvPlay').onclick=()=>{if(!playing){playing=true;animate()}};E('tvPause').onclick=()=>{playing=false;cancelAnimationFrame(raf)};E('tvFit').onclick=()=>{orbit.zoom=1;draw()};E('tvResetOrbit').onclick=()=>{orbit={yaw:-.78,pitch:.36,zoom:1,drag:false,x:0,y:0};E('tv3DView').value='iso';draw()};E('tvCapture').onclick=()=>{const a=document.createElement('a');a.download='Plegar_Pro_v60_Gemelo_Visual_HD.png';a.href=E('tvCanvas3D').toDataURL('image/png');a.click()};const c=E('tvCanvas3D');c.addEventListener('pointerdown',e=>{orbit.drag=true;orbit.x=e.clientX;orbit.y=e.clientY;c.setPointerCapture(e.pointerId);E('tv3DView').value='free'});c.addEventListener('pointermove',e=>{if(!orbit.drag)return;orbit.yaw+=(e.clientX-orbit.x)*.011;orbit.pitch=Math.max(-1.45,Math.min(1.45,orbit.pitch+(e.clientY-orbit.y)*.009));orbit.x=e.clientX;orbit.y=e.clientY;draw3D()});c.addEventListener('pointerup',()=>orbit.drag=false);c.addEventListener('pointercancel',()=>orbit.drag=false);c.addEventListener('wheel',e=>{e.preventDefault();orbit.zoom=Math.max(.42,Math.min(3.4,orbit.zoom*(e.deltaY>0?.9:1.1)));draw3D()},{passive:false});document.querySelector('[data-page="toolviews"]')?.addEventListener('click',()=>setTimeout(draw,30));window.addEventListener('resize',()=>{if(E('toolviews')?.classList.contains('active'))draw()});setTimeout(draw,500);document.documentElement.dataset.ppVersion='61.0';window.PLEGAR_PRO_BUILD={version:'61.0',code:'PP-630-NUCLEO-SINCRONIZADO',source:'Plegar_Pro_v59_0'}}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
 
 
-/* Plegar Pro v60.0 · Liberación industrial y trazabilidad */
+/* Plegar Pro v63.0 · Liberación industrial y trazabilidad */
 (function(){
  const KEY='plegarPro.v60.releases';
  const E=id=>document.getElementById(id);
@@ -2449,11 +2477,141 @@ function init(){if(!E('toolviews'))return;try{if(typeof titles==='object')titles
  }
  function requestedReady(h){const level=E('v600ReleaseLevel')?.value||'revision';return level==='production'?h.readyProduction:level==='prototype'?h.readyPrototype:h.readyReview}
  function render(){if(!E('v600ReleaseCard'))return;const h=health(),records=get(),level=E('v600ReleaseLevel')?.value||'revision',ready=requestedReady(h);E('v600Integrity').textContent=h.score+' %';E('v600ReleaseState').textContent=ready?'Preparado':'Pendiente';E('v600ReleaseState').className=ready?'status-ok':'status-warn';E('v600ReleaseCount').textContent=records.length;E('v600LastRelease').textContent=records[0]?new Date(records[0].created).toLocaleString('es-ES'):'—';E('v600ReleaseChecks').innerHTML=h.checks.map(x=>`<div class="${x.ok?'ok':'warn'}"><b>${x.ok?'✓':'!'} ${safe(x.label)}</b><span>${safe(x.detail)}</span></div>`).join('');E('v600ReleaseHistory').innerHTML=records.length?records.slice(0,8).map(r=>`<div class="revisionItem"><b>${safe(r.levelLabel)} · ${safe(r.ref||'Sin referencia')}</b><small>${new Date(r.created).toLocaleString('es-ES')} · ${safe(r.approver)} · Integridad ${r.score}%</small><div>${safe(r.note||'Sin observaciones')}</div></div>`).join(''):'<div class="note">Todavía no hay liberaciones registradas.</div>';return {h,ready,level};}
- function register(){const r=render();if(!r||!r.ready){typeof toast==='function'&&toast('No cumple los requisitos del nivel seleccionado');return}const approver=String(E('v600Approver')?.value||'').trim();if(!approver){typeof toast==='function'&&toast('Indica el responsable de validación');E('v600Approver')?.focus();return}const labels={revision:'Preparado para revisión',prototype:'Autorizado para prototipo',production:'Autorizado para producción'};const records=get();const rec={id:Date.now(),created:new Date().toISOString(),version:'60.0',build:'PP-600-LIBERACION-TRAZABILIDAD',ref:state?.project?.ref||'',material:state?.project?.material||'',thickness:Number(state?.project?.thickness)||0,bends:Array.isArray(state?.bends)?state.bends.length:0,level:r.level,levelLabel:labels[r.level],approver,note:String(E('v600ReleaseNote')?.value||'').trim(),score:r.h.score,checks:r.h.checks};records.unshift(rec);put(records.slice(0,50));try{state.release=rec;autoSave()}catch(e){}render();typeof toast==='function'&&toast('Liberación registrada')}
+ function register(){const r=render();if(!r||!r.ready){typeof toast==='function'&&toast('No cumple los requisitos del nivel seleccionado');return}const approver=String(E('v600Approver')?.value||'').trim();if(!approver){typeof toast==='function'&&toast('Indica el responsable de validación');E('v600Approver')?.focus();return}const labels={revision:'Preparado para revisión',prototype:'Autorizado para prototipo',production:'Autorizado para producción'};const records=get();const rec={id:Date.now(),created:new Date().toISOString(),version:'61.0',build:'PP-630-NUCLEO-SINCRONIZADO',ref:state?.project?.ref||'',material:state?.project?.material||'',thickness:Number(state?.project?.thickness)||0,bends:Array.isArray(state?.bends)?state.bends.length:0,level:r.level,levelLabel:labels[r.level],approver,note:String(E('v600ReleaseNote')?.value||'').trim(),score:r.h.score,checks:r.h.checks};records.unshift(rec);put(records.slice(0,50));try{state.release=rec;autoSave()}catch(e){}render();typeof toast==='function'&&toast('Liberación registrada')}
  function certificate(){const r=get()[0];if(!r){typeof toast==='function'&&toast('No hay liberaciones registradas');return}const lines=['PLEGAR PRO v60.0 · CERTIFICADO DE LIBERACIÓN','Código de build: '+r.build,'','Referencia: '+(r.ref||'—'),'Nivel: '+r.levelLabel,'Responsable: '+r.approver,'Fecha: '+new Date(r.created).toLocaleString('es-ES'),'Integridad: '+r.score+' %','Material: '+(r.material||'—'),'Espesor: '+r.thickness.toFixed(2)+' mm','Pliegues: '+r.bends,'Observaciones: '+(r.note||'Sin observaciones'),'','COMPROBACIONES',...r.checks.map(x=>'['+(x.ok?'OK':'PENDIENTE')+'] '+x.label+': '+x.detail),'','Aviso: documento generado localmente. Confirmar máquina, utillaje, seguridad y primera pieza antes de fabricar.'];const blob=new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Plegar_Pro_v60_Certificado_'+String(r.ref||'proyecto').replace(/[^a-z0-9_-]/gi,'_')+'.txt';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),800)}
  function init(){if(!E('v600ReleaseCard'))return;E('v600Evaluate')?.addEventListener('click',()=>{render();typeof toast==='function'&&toast('Evaluación actualizada')});E('v600Release')?.addEventListener('click',register);E('v600ExportCertificate')?.addEventListener('click',certificate);E('v600ReleaseLevel')?.addEventListener('change',render);document.querySelector('[data-page="projectcenter"]')?.addEventListener('click',()=>setTimeout(render,20));render();window.PlegarProRelease={evaluate:health,list:get,register};}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
 
+</script>
+
+<script id="pp61Patch">
+(function(){
+ const E=id=>document.getElementById(id), n=v=>Number(String(v??'').replace(',','.'))||0;
+ function bend(){return {leg:100,angle:90,radius:Math.max(1,n(state?.project?.thickness)),v:16,punch:'Punzón recto 88°',gauge:100,direction:1,notes:''}}
+ function save(){try{autoSave()}catch(e){} try{drawAll()}catch(e){} try{syncAll()}catch(e){renderEditors()}}
+ function action(i,type){if(!Array.isArray(state.bends))state.bends=[];if(type==='add')state.bends.splice(i+1,0,bend());if(type==='dup')state.bends.splice(i+1,0,JSON.parse(JSON.stringify(state.bends[i])));if(type==='del'&&state.bends.length>1)state.bends.splice(i,1);if(type==='up'&&i>0)[state.bends[i-1],state.bends[i]]=[state.bends[i],state.bends[i-1]];if(type==='down'&&i<state.bends.length-1)[state.bends[i+1],state.bends[i]]=[state.bends[i],state.bends[i+1]];save()}
+ function editor(hostId){const host=E(hostId);if(!host||!window.state)return;const rows=(state.bends||[]).map((b,i)=>`<tr><td><b>P${i+1}</b></td><td><input data-i="${i}" data-k="leg" inputmode="decimal" value="${b.leg??''}"></td><td><input data-i="${i}" data-k="angle" inputmode="decimal" value="${b.angle??''}"></td><td><input data-i="${i}" data-k="radius" inputmode="decimal" value="${b.radius??''}"></td><td><select data-i="${i}" data-k="direction"><option value="1" ${+b.direction!==-1?'selected':''}>Arriba</option><option value="-1" ${+b.direction===-1?'selected':''}>Abajo</option></select></td><td><input data-i="${i}" data-k="v" inputmode="decimal" value="${b.v??16}"></td><td><input data-i="${i}" data-k="gauge" inputmode="decimal" value="${b.gauge??''}"></td><td><div class="pp61-row-actions"><button class="btn secondary" data-act="up" data-i="${i}">↑</button><button class="btn secondary" data-act="down" data-i="${i}">↓</button><button class="btn secondary" data-act="dup" data-i="${i}">⧉</button><button class="btn danger" data-act="del" data-i="${i}">×</button></div></td></tr>`).join('');host.innerHTML=`<div class="pp61-editor-head"><h3>Secuencia real de plegado · ${(state.bends||[]).length} operaciones</h3><div class="pp61-editor-actions"><button class="btn" data-add>Añadir pliegue</button><button class="btn secondary" data-go="program">Abrir programación completa</button></div></div><div class="pp61-scroll"><table class="pp61-table"><thead><tr><th>Paso</th><th>Ala mm</th><th>Ángulo °</th><th>Radio mm</th><th>Sentido</th><th>V</th><th>Tope X</th><th>Acciones</th></tr></thead><tbody>${rows}</tbody></table></div>`;
+ host.querySelector('[data-add]')?.addEventListener('click',()=>action((state.bends||[]).length-1,'add'));host.querySelectorAll('[data-act]').forEach(x=>x.onclick=()=>action(+x.dataset.i,x.dataset.act));host.querySelectorAll('input,select').forEach(x=>x.onchange=()=>{const b=state.bends[+x.dataset.i];if(!b)return;b[x.dataset.k]=x.dataset.k==='direction'?+x.value:n(x.value);save()})}
+ function renderEditors(){editor('pp61P2Editor');editor('pp61P3Editor')}
+ function cleanFooter(){document.querySelectorAll('body').forEach(body=>{[...body.childNodes].filter(x=>x.nodeType===3&&/\\n|\n\s*\\n/.test(x.textContent||'')).forEach(x=>x.remove())});const f=E('legalFooter');if(f)f.textContent='© 2026 Antonio Molina Sanchez. Todos los derechos reservados. Plegar Pro es software propietario. Los cálculos y simulaciones deben verificarse por personal cualificado antes de fabricar.'}
+ function orientation(){const sel=E('pp61BendOrientation');if(!sel)return;const apply=()=>{window.pp61Orientation=sel.value;localStorage.setItem('pp61.orientation',sel.value);try{const b=state.bends?.[0];if(b)b.direction=sel.value==='machine'?-1:1;drawAll();}catch(e){}};sel.value=localStorage.getItem('pp61.orientation')||'operator';sel.onchange=apply;apply()}
+ function init(){cleanFooter();renderEditors();orientation();document.querySelectorAll('[data-page="program2d"],[data-page="program3d"]').forEach(x=>x.addEventListener('click',()=>setTimeout(renderEditors,40)));const old=window.syncAll;if(typeof old==='function'&&!old.pp61){window.syncAll=function(){const r=old.apply(this,arguments);setTimeout(renderEditors,0);cleanFooter();return r};window.syncAll.pp61=true}document.documentElement.dataset.ppVersion='61.0';window.PLEGAR_PRO_BUILD={version:'61.0',code:'PP-630-NUCLEO-SINCRONIZADO',source:'Plegar_Pro_v60_0'};}
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+})();
+</script>
+
+<script id="pp62GaugeSequencePatch">
+(function(){
+ const E=id=>document.getElementById(id), num=v=>Number(String(v??'').replace(',','.'))||0;
+ const clone=x=>JSON.parse(JSON.stringify(x));
+ function ensure(){
+  if(!Array.isArray(window.state?.bends))return;
+  state.bends.forEach((b,i)=>{
+   if(!b.uid)b.uid='B'+Date.now().toString(36)+'_'+i+'_'+Math.random().toString(36).slice(2,7);
+   if(!b.gaugeMode)b.gaugeMode='auto';
+   if(b.gaugeMode==='auto'||!Number.isFinite(+b.gauge))b.gauge=+num(b.leg).toFixed(2);
+  });
+ }
+ function autoGauge(b){return Math.max(0,num(b?.leg));}
+ function syncGauge(b){if(!b)return;if((b.gaugeMode||'auto')==='auto')b.gauge=+autoGauge(b).toFixed(2)}
+ function machineName(){return String(state?.project?.machine||E('machine')?.value||'Máquina seleccionada')}
+ function hardCheck(b,index){
+  const t=Math.max(.1,num(state?.project?.thickness)||1),v=Math.max(1,num(b.v)||16),leg=num(b.leg),g=num(b.gauge),angle=Math.max(1,Math.min(179,num(b.angle)||90));
+  const issues=[];
+  const minFlange=v*.7;
+  if(leg<=0)issues.push('ala no definida');
+  if(leg<minFlange)issues.push('ala '+leg.toFixed(1)+' mm menor que el apoyo mínimo orientativo '+minFlange.toFixed(1)+' mm');
+  if(g<=0)issues.push('tope X no válido');
+  if((b.gaugeMode||'auto')==='auto'&&Math.abs(g-leg)>.05)issues.push('tope automático desincronizado del ala');
+  if((b.gaugeMode||'auto')==='manual'&&Math.abs(g-leg)>Math.max(1,t))issues.push('tope manual '+g.toFixed(1)+' mm no corresponde al ala '+leg.toFixed(1)+' mm');
+  if(angle>135&&/88|90/.test(String(b.punch||'')))issues.push('ángulo cerrado incompatible con el punzón seleccionado; revisar punzón 30°');
+  if(v/t<5)issues.push('matriz demasiado estrecha para el espesor');
+  return issues;
+ }
+ function stepCheck(order,pos){
+  const idx=order[pos],b=state.bends[idx],issues=hardCheck(b,idx),warnings=[];
+  const before=order.slice(0,pos).map(i=>state.bends[i]);
+  const after=order.slice(pos+1).map(i=>state.bends[i]);
+  const angle=num(b.angle)||90,leg=num(b.leg),dir=num(b.direction)||1;
+  // Reglas conservadoras: cierres y alas pequeñas primero; cambios de cara penalizados.
+  if(angle<60&&after.length)issues.push('un plegado muy cerrado antes del final puede bloquear la colocación o extracción de la pieza');
+  if(before.some(x=>(num(x.angle)||90)<70 && num(x.leg)>leg*1.25))issues.push('un ala ya cerrada puede impedir que el punzón alcance esta línea');
+  if(pos>0){const prev=before[before.length-1];if((num(prev.direction)||1)!==dir)warnings.push('requiere girar o voltear la pieza')}
+  if(after.some(x=>num(x.leg)<leg*.55)&&angle<90)warnings.push('conviene realizar antes las alas pequeñas pendientes');
+  return {idx,issues,warnings};
+ }
+ function evaluate(order){
+  let hard=[],warn=[],toolChanges=0,turns=0,score=100,prev=null;
+  order.forEach((idx,pos)=>{
+   const r=stepCheck(order,pos);r.issues.forEach(x=>hard.push('Paso '+(pos+1)+' / P'+(idx+1)+': '+x));r.warnings.forEach(x=>warn.push('Paso '+(pos+1)+' / P'+(idx+1)+': '+x));
+   const b=state.bends[idx],key=String(b.punch||'')+'|V'+num(b.v),dir=num(b.direction)||1;
+   if(prev){if(prev.key!==key)toolChanges++;if(prev.dir!==dir)turns++}prev={key,dir};
+  });
+  score-=hard.length*30+warn.length*5+toolChanges*3+turns*2;
+  return {order,hard,warn,toolChanges,turns,score:Math.max(0,Math.round(score)),valid:hard.length===0};
+ }
+ function permutations(arr){
+  const out=[];function rec(a,l){if(l===a.length){out.push(a.slice());return}for(let i=l;i<a.length;i++){[a[l],a[i]]=[a[i],a[l]];rec(a,l+1);[a[l],a[i]]=[a[i],a[l]]}}rec(arr.slice(),0);return out;
+ }
+ function candidates(){
+  const n=state.bends.length,base=[...Array(n).keys()];
+  if(n<=8)return permutations(base);
+  const small=base.slice().sort((a,b)=>num(state.bends[a].leg)-num(state.bends[b].leg));
+  const closedLast=base.slice().sort((a,b)=>(num(state.bends[b].angle)||90)-(num(state.bends[a].angle)||90));
+  const grouped=base.slice().sort((a,b)=>(String(state.bends[a].punch)+state.bends[a].v).localeCompare(String(state.bends[b].punch)+state.bends[b].v));
+  return [base,small,closedLast,grouped,small.slice().reverse(),closedLast.slice().reverse()];
+ }
+ function bestSequence(){
+  ensure();const all=candidates().map(evaluate);
+  all.sort((a,b)=>(b.valid-a.valid)||(b.score-a.score)||(a.toolChanges-b.toolChanges)||(a.turns-b.turns));
+  return {best:all[0],valid:all.find(x=>x.valid)||null,tested:all.length};
+ }
+ function report(result){
+  const host=E('sequenceReport');if(!host)return;
+  const r=result||bestSequence(),b=r.valid||r.best;
+  const status=r.valid?'SECUENCIA VALIDADA':'SIN SECUENCIA VÁLIDA';
+  E('seqState')&&(E('seqState').textContent=status+' · '+b.score+'/100');
+  E('seqRisk')&&(E('seqRisk').textContent=r.valid?(b.warn.length?'Medio':'Bajo'):'Alto');
+  E('seqToolChanges')&&(E('seqToolChanges').textContent=b.toolChanges);
+  E('seqTurns')&&(E('seqTurns').textContent=b.turns);
+  host.innerHTML=`<b>${status}</b><br>Máquina: ${machineName()}<br>Combinaciones evaluadas: ${r.tested}<hr><b>Mejor orden:</b> ${b.order.map(i=>'P'+(i+1)).join(' → ')}${b.hard.length?'<hr><span class="error"><b>Errores que impiden aprobarlo:</b><br>'+b.hard.map(x=>'✕ '+x).join('<br>')+'</span>':''}${b.warn.length?'<hr><span class="warning"><b>Advertencias:</b><br>'+b.warn.map(x=>'⚠ '+x).join('<br>')+'</span>':''}<hr><small>La validación es conservadora y comprueba topes, alas mínimas, herramientas y bloqueos geométricos básicos. La primera pieza y los límites reales de la máquina deben verificarse físicamente.</small>`;
+ }
+ function applyRecommended(){
+  const r=bestSequence();report(r);
+  if(!r.valid){toast('No existe una secuencia aprobable con los datos actuales. Revisa los errores.');return}
+  const before=clone(state.bends),ordered=r.valid.order.map(i=>before[i]);
+  ordered.forEach((b,i)=>{b.operation=i+1;syncGauge(b)});
+  if(typeof commit==='function')commit('Aplicado orden validado sin colisiones básicas',()=>{state.bends=ordered});else{state.bends=ordered;autoSave();syncAll()}
+  toast('Orden recomendado validado y aplicado');
+ }
+ function installMainTable(){
+  const rows=E('programRows');if(!rows||rows.dataset.pp62)return;rows.dataset.pp62='1';
+  rows.addEventListener('input',e=>{
+   const x=e.target;if(!x.matches('[data-b][data-k]'))return;const b=state.bends[+x.dataset.b];if(!b)return;
+   if(x.dataset.k==='leg'){b.leg=num(x.value);if((b.gaugeMode||'auto')==='auto'){b.gauge=autoGauge(b);const g=rows.querySelector(`[data-b="${x.dataset.b}"][data-k="gauge"]`);if(g)g.value=b.gauge}}
+   if(x.dataset.k==='gauge'){b.gauge=num(x.value);b.gaugeMode='manual'}
+  },true);
+ }
+ function enhanceEditors(){
+  ['pp61P2Editor','pp61P3Editor'].forEach(id=>{
+   const h=E(id);if(!h||h.dataset.pp62)return;h.dataset.pp62='1';
+   h.addEventListener('change',e=>{const x=e.target;if(!x.matches('[data-i][data-k]'))return;const b=state.bends[+x.dataset.i];if(!b)return;if(x.dataset.k==='leg'){b.leg=num(x.value);syncGauge(b)}else if(x.dataset.k==='gauge'){b.gauge=num(x.value);b.gaugeMode='manual'}setTimeout(()=>{try{syncAll()}catch(_){}})},true);
+  });
+ }
+ function addStatus(){
+  const box=E('programLiveStatus');if(box&&!E('pp62GaugeStatus'))box.insertAdjacentHTML('afterend','<div id="pp62GaugeStatus" class="note"><b>Tope X automático:</b> por defecto sigue el valor del ala. Al editar el tope manualmente queda marcado como ajuste manual.</div>');
+ }
+ function init(){
+  ensure();addStatus();installMainTable();enhanceEditors();
+  const opt=E('sequenceOptimize');if(opt){opt.onclick=applyRecommended;opt.textContent='Aplicar orden validado'}
+  const ana=E('sequenceAnalyze');if(ana)ana.onclick=()=>report(bestSequence());
+  state.bends.forEach(syncGauge);try{syncAll()}catch(e){}
+  const oldSync=window.syncAll;if(typeof oldSync==='function'&&!oldSync.pp62){window.syncAll=function(){ensure();state.bends.forEach(syncGauge);const r=oldSync.apply(this,arguments);setTimeout(()=>{installMainTable();enhanceEditors()},0);return r};window.syncAll.pp62=true}
+  window.optimizeSequence=applyRecommended;window.analyzeBendSequenceValidated=bestSequence;
+  document.documentElement.dataset.ppVersion='62.0';window.PLEGAR_PRO_BUILD={version:'62.0',code:'PP-630-NUCLEO-SINCRONIZADO',source:'Plegar_Pro_v61_0'};
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+})();
 </script>
 </body></html>

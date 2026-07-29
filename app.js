@@ -36,7 +36,7 @@ const DEFAULT_DB={
   {id:'MECOS-MV32-30',brand:'Mecos',name:'Mecos matriz V32 30°',v:32,angle:30,minT:4.0,maxT:8.0,maxTonsM:240}
  ],
  machines:[
-  {id:'BYSTRONIC-XPERT-3100-100-2006',brand:'Bystronic',name:'Bystronic Xpert 3100 / 100T',model:'Xpert',year:2006,length:3100,tons:100,tonsPerM:32.26,axes:'Y1/Y2/X/R/Z1/Z2',control:'ByVision / demo',notes:'Ficha local orientativa para beta. Validar datos exactos con placa/manual de máquina.'}
+  {id:'BYSTRONIC-XPERT-3100-100-2006',brand:'Bystronic',name:'Bystronic Vistronic 100 T · 2006',model:'Xpert',year:2006,length:3100,tons:100,tonsPerM:32.26,axes:'Y1/Y2/X/R/Z1/Z2',control:'ByVision / demo',notes:'Ficha local orientativa para beta. Validar datos exactos con placa/manual de máquina.'}
  ]
 };
 const $=id=>document.getElementById(id);

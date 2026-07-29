@@ -1,0 +1,8 @@
+PLEGAR PRO v63.0 · NÚCLEO SINCRONIZADO
+
+- Programar vuelve a ser la fuente única de la pieza activa.
+- Desarrollo del proyecto se regenera desde material, espesor, K, longitud y pliegues de Programar.
+- Desarrollo deja de permitir ediciones paralelas que podían desincronizar 2D/3D/simulaciones.
+- Calculadora de desarrollo permanece totalmente independiente.
+- Curva Perfecta permanece independiente y se retira el envío directo a Programar.
+- Se conservan módulos, máquina Bystronic/Vistronic 100 T 2006, editor de pliegues, topes y validación de secuencia.

@@ -1,0 +1,9 @@
+PLEGAR PRO v61.0 · CONSOLIDACIÓN PROGRAMACIÓN Y GEMELO
+
+- Recuperada Bystronic Vistronic 100 T · año 2006 como máquina seleccionable y predeterminada.
+- Añadido editor real de pasos/pliegues en Programación 2D y Programación 3D.
+- Permite añadir, duplicar, eliminar, reordenar y editar ala, ángulo, radio, sentido, V y tope X.
+- Rediseño compacto y responsive de la Calculadora de Desarrollo independiente.
+- Eliminados caracteres residuales del pie de página en todas las pantallas.
+- Añadido selector de orientación visual del plegado: operario/máquina.
+- Conservados todos los módulos y funciones heredados de v60.0.

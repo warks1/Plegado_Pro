@@ -1,12 +1,12 @@
 {
-  "version": "60.0",
+  "version": "61.0",
   "passed": [
-    "IDs HTML únicos: 659",
+    "IDs HTML únicos: 663",
     "Accesos de menú presentes: 31",
     "Contenedores de página presentes: 31",
     "Núcleo acumulativo prioritario conservado",
     "Interfaz sin banner visible de despliegue",
-    "Build interno actualizado a 60.0",
+    "Build interno actualizado a 61.0",
     "Referencia funcional localizada: openPage",
     "Referencia funcional localizada: localStorage",
     "Referencia funcional localizada: tvCanvas3D",

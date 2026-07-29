@@ -1,0 +1,9 @@
+PLEGAR PRO v62.0 · TOPES Y SECUENCIA VALIDADA
+
+- El tope X automático se sincroniza con el valor del ala.
+- Al editar manualmente el tope se conserva como ajuste manual y se valida contra el ala.
+- El orden recomendado evalúa combinaciones (todas hasta 8 pliegues) y descarta secuencias con errores duros.
+- No se aplica ningún orden si no existe una secuencia validada.
+- Se comprueban ala mínima, coherencia del tope, relación V/espesor, compatibilidad angular del punzón y bloqueos geométricos conservadores.
+- Se muestran errores por paso y la alternativa recomendada.
+- Se conserva toda la funcionalidad acumulativa de v61.0.
