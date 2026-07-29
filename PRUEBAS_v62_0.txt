@@ -1,0 +1,8 @@
+PRUEBAS v62.0
+- Sintaxis JavaScript global e inline.
+- IDs HTML sin duplicados.
+- Menú y páginas conservados.
+- Tope automático ala 20 mm -> X 20 mm.
+- Edición manual del tope conservada.
+- Secuencia inválida rechazada.
+- Secuencia válida aplicada y sincronizada.

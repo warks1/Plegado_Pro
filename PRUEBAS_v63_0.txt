@@ -1,0 +1,9 @@
+PRUEBAS v63.0
+
+1. Sintaxis JavaScript principal e incrustado.
+2. Navegación y existencia de pantallas.
+3. Programar como fuente única de state.bends/state.project.
+4. Desarrollo sincronizado mediante syncProjectDevelopment().
+5. Calculadora independiente conservada (PLEGAR_PRO_V529_AUDIT.independent).
+6. Curva Perfecta sin envío directo a Programar.
+7. Persistencia local y migración acumulativa conservadas.
