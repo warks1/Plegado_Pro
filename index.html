@@ -479,7 +479,7 @@ canvas{touch-action:none;-webkit-user-select:none;user-select:none;max-width:100
 <div><label>Flecha (mm)</label><input id="curveSagitta" type="text" inputmode="decimal" placeholder="Opcional"></div>
 <div><label>Ángulo máximo por golpe (°)</label><input id="curveMaxHitAngle" type="text" inputmode="decimal" value="5"></div>
 <div><label>Error máximo de cuerda (mm)</label><input id="curveTolerance" type="text" inputmode="decimal" value="0.5"></div>
-</div><div class="actions"><button class="btn" id="curveCalculate">Calcular</button><button class="btn secondary" id="curveAutoOptimize">Optimizar golpes</button><button class="btn secondary" id="curveExportCsv">Exportar CSV</button></div><div id="curveResult" class="note"></div><div class="kpis"><div class="kpi"><span>Desviación geométrica</span><b id="curveDeviation">—</b></div><div class="kpi"><span>Cuerda calculada</span><b id="curveChordOut">—</b></div><div class="kpi"><span>Flecha calculada</span><b id="curveSagittaOut">—</b></div><div class="kpi"><span>Calidad estimada</span><b id="curveQuality">—</b></div></div></div>
+</div><div class="actions"><button class="btn" id="curveCalculate">Calcular</button><button class="btn secondary" id="curveAutoOptimize">Optimizar golpes</button><button class="btn secondary" id="curveToProgram">Enviar a Programar</button><button class="btn secondary" id="curveExportCsv">Exportar CSV</button></div><div id="curveResult" class="note"></div><div class="kpis"><div class="kpi"><span>Desviación geométrica</span><b id="curveDeviation">—</b></div><div class="kpi"><span>Cuerda calculada</span><b id="curveChordOut">—</b></div><div class="kpi"><span>Flecha calculada</span><b id="curveSagittaOut">—</b></div><div class="kpi"><span>Calidad estimada</span><b id="curveQuality">—</b></div></div></div>
 <div class="card c7"><h2>Vista avanzada de la curva</h2><div class="visualToolbar"><button class="btn secondary" id="curveFit">Centrar</button><button class="btn secondary" id="curveZoomIn">＋</button><button class="btn secondary" id="curveZoomOut">－</button><button class="btn secondary" id="curveRotateLeft">↶ Rotar</button><button class="btn secondary" id="curveRotateRight">Rotar ↷</button></div><div class="stage"><canvas id="canvasCurve" width="1000" height="600"></canvas><div class="overlay" id="overlayCurve"></div></div></div><div class="card c12"><h2>Tabla de golpes</h2><div class="tableWrap"><table class="table"><thead><tr><th>Golpe</th><th>Posición X</th><th>Distancia</th><th>Ángulo golpe</th><th>Ángulo acumulado</th><th>Corrección</th></tr></thead><tbody id="curveRows"></tbody></table></div><div id="curveWarnings" class="note"></div></div>
 </div></section>
 
@@ -758,7 +758,7 @@ let state={
 let undoStack=[],redoStack=[],pageHistory=['dashboard'],currentPage='dashboard';
 let sim={rotXP3:-.35,rotYP3:.5,rotXS3:-.35,rotYS3:.5,s2Step:0,s3Step:0,s2Timer:null,s3Timer:null,operatorStep:0,p3Active:0,rotX:-.35,rotY:.5,drag:false,lastX:0,lastY:0,zoomP3:1,zoomS3:1,panP3X:0,panP3Y:0,panS3X:0,panS3Y:0,dragTarget:'',panMode:false,zoomS2:1,rotS2:0,panS2X:0,panS2Y:0,zoomCurve:1,rotCurve:0,panCurveX:0,panCurveY:0,zoomProgram:1,rotProgram:0,panProgramX:0,panProgramY:0};
 let aiProposal=null,importDraft=null,importedFiles=[];
-window.PLEGAR_PRO_BUILD={version:'63.0',code:'PP-630-NUCLEO-SINCRONIZADO',source:'Plegar_Pro_v52_0'};
+window.PLEGAR_PRO_BUILD={version:'63.1',code:'PP-631-CONTROLES-REPARADOS',source:'Plegar_Pro_v52_0'};
 (function verifyDeployment(){
  const expected='PP-514-PHOTO-TO-PROGRAM';
  document.documentElement.dataset.build=expected;
@@ -795,7 +795,8 @@ function go(page,remember=true){
  currentPage=page;
  document.querySelectorAll('.page').forEach(x=>x.classList.toggle('active',x.id===page));
  document.querySelectorAll('.nav button').forEach(x=>x.classList.toggle('active',x.dataset.page===page));
- $('pageTitle').textContent=titles[page][0];$('pageSub').textContent=titles[page][1];
+ const pageMeta=titles[page]||[(($(page).querySelector('h2')||$(page).querySelector('h1'))?.textContent||page).trim(),'Módulo operativo de Plegar Pro'];
+ $('pageTitle').textContent=pageMeta[0];$('pageSub').textContent=pageMeta[1];
  refreshPage(page);
  // v50.8: centrar y ajustar automáticamente las vistas al entrar.
  requestAnimationFrame(()=>{

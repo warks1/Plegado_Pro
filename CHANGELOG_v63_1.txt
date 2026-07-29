@@ -1,0 +1,7 @@
+PLEGAR PRO v63.1 · CONTROLES Y MÓDULOS REPARADOS
+
+- Reparado el bloqueo de inicialización que dejaba sin acción los controles posteriores a Curva Perfecta.
+- Incorporado el botón visible «Enviar a Programar» en Curva Perfecta y conectado a su formulario.
+- Simulación 2D y Simulación 3D recuperan reproducción, pausa, pasos, reinicio, centrado, zoom y rotación.
+- Navegación reforzada para que los módulos acumulativos sin título registrado también puedan abrirse.
+- Conservados todos los módulos, formularios, datos y funciones anteriores.
