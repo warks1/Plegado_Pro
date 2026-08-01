@@ -1,1 +1,9 @@
-{"name":"Plegar Pro v50","short_name":"Plegar Pro","start_url":"./index.html","display":"standalone","background_color":"#07121b","theme_color":"#0e2231"}
+{
+  "name": "Plegar Pro",
+  "short_name": "PlegarPro",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#020a12",
+  "theme_color": "#020a12",
+  "icons": []
+}

@@ -1,0 +1,163 @@
+{
+  "version": "v53.0",
+  "files": {
+    "dashboard.html": {
+      "size": 20610,
+      "forms": 0,
+      "buttons": 1,
+      "nav_links": 26
+    },
+    "projects.html": {
+      "size": 19653,
+      "forms": 1,
+      "buttons": 4,
+      "nav_links": 26
+    },
+    "import.html": {
+      "size": 19744,
+      "forms": 1,
+      "buttons": 4,
+      "nav_links": 26
+    },
+    "program2d.html": {
+      "size": 19468,
+      "forms": 1,
+      "buttons": 4,
+      "nav_links": 26
+    },
+    "program3d.html": {
+      "size": 19468,
+      "forms": 1,
+      "buttons": 4,
+      "nav_links": 26
+    },
+    "sim2d.html": {
+      "size": 19454,
+      "forms": 1,
+      "buttons": 4,
+      "nav_links": 26
+    },
+    "sim3d.html": {
+      "size": 19454,
+      "forms": 1,
+      "buttons": 4,
+      "nav_links": 26
+    },
+    "curve.html": {
+      "size": 19137,
+      "forms": 1,
+      "buttons": 5,
+      "nav_links": 26
+    },
+    "vcompare.html": {
+      "size": 19161,
+      "forms": 1,
+      "buttons": 5,
+      "nav_links": 26
+    },
+    "development.html": {
+      "size": 19135,
+      "forms": 1,
+      "buttons": 4,
+      "nav_links": 26
+    },
+    "tooling.html": {
+      "size": 19173,
+      "forms": 1,
+      "buttons": 4,
+      "nav_links": 26
+    },
+    "machines.html": {
+      "size": 19301,
+      "forms": 1,
+      "buttons": 4,
+      "nav_links": 26
+    },
+    "materials.html": {
+      "size": 19134,
+      "forms": 1,
+      "buttons": 4,
+      "nav_links": 26
+    },
+    "production.html": {
+      "size": 19324,
+      "forms": 1,
+      "buttons": 4,
+      "nav_links": 26
+    },
+    "quality.html": {
+      "size": 19287,
+      "forms": 1,
+      "buttons": 4,
+      "nav_links": 26
+    },
+    "maintenance.html": {
+      "size": 19302,
+      "forms": 1,
+      "buttons": 4,
+      "nav_links": 26
+    },
+    "warehouse.html": {
+      "size": 19131,
+      "forms": 1,
+      "buttons": 4,
+      "nav_links": 26
+    },
+    "suppliers.html": {
+      "size": 19187,
+      "forms": 1,
+      "buttons": 4,
+      "nav_links": 26
+    },
+    "clients.html": {
+      "size": 18988,
+      "forms": 1,
+      "buttons": 6,
+      "nav_links": 26
+    },
+    "calendar.html": {
+      "size": 19349,
+      "forms": 1,
+      "buttons": 4,
+      "nav_links": 26
+    },
+    "welding.html": {
+      "size": 19299,
+      "forms": 1,
+      "buttons": 4,
+      "nav_links": 26
+    },
+    "workflow.html": {
+      "size": 19482,
+      "forms": 1,
+      "buttons": 4,
+      "nav_links": 26
+    },
+    "libraries.html": {
+      "size": 19508,
+      "forms": 1,
+      "buttons": 4,
+      "nav_links": 26
+    },
+    "settings.html": {
+      "size": 19525,
+      "forms": 1,
+      "buttons": 4,
+      "nav_links": 26
+    },
+    "assistant.html": {
+      "size": 19306,
+      "forms": 1,
+      "buttons": 4,
+      "nav_links": 26
+    },
+    "about.html": {
+      "size": 19072,
+      "forms": 1,
+      "buttons": 4,
+      "nav_links": 26
+    }
+  },
+  "modules": 26,
+  "errors": []
+}
