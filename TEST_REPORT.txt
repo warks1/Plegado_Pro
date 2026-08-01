@@ -1,47 +1,18 @@
-PLEGAR PRO v53.0 INDUSTRIAL STABLE — INFORME DE COMPROBACIÓN
+PLEGAR PRO v68.0 MOCKUP 1 SIDEBAR — INFORME DE CAMBIOS
 
-Identidad visual
-- Se utiliza el primer concepto industrial aprobado por el usuario.
-- Logo PP metálico con efecto de movimiento.
-- Menú oscuro industrial con detalles cian.
+- Recuperado el menú lateral del boceto 1 aprobado.
+- Eliminado el menú superior horizontal de módulos.
+- Iconos a color mediante gradientes CSS en PC, tablet y smartphone.
+- Conservados Volver, Deshacer y Rehacer.
+- Conservada y funcional la zona superior derecha: Ayuda, notificaciones, mensajes y perfil.
+- Menú móvil deslizable con fondo de bloqueo.
+- 27 destinos de navegación conservados.
+- Persistencia migrada a clave pp68.
+- Copyright visible en el pie general.
 
-Estructura comprobada
-- 27 archivos HTML.
-- 26 módulos principales más index.html.
-- Cada módulo tiene una página física independiente.
-- Cada módulo operativo contiene su propio formulario.
-- No existen enlaces internos rotos.
-- No existen botones sin acción enlazada según la auditoría estática.
-- No existen identificadores HTML duplicados.
-- No existen formularios vacíos.
-
-Módulos incluidos
-Dashboard, Proyectos, Importar/CAD-CAM, Programación 2D, Programación 3D,
-Simulación 2D, Simulación 3D, Curva Perfecta, Comparador V, Desarrollo,
-Utillaje, Máquinas, Materiales, Producción, Calidad, Mantenimiento, Almacén,
-Proveedores de chapa, Clientes/CRM, Agenda y calendario, Soldadura,
-Ruta de fabricación, Bibliotecas oficiales, Ajustes, IA asistente y Acerca de.
-
-Arranque
-- La pantalla de inicio se oculta por animación CSS después de cinco segundos.
-- Existe además una retirada mediante JavaScript y un control de error.
-- La aplicación permanece visible debajo de la pantalla de carga.
-
-Compatibilidad móvil
-- Menú adaptable.
-- Formularios adaptables.
-- Controles táctiles.
-- Diseño responsive.
-
-Nota de prueba
-Se ejecutó una auditoría estática exhaustiva de todos los archivos. El entorno de
-compilación bloqueó por política administrativa el acceso de Chromium a localhost
-y file://, por lo que no se afirma una prueba visual automatizada completa en ese
-navegador. La estructura, enlaces y acciones sí fueron comprobados por análisis.
-
-Apertura recomendada en iPhone
-1. Descomprimir el ZIP en la app Archivos.
-2. Mantener pulsado index.html.
-3. Usar Compartir > Abrir en Safari, o publicar la carpeta en GitHub Pages.
-El visor rápido de Archivos puede restringir JavaScript y no es un navegador web
-completo.
+Pruebas estáticas realizadas:
+- Archivos requeridos presentes.
+- Sintaxis JavaScript validada con Node.
+- IDs HTML sin duplicados.
+- Todos los data-m corresponden a módulos definidos.
+- Recursos gráficos locales existentes.
